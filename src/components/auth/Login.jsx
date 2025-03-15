@@ -27,8 +27,8 @@ export default function Login() {
                 navigate('/')
             }  
         })
-        .catch((error) => {            
-            setErrors({email: [error.errors.email]}) 
+        .catch(({errors}) => {            
+            setErrors({email: [errors.email]}) 
         })
     }
 

@@ -32,8 +32,8 @@ export function GET(URL, headers = {}) {
     return api.request(URL, 'GET', '', headers)
 }
 
-export async function POST(URL, body,  headers = {}) {
-    return await api.request(URL, 'POST', body, headers)
+export function POST(URL, body,  headers = {}) {
+    return api.request(URL, 'POST', body, headers)
 }
 
 export function PUT(URL, body,  headers = {}) {

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { emptyObj } from './utils/objects'
 
 export default function Form(props) {
-    let {fields, submit, styles ={}, validation = {}} = props
+    let {fields, submit, styles ={}, validation = {}, reset = true} = props
     let id = 'FORM-' + Math.floor(Math.random() * 100) 
     let _errors = props.errors
     let [errors, setErrors] = useState(_errors)
@@ -28,16 +28,22 @@ export default function Form(props) {
                 setErrors(errors)
             })
         })
-
+        
         form.addEventListener("submit", (e) => {
             e.preventDefault()
             let valdatior = new Valdatior
             let errors = valdatior.formValdaite(result, validation)  
             setErrors(errors)   
-             
-            if(emptyObj(errors)) submit.fun(result)
+
+            if(emptyObj(errors)) {
+                submit.fun(result)
+                console.log('sss');
+                
+                if(reset) form.reset()
+            }
         })
-    })
+
+    },[])
 
     useEffect (() => {
         setErrors(_errors) 
@@ -64,6 +70,7 @@ export default function Form(props) {
         )
     })
 
+
     return (
         <form className={`flex flex-col ${styles.form ?? 'w-96'}`} id={id}>
             {inputs}
@@ -78,4 +85,5 @@ Form.propTypes = {
     errors: PropTypes.object,
     styles: PropTypes.object,
     validation: PropTypes.object,
+    reset: PropTypes.bool,
 }
