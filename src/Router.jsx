@@ -6,7 +6,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Profile from "./components/user/Profile";
 import Posts from "./components/Posts/Posts";
-import  Counter  from "./counter";
+import Counter  from "./counter";
 import Settings from "./components/settings/Settings";
 import ChangeUserNameAndEmail from "./components/settings/ChangeUserNameAndEmail";
 import ChangePassword from "./components/settings/ChangePassword";

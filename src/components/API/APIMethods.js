@@ -1,41 +1,45 @@
-const baseURL = 'http://127.0.0.1:8000/api/'
-const token = localStorage.getItem('token')
+import { api } from "../../main"
+export class API {
 
-function API (URL, method, body = '', headers = {}) {
-
-    if (token) headers = {'Authorization':`Bearer ${token}`, ...headers}
-    if(method === 'POST' || method === 'PUT') {
-        headers = {'Content-Type': 'application/json', ...headers}
+    constructor (baseURL, token) {
+        this.baseURL = baseURL
+        this.token = token
     }
 
-    let options = {
-        method: method,
-        headers: headers
-    }
+   async request (URL, method, body = '', headers = {}) {
 
-    if(body) options.body = JSON.stringify(body)
-
-    try {
-        fetch(baseURL+URL, options)
-        .then(res => {return res.json()})
-        
-    } catch (error) {
-        console.log(error)
+        if (this.token) headers = {'Authorization':`Bearer ${this.token}`, ...headers}
+        if(method === 'POST' || method === 'PUT') {
+            headers = {'Content-Type': 'application/json', ...headers}
+        }
+    
+        let options = {
+            method: method,
+            headers: headers
+        }
+    
+        if(body) options.body = JSON.stringify(body)
+    
+        let res = await fetch(this.baseURL+URL, options)
+        let status = res.status
+        res = await res.json()
+        if( status !== 200) throw res
+        else return res
     }
 }
 
 export function GET(URL, headers = {}) {
-    return API(URL, 'GET', '', headers)
+    return api.request(URL, 'GET', '', headers)
 }
 
-export function POST(URL, body,  headers = {}) {
-    return API(URL, 'POST', body, headers)
+export async function POST(URL, body,  headers = {}) {
+    return await api.request(URL, 'POST', body, headers)
 }
 
 export function PUT(URL, body,  headers = {}) {
-    return API(URL, 'PUT', body, headers)
+    return api.request(URL, 'PUT', body, headers)
 }
 
 export function DELETE(URL, headers = {}) {
-    return API(URL, 'DELETE', '', headers)
+    return api.request(URL, 'DELETE', '', headers)
 }

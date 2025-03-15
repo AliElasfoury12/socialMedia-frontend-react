@@ -1,32 +1,46 @@
 import { useState} from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Post from "../API/Post"
-import {Formik, Field, Form} from 'formik'
-import { registerSchema } from "../../Valdation"
+import Form from "../../Form"
 
 export default function Register () {
     let navigate = useNavigate()
+    let [errors, setErrors] = useState({})
 
-    let [Errors, setErrors] = useState({
-        name:'',
-        email:'',
-        password: ''
-    })
+    let validation = {
+        name: 'required|min:4',
+        email: 'required|min:4|email',
+        password: 'required|min:4',
+        password_confirmation: 'required|min:4'
+    }
 
-    const register = (form, actions) => {
+    const register = (form) => {
         Post('register', form)
         .then(() => {
-            actions.resetForm()
             navigate('/login')
         })
         .catch((error) => {
-            error.name && setErrors({name: error.name[0]})  
+           /* error.name && setErrors({name: error.name[0]})  
             error.email && setErrors({email: error.email[0]})   
-            error.password && setErrors({password: error.password[0]})  
+            error.password && setErrors({password: error.password[0]})  */
         })
     }
 
     return (
+        <div className="flex flex-col justify-center h-[100vh] items-center w-fit m-auto">
+           <Form 
+                fields={[
+                    {name: 'name', placeholder: 'Enter Your Name'},
+                    {name: 'email', placeholder: 'Enter Your Email'},
+                    {name: 'password', type: 'password', placeholder: 'Enter Your Password'},
+                    {name: 'password_confirmation', type: 'password', placeholder: 'Confirm Password', label: 'Password Confirmation'}
+                ]} 
+                styles={{submit: 'bg-blue-600 text-white rounded-lg py-1'}}
+                submit={{value :'Login', fun: register }}
+                validation={validation}
+                errors={errors}/>
+        </div>
+        /*
         <Formik
         initialValues={{
             name: '',
@@ -79,6 +93,6 @@ export default function Register () {
 
             </Form>
         )}
-        </Formik>
+        </Formik>*/
     )
 }
