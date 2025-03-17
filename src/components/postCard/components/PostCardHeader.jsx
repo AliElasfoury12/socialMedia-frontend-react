@@ -6,9 +6,9 @@ import { timeAgo } from '../../../tools/Moments'
 import Follow from './Follow'
 import { profileStorage } from '../../../stores/statices'
 
-export default function PostCardHeader({ post }) {
+export default function PostCardHeader({post}) {
     let storage = profileStorage
-
+  
     return (
         <div
             className="flex justify-between px-2 " 

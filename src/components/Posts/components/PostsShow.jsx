@@ -17,6 +17,8 @@ export default function PostsShow () {
 
     useInfinteScroll(page, setPage, handleGetPosts)
 
+    console.log('postsShow', posts);
+    
     return (
        <ShowLoop loading={loading} array={posts} LoopComponent={PostCard}/>
     )

@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import Get from '../components/API/Get'
+import { GET } from '../components/API/APIMethods'
 
 export let getPosts = createAsyncThunk(
 	'posts/getPosts',
 	async (page) => { 
-		return await Get('posts?page=' + page)
+		return await GET('posts?page=' + page)
 	}
 )
 
@@ -69,11 +69,13 @@ export const postsSlice = createSlice({
 
 	extraReducers: (builder) => {
 		builder.addCase(getPosts.fulfilled, (state, {payload}) => {
+			console.log(payload);
+			
 			if(payload == '') {
 				state.end = true
 				state.loading = false
 			}else {
-				state.posts.push(...payload)
+				state.posts.push(...payload.posts)
 				state.loading = false
 				state.lastPage = state.page
 			}

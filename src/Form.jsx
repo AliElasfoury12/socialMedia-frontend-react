@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Fragment, useEffect} from 'react'
 import {Valdatior } from './FormValdation'
 import { useState } from 'react'
-import { emptyObj } from './utils/objects'
+import { emptyObject } from './utils/objects'
 
 export default function Form(props) {
     let {fields, submit, styles ={}, validation = {}, reset = true} = props
@@ -35,7 +35,7 @@ export default function Form(props) {
             let errors = valdatior.formValdaite(result, validation)  
             setErrors(errors)   
 
-            if(emptyObj(errors)) {
+            if(emptyObject(errors)) {
                 submit.fun(result)
                 console.log('sss');
                 
