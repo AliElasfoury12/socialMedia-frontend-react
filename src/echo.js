@@ -1,5 +1,6 @@
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import { base_url } from './stores/statices';
 
 window.Pusher = Pusher;
 
@@ -11,7 +12,7 @@ window.Echo = new Echo({
     wssPort: import.meta.env.VITE_REVERB_PORT ?? 443,
     forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
-    authEndpoint: 'http://localhost:8000/api/broadcasting/auth',
+    authEndpoint: base_url + 'api/broadcasting/auth',
     auth: {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`

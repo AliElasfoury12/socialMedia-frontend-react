@@ -1,3 +1,4 @@
-export let profileStorage = 'http://127.0.0.1:8000/storage/profile/'
-export let postsStorage = 'http://127.0.0.1:8000/storage/posts/'
+export const base_url = 'http://127.0.0.1:8000/'
+export const profileStorage = base_url + 'storage/profile/'
+export const postsStorage = base_url + 'storage/posts/'
 
