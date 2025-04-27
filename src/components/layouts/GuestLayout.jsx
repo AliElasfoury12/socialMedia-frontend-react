@@ -1,17 +1,19 @@
-import { useSelector } from "react-redux"
-import {  Navigate, Outlet } from "react-router-dom"
+import router from "../../Router"
+import Nav from "./Nav"
+import PropTypes from 'prop-types'
 
-export default function GuestLayout () {
-   //let {token} = useSelector(state => state.auth)
-   let token = localStorage.getItem('token')
-
-      if(token) {
-         return <Navigate to='/'/> 
-      }  
-   
-   return(
-      <div>    
-         <Outlet/>
-      </div>
+export default function GuestLayout ({children}) {
+   const token = localStorage.getItem('token')
+   if(token) return router.navigate('/')
+          
+   return (
+       <>
+           <Nav/>
+            {children}
+       </>
    )
+}
+
+GuestLayout.propTypes = {
+    children: PropTypes.object,
 }

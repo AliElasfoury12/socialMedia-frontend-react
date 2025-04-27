@@ -1,12 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import DefaultLayout from "./components/layouts/DefaultLayout";
-import GuestLayout from "./components/layouts/GuestLayout";
 import EditUser from "./components/user/EditUser";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
 import Profile from "./components/user/Profile";
 import Posts from "./components/Posts/Posts";
-import Counter  from "./counter";
 import Settings from "./components/settings/Settings";
 import ChangeUserNameAndEmail from "./components/settings/ChangeUserNameAndEmail";
 import ChangePassword from "./components/settings/ChangePassword";
@@ -20,25 +15,38 @@ import DeleteUser from "./components/settings/DeleteUser";
 import ShowPost from "./components/Notifications/ShowPost";
 import UserPosts from "./components/user/UserPosts";
 import ShowProfilePictures from "./components/user/ٍShowProfilePictures";
+import Test from "./Test";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage.jsx";
 
 let router = createBrowserRouter([
     {
+        path: '/login',
+        element: <LoginPage/>
+    },{
+        path: '/register',
+        element: <RegisterPage/>
+    },{
         path: '/',
+        element: <HomePage/>
+    },/*{
+        path: '/home',
         element: <DefaultLayout/>,
         children: [
             {
-                path: 'user/edit/:id',
+                path: '/user/edit/:id',
                 element: <EditUser/>
             },{
-                path: 'user/profile/:id/',
+                path: '/user/profile/:id/',
                 element: <Profile/>,
                 children: [
                     {
-                        path: 'posts',
+                        path: '/posts',
                         element: <UserPosts/>,
                     },
                     {
-                        path: 'profile-pictures',
+                        path: '/profile-pictures',
                         element: <ShowProfilePictures/>,
                     }
                 ]
@@ -83,7 +91,7 @@ let router = createBrowserRouter([
             },
             {
                 path: 'counter',
-                 element:<Counter/>
+                 element:<Test/>
             },
         ]
     },
@@ -91,14 +99,6 @@ let router = createBrowserRouter([
         path: '/',
         element: <GuestLayout/>,
         children: [
-            {
-                path: 'register',
-                element: <Register/>
-            },
-            {
-                path: 'login',
-                element: <Login/>
-            },
             {
                 path: 'forgetpassword',
                 element: <ForgetPassword/>
@@ -112,7 +112,7 @@ let router = createBrowserRouter([
                 element: <SetNewPassword/>
             },
         ]
-    },
+    },*/
    
 ])
 

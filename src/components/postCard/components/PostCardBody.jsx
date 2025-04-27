@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import Get from '../../API/Get'
 import { postsStorage } from '../../../stores/statices'
 import Modal from '../../../Modal'
+import api from '../../API/APIMethods'
 
-export default function PostCardBody(props) {
-    let { post } = props
-    let [Post, setPost] = useState(post.post ?? '')
+export default function PostCardBody({ post }) {
+    const [Post, setPost] = useState(post.post ?? '')
     let images = post.post_imgs ?? []
-    let [show, setShow] = useState(false)
+    const [show, setShow] = useState(false)
     let storage = postsStorage
 
-    let getPost = () => {
-        Get('posts/'+ post.id)
+    function getPost ()
+    {
+        api.GET('posts/'+ post.id)
         .then((data)=> {
             setPost(data)
         })
@@ -24,6 +24,7 @@ export default function PostCardBody(props) {
         let showImages = images.map((img,index) => {
             return (
                 <img 
+                    loading='lazy'
                     key={index}
                     className=" mb-4 " 
                     style={{width: '40rem'}}

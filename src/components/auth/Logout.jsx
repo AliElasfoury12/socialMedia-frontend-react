@@ -2,14 +2,14 @@ import { useDispatch } from "react-redux"
 import logoutIcon from '../../assets/logout.png'
 import { setAuthUser, setToken } from "../../stores/authStore"
 import { useNavigate } from "react-router-dom"
-import { GET } from "../API/APIMethods"
+import api from "../API/APIMethods"
 
 export default function Logout() {
   let dispatch = useDispatch()
   let navigate = useNavigate()
 
   let logout = () => {
-    GET('logout')
+    api.GET('logout')
     .then(() => {
         dispatch(setAuthUser(''))
         dispatch(setToken(''))

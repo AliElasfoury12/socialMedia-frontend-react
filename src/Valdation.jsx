@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import yupPassword from 'yup-password'
 yupPassword(yup)
-
+/*
 export let registerSchema = yup.object().shape({
     name:  yup.string().min(4).max(50).required('Name Field is Required'),
     email:  yup.string().email('Not a Valid Email').required('Email Field is Required'),
@@ -14,7 +14,7 @@ export let loginSchema = yup.object().shape({
     email:  yup.string().email('Not a Valid Email').required('Email Field is Required'),
     password: yup.string().min(4).required('Password Field is Required'),
 })
-
+*/
 export let changePasswordSchema = yup.object().shape({
     //current_password: yup.string().password().required('Current Password Field is Required'),
     current_password: yup.string().min(4).required('Current Password Field is Required'),

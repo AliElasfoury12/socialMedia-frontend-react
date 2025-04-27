@@ -1,4 +1,4 @@
-import { timeAgo } from '../../../../tools/Moments'
+import { timeAgo } from '../../../../utils/Moments'
 import user from '../../../../assets/user.png'
 import PropTypes from 'prop-types'
 import { profileStorage } from '../../../../stores/statices'

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import PostCard from '../postCard/PostCard'
 import { useEffect, useState } from 'react'
 import Get from '../API/Get'
-import BigLoadingSpinner from '../../LoadingSpinner/LoadingSpinner'
+import BigLoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import CommentsCard from '../Comments/components/CommentsCard'
 
 export default function ShowPost() {

@@ -1,11 +1,7 @@
-import { api } from "../../main"
-export class API {
-
-    constructor (baseURL, token) {
-        this.baseURL = baseURL
-        this.token = token
-    }
-
+class API {
+    baseURL
+    token
+    
    async request (URL, method, body = '', headers = {}) {
 
         if (this.token) headers = {'Authorization':`Bearer ${this.token}`, ...headers}
@@ -26,20 +22,34 @@ export class API {
         if( status !== 200) throw res
         else return res
     }
+
+    GET(URL, headers = {}) {
+        return this.request(URL, 'GET', '', headers)
+    }
+    
+    POST(URL, body,  headers = {}) {
+        return this.request(URL, 'POST', body, headers)
+    }
+    
+    PUT(URL, body,  headers = {}) {
+        return this.request(URL, 'PUT', body, headers)
+    }
+    
+    DELETE(URL, headers = {}) {
+        return this.request(URL, 'DELETE', '', headers)
+    }
+
+    setToken (token)
+    {
+        this.token = token;
+    }
+
+    setBaseURL (url)
+    {
+        this.baseURL = url
+    }
 }
 
-export function GET(URL, headers = {}) {
-    return api.request(URL, 'GET', '', headers)
-}
+const api = new API;
+export default api;
 
-export function POST(URL, body,  headers = {}) {
-    return api.request(URL, 'POST', body, headers)
-}
-
-export function PUT(URL, body,  headers = {}) {
-    return api.request(URL, 'PUT', body, headers)
-}
-
-export function DELETE(URL, headers = {}) {
-    return api.request(URL, 'DELETE', '', headers)
-}

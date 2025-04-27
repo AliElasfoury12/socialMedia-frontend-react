@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPostId, setShow } from '../../stores/commentStore'
 import PropTypes from 'prop-types'
 import { createContext, useEffect, useState } from 'react'
-import countRound from '../../tools/CountRound'
+import countRound from '../../utils/CountRound'
 import CommentsModal from './components/CommentsModal'
 
 export const CommentContext = createContext()

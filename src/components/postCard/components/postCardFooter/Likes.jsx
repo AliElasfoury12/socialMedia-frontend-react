@@ -3,7 +3,7 @@ import likeIcon from '../../../../assets/like.png'
 import blueLike from '../../../../assets/bluelike.png'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import countRound from '../../../../tools/CountRound'
+import countRound from '../../../../utils/CountRound'
 import Get from '../../../API/Get'
 
 export default function Likes(props) {

@@ -2,7 +2,7 @@ import { useState } from "react"
 import Post from "../../../API/Post"
 import { addPost } from '../../../../stores/postsStore' 
 import { useDispatch } from "react-redux"
-import SmallLoadingSpinner from "../../../../LoadingSpinner/SmallLoadingSpinner"
+import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner"
 import PropTypes from 'prop-types'
 import AddImg from "./AddImg"
 import CreatePostInput from "./CreatePostInput"

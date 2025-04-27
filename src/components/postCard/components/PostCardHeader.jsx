@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import user from '../../../assets/user.png'
 import DownList from '../../Posts/components/DownList'
 import PropTypes from 'prop-types'
-import { timeAgo } from '../../../tools/Moments'
+import { timeAgo } from '../../../utils/Moments'
 import Follow from './Follow'
 import { profileStorage } from '../../../stores/statices'
 

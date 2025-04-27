@@ -2,7 +2,7 @@ import { useState } from "react"
 import Post from "../../API/Post"
 import { forgetPasswordSchema } from "../../../Valdation"
 import { useNavigate } from "react-router-dom"
-import BigLoadingSpinner from "../../../LoadingSpinner/LoadingSpinner"
+import BigLoadingSpinner from "../../LoadingSpinner/LoadingSpinner"
 
 export default function ForgetPassword() {
     let[email,setEmail] = useState('')

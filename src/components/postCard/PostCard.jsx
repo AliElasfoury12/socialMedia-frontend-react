@@ -4,14 +4,13 @@ import PostCardHeader from './components/PostCardHeader'
 import PostCardBody from './components/PostCardBody'
 import { emptyObject } from '../../utils/objects'
 
-export default function PostCard(props) {
-    let {element: post} = props
+export default function PostCard({element: post}) {
     
     return(
         <div 
-          className="h-fit border border-1 border-gray-800 rounded-lg
-          my-3 py-1 relative bg-slate-100"
-          style={{width: '30rem'}}>
+            className="h-fit border border-1 border-gray-800 rounded-lg
+            my-3 py-1 relative bg-slate-100"
+            style={{width: '30rem'}}>
             
             <PostCardHeader post={post}/>
             <PostCardBody   post={post}/>

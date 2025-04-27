@@ -4,7 +4,7 @@ import Put from "../../../API/Put"
 import { useDispatch } from 'react-redux'
 import { setShowEditModal , editPost } from '../../../../stores/postsStore' 
 import Get from '../../../API/Get'
-import BigLoadingSpinner from '../../../../LoadingSpinner/LoadingSpinner'
+import BigLoadingSpinner from '../../../LoadingSpinner/LoadingSpinner'
 import EditPostHeader from './EditPostHeader'
 import EditPostFooter from './EditPostFooter'
 

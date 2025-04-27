@@ -12,7 +12,7 @@ export default function Posts() {
 
     return(
         <div
-            className="w-full flex flex-col items-center ">
+            className="w-full flex flex-col items-center">
             <button 
                 onClick={() => {setShow(true)}}
                 className='w-96 bg-blue-600 h-12 mt-7 mb-3 text-white rounded-lg'

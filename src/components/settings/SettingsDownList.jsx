@@ -7,7 +7,7 @@ export default function SettingsDownList() {
 	
    return (				
 		<div 
-			className=" bg-blue-500 rounded-md h-fit py-2 w-52 right-0
+			className=" bg-blue-500 rounded-md h-fit py-2 w-52 right-0 top-12
 					flex flex-col absolute  items-center z-10 down">
 					
 			<div 

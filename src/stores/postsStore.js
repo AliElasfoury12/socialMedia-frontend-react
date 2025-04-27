@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { GET } from '../components/API/APIMethods'
+import api from '../components/API/APIMethods'
 
 export let getPosts = createAsyncThunk(
 	'posts/getPosts',
 	async (page) => { 
-		return await GET('posts?page=' + page)
+		return await api.GET('posts?page=' + page)
 	}
 )
 

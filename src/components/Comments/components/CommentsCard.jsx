@@ -3,7 +3,7 @@ import user from '../../../assets/user.png'
 import { Link } from 'react-router-dom'
 import CommentDownList from './CommentDownList'
 import EditComment from './EditComment'
-import { timeAgo } from '../../../tools/Moments'
+import { timeAgo } from '../../../utils/Moments'
 import { profileStorage } from '../../../stores/statices'
 
 export default function CommentsCard(props) {

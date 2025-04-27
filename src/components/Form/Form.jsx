@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Fragment, useEffect} from 'react'
 import {Valdatior } from './FormValdation'
 import { useState } from 'react'
-import { emptyObject } from './utils/objects'
+import { emptyObject } from '../../utils/objects'
 
 export default function Form(props) {
     let {fields, submit, styles ={}, validation = {}, reset = true} = props

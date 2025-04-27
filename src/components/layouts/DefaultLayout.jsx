@@ -1,18 +1,19 @@
-import {   Navigate, Outlet } from "react-router-dom"
 import Nav from "./Nav"
+import PropTypes from 'prop-types'
+import router from "../../Router"
 
-export default function DefaultLayout () {
- let token = localStorage.getItem('token')
-
-    if(!token) {
-        return <Navigate to={'/login'}/> 
-    }
+export default function DefaultLayout ({children}) {
+    const token = localStorage.getItem('token')
+    if(!token) return router.navigate('/login')
         
+    return (
+        <>
+            <Nav/>
+            {children}
+        </>
+    )
+}
 
-  return (
-     <div>
-        <Nav/>
-        <Outlet/>
-    </div>
-  )
+DefaultLayout.propTypes = {
+    children: PropTypes.object,
 }

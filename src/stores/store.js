@@ -17,6 +17,5 @@ export let store = configureStore({
         profile: profileStore,
         notifications: NotificationsStore,
         search: searchStore
-
     }
 })
