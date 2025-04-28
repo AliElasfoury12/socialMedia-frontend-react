@@ -1,10 +1,12 @@
 import DefaultLayout from "../components/layouts/DefaultLayout";
-import Posts from "../components/Posts/Posts";
+import CreatePost from "../components/Posts/components/createPost/CreatePost";
+import ShowPosts from "../components/Posts/components/ShowPosts";
 
 export default function HomePage() {
     return (
         <DefaultLayout>
-            <Posts/>
+            <CreatePost/>
+            <ShowPosts/>
         </DefaultLayout>
     )
 }

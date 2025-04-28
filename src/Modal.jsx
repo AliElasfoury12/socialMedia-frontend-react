@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux"
 
 export default function Modal(props) {
     let dispatch = useDispatch()
-    let {show, setShow, type, Component} = props
+    let {show, setShow, type, children} = props
 
     let close = () => {
         document.body.classList.remove('disableScrolling')
@@ -47,7 +47,7 @@ export default function Modal(props) {
                         className=" flex flex-col w-fit border-black  border-2 rounded-xl
                                     my-3 py-1 m-auto"
                         style={{maxWidth: '45rem', maxHeight: '30rem'}}>
-                          <Component/>
+                          {children}
                     </div>
         
                 </div>
@@ -62,5 +62,5 @@ Modal.propTypes = {
     show: PropTypes.bool,
     setShow: PropTypes.func,
     type: PropTypes.string,
-    Component: PropTypes.func
+    children: PropTypes.object
 }

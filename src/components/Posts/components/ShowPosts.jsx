@@ -4,7 +4,7 @@ import { getPosts, setLoading, setPage } from '../../../stores/postsStore'
 import useInfinteScroll from "../../../useInfinteScroll"
 import ShowLoop from "../../../ShowLoop"
 
-export default function PostsShow () {
+export default function ShowPosts () {
     let dispatch = useDispatch()
     let {posts, loading, end, page, lastPage}  = useSelector(state => state.posts)
 
@@ -16,8 +16,6 @@ export default function PostsShow () {
     }
 
     useInfinteScroll(page, setPage, handleGetPosts)
-
-    console.log('postsShow', posts);
     
     return (
        <ShowLoop loading={loading} array={posts} LoopComponent={PostCard}/>

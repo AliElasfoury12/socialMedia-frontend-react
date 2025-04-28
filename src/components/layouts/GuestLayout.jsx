@@ -1,5 +1,5 @@
 import router from "../../Router"
-import Nav from "./Nav"
+import Header from "./Header"
 import PropTypes from 'prop-types'
 
 export default function GuestLayout ({children}) {
@@ -8,7 +8,7 @@ export default function GuestLayout ({children}) {
           
    return (
        <>
-           <Nav/>
+           <Header/>
             {children}
        </>
    )

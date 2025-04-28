@@ -1,4 +1,4 @@
-import Nav from "./Nav"
+import Header from "./Header"
 import PropTypes from 'prop-types'
 import router from "../../Router"
 
@@ -8,7 +8,7 @@ export default function DefaultLayout ({children}) {
         
     return (
         <>
-            <Nav/>
+            <Header/>
             {children}
         </>
     )

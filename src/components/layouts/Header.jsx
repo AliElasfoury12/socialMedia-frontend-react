@@ -4,11 +4,11 @@ import Notification from "../Notifications/Notification"
 import NavLeft from "./NavLeft"
 import { useSelector } from "react-redux"
 
-export default function Nav() {
+export default function Header() {
     let { authUser } = useSelector(state => state.auth)
     
     return (
-        <div 
+        <header 
             className="sticky top-0 z-20">
             <div
                 className="flex justify-between px-5 py-2 bg-blue-900 text-white ">
@@ -35,6 +35,6 @@ export default function Nav() {
                 }
 
             </div>
-        </div>
+        </header>
     )
 }

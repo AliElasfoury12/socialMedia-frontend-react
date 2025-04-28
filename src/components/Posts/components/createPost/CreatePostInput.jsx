@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
-import { useEffect } from 'react'
+import { useEffect} from 'react'
 
 export default function CreatePostInput(props) {
-    let { post, setPost, error } = props
+    let { post, setPost, error} = props
 
     useEffect(() => {
-        document.getElementById('post-input').focus()
+        document.getElementById('post-input')?.focus()
       }, [])
 
     return (
-        <div className=''>
+        <>
             <textarea 
                 id="post-input"
                 placeholder="Share Your Thoughts..." 
@@ -22,7 +22,7 @@ export default function CreatePostInput(props) {
                 className="text-red-600 self-start m-2">
                 {error}
             </p>
-        </div>
+        </>
     )
 }
 

@@ -9,7 +9,7 @@ export default function ShowLoop(props) {
     )
     
     return (
-       <div className='mb-2'>
+       <div className='mb-2 w-fit m-auto'>
             <div>
                 {showArray != '' ?
                     showArray :

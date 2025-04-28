@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import EditUser from "./components/user/EditUser";
 import Profile from "./components/user/Profile";
-import Posts from "./components/Posts/Posts";
 import Settings from "./components/settings/Settings";
 import ChangeUserNameAndEmail from "./components/settings/ChangeUserNameAndEmail";
 import ChangePassword from "./components/settings/ChangePassword";
