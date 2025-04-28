@@ -9,7 +9,9 @@ export default function DefaultLayout ({children}) {
     return (
         <>
             <Header/>
-            {children}
+            <main className="w-fit m-auto">
+                {children}
+            </main>
         </>
     )
 }

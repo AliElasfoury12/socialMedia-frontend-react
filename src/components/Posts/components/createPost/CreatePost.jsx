@@ -1,5 +1,4 @@
 import { useState } from "react"
-import Post from "../../../API/Post"
 import { addPost } from '../../../../stores/postsStore' 
 import { useDispatch } from "react-redux"
 import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner"
@@ -7,6 +6,7 @@ import PropTypes from 'prop-types'
 import AddImg from "./AddImg"
 import CreatePostInput from "./CreatePostInput"
 import Modal from "../../../../Modal"
+import api from "../../../API/APIMethods"
 
 export default function CreatePost() {
     let dispatch = useDispatch()
@@ -26,9 +26,8 @@ export default function CreatePost() {
     let submit =  () => { 
       
         if(post || imgs != ''){
-            console.log(formdata);
             setLoading(true)   
-            Post('posts',formdata)
+            api.POST('posts',formdata)
             .then((data) => {
                 dispatch(addPost(data.post))
                 setPost('')
@@ -43,15 +42,13 @@ export default function CreatePost() {
  
     return (
         <>
-            <div
-                className="w-full flex flex-col items-center">
-                <button 
-                    onClick={() => {setShow(true)}}
-                    className='w-96 bg-blue-600 h-12 mt-7 mb-3 text-white rounded-lg'
-                    style={{width:'30rem'}}>
-                    What is in your mind?
-                </button>
-            </div>
+            <button 
+                className='w-96 bg-blue-600 h-12 mt-7 mb-3 text-white rounded-lg'
+                onClick={() => {setShow(true)}}
+                style={{width:'30rem'}}>
+                What is in your mind?
+            </button>
+
             {show && 
                 <Modal show={show} setShow={setShow}>
                     <div 

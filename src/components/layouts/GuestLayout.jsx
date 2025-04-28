@@ -8,8 +8,10 @@ export default function GuestLayout ({children}) {
           
    return (
        <>
-           <Header/>
-            {children}
+            <Header/>
+            <main className="w-fit m-auto">
+                {children}
+            </main>
        </>
    )
 }
