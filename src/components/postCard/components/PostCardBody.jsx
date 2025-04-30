@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { postsStorage } from '../../../stores/statices'
-import Modal from '../../../Modal'
+import Modal from '../../Modal'
 import api from '../../API/APIMethods'
 
 export default function PostCardBody({ post }) {

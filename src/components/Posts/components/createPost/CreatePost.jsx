@@ -1,43 +1,47 @@
 import { useState } from "react"
 import { addPost } from '../../../../stores/postsStore' 
-import { useDispatch } from "react-redux"
-import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner"
-import PropTypes from 'prop-types'
-import AddImg from "./AddImg"
-import CreatePostInput from "./CreatePostInput"
-import Modal from "../../../../Modal"
+import { useDispatch} from "react-redux"
 import api from "../../../API/APIMethods"
+import { emptyObject } from "../../../../utils/objects"
+import CreatePostModal from "./CreatePostModal"
 
 export default function CreatePost() {
-    let dispatch = useDispatch()
-    let [post,setPost] = useState('')
-    let [imgs, setImgs] = useState([])
-    let [loading, setLoading] = useState(false)
-    let [show, setShow] = useState(false)
-    let [error, setError] = useState('')
+    const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
+    const [show, setShow] = useState(false)
+    const [error, setError] = useState('')
+    const [form, setForm] = useState({postContent: '', images: {}})
 
-    let formdata = new FormData
-    formdata.append('post', post)
-
-    for (var i = 0; i < imgs.length; i++) {
-        formdata.append('img'+i, imgs[i])
-    }
-
-    let submit =  () => { 
-      
-        if(post || imgs != ''){
-            setLoading(true)   
-            api.POST('posts',formdata)
-            .then((data) => {
-                dispatch(addPost(data.post))
-                setPost('')
-                setImgs([])
-                setShow(false)
-            })
+    function handleSubmit (e) 
+    { 
+        e.preventDefault()        
+        if(form.postContent || !emptyObject(form.images)){
+            const formdata = createFormData()
+            setLoading(true) 
+            createPostRequest(formdata)
         }else{
-            setError('Try to Write Some Words and Try Again.')
+            setError("Post Can't be Empty")
             setTimeout(() => setError(''), 3000)
         }
+    }
+
+    function createFormData ()
+    {
+        let formdata = new FormData
+        formdata.append('content', form.postContent)
+        for (let i = 0; i < form.images.length; i++) {
+            formdata.append('image'+i, form.images[i])
+        }
+        return formdata
+    }
+
+    function createPostRequest (formdata)
+    {
+        api.POST('posts',formdata)
+        .then((data) => {
+            dispatch(addPost(data.post))
+            setShow(false)
+        })
     }
  
     return (
@@ -48,28 +52,15 @@ export default function CreatePost() {
                 style={{width:'30rem'}}>
                 What is in your mind?
             </button>
-
-            {show && 
-                <Modal show={show} setShow={setShow}>
-                    <div 
-                        className="flex flex-col items-center w-fit">
-                        <button 
-                            onClick={submit}
-                            className="self-end bg-blue-800 text-white rounded-md p-1 my-2 w-20 mr-2">
-                            Post
-                        </button>
-                        <CreatePostInput post={post} setPost={setPost} error={error}/>
-                        <div>
-                            {loading && <SmallLoadingSpinner/>}
-                        </div>
-                        <AddImg imgs={imgs} setImgs={setImgs} />
-                    </div>
-                </Modal>
-            }
+            <CreatePostModal 
+                loading={loading} 
+                error={error} 
+                form={form}
+                setForm={setForm}
+                show={show}
+                setShow={setShow} 
+                handleSubmit={handleSubmit} 
+            />
         </>
     )
-}
-
-CreatePost.propTypes = {
-    setShow: PropTypes.func,
 }

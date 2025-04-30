@@ -1,3 +1,4 @@
+
 class API {
     baseURL
     token
@@ -5,17 +6,23 @@ class API {
    async request (URL, method, body = '', headers = {}) {
 
         if (this.token) headers = {'Authorization':`Bearer ${this.token}`, ...headers}
-        if(method === 'POST' || method === 'PUT') {
-            headers = {'Content-Type': 'application/json', ...headers}
+        
+        if((method === 'POST' || method === 'PUT')) {
+            if(body instanceof FormData ){
+                headers = {...headers}
+            }else{
+                headers = {'Content-Type': 'application/json', ...headers}
+                if(body) body = JSON.stringify(body)
+            }
         }
     
         let options = {
             method: method,
             headers: headers
         }
-    
-        if(body) options.body = JSON.stringify(body)
-    
+                
+       if(body) options.body = body
+
         let res = await fetch(this.baseURL+URL, options)
         let status = res.status
         res = await res.json()

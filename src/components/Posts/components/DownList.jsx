@@ -3,7 +3,7 @@ import more from '../../../assets/more.png'
 import PropTypes from 'prop-types'
 import { setShowEditModal, setEditId, setShowList } from '../../../stores/postsStore' 
 import { useDispatch, useSelector } from "react-redux"
-import Modal from "../../../Modal"
+import Modal from "../../Modal"
 import EditPost from "./EditPost/EditPost"
 
 export default function DownList({post}) {

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
-import AddImg from '../createPost/AddImg'
 import { Trash } from 'lucide-react'
 import { useState } from 'react'
 import Delete from '../../../API/Delete'
 import { postsStorage } from '../../../../stores/statices'
+import ImagesPreview from '../createPost/ImagesPreview'
 
 export default function EditPostFooter(props) {
     let { postVal, setPostVal, postError, post, imgs, setImgs } = props
@@ -49,7 +49,7 @@ export default function EditPostFooter(props) {
                 {showImgs}
             </div>
 
-            <AddImg imgs={imgs} setImgs={setImgs} />
+            <ImagesPreview imgs={imgs} setImgs={setImgs} />
             
         </div>
     )

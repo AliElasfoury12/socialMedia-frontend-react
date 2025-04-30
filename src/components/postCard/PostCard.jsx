@@ -15,7 +15,7 @@ export default function PostCard({element: post}) {
             <PostCardHeader post={post}/>
             <PostCardBody   post={post}/>
 
-            {!emptyObject(post.shared_post) &&
+            {!emptyObject(post?.shared_post) &&
                 <div 
                     className='border border-black my-4 border-x-0 p-2'>
                     <PostCardHeader post={post.shared_post}/>

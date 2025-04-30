@@ -1,6 +1,6 @@
 import shareIcon from '../../../../assets/right-arrow.png'
 import Post from '../../../API/Post'
-import Modal from '../../../../Modal'
+import Modal from '../../../Modal'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { postsStorage, profileStorage } from '../../../../stores/statices'
