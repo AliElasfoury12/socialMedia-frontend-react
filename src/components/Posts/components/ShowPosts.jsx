@@ -1,6 +1,6 @@
 import PostCard from "../../postCard/PostCard"
 import { useDispatch, useSelector } from "react-redux"
-import { getPosts, setLoading, setPage } from '../../../stores/postsStore' 
+import { getPosts, setPage } from '../../../stores/postsStore' 
 import useInfinteScroll from "../../../useInfinteScroll"
 import ShowLoop from "../../../ShowLoop"
 
@@ -10,7 +10,6 @@ export default function ShowPosts () {
 
     let handleGetPosts = () => {
         if (!end && page > lastPage) {
-            dispatch(setLoading(true))
             dispatch(getPosts(page))
         }
     }

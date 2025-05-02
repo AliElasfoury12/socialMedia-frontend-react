@@ -1,22 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../components/API/APIMethods'
 
-export let getPosts = createAsyncThunk(
-	'posts/getPosts',
-	async (page) => { 
-		return await api.GET('posts?page=' + page)
-	}
-)
-
 export const postsSlice = createSlice({
 	name: 'posts',
 
 	initialState: {
 		posts: [],
 		showEditModal: false,
+		showCreatePostModal: false,
 		editId: '',
 		showList: false,
-		loading: true,
+		loading: false,
 		end: false,
 		page: 1 ,
 		lastPage: 0
@@ -57,6 +51,10 @@ export const postsSlice = createSlice({
 			state.page +=1
 		},
 
+		setShowCreatePostModal: (state, {payload}) => {
+			state.showCreatePostModal = payload
+		},
+
 		followPostUser: (state, {payload}) => {
 		state.posts = state.posts.map((post) => {
 			if(post.user.id == payload.id) {
@@ -68,9 +66,7 @@ export const postsSlice = createSlice({
 	},
 
 	extraReducers: (builder) => {
-		builder.addCase(getPosts.fulfilled, (state, {payload}) => {
-			console.log(payload);
-			
+		builder.addCase(getPosts.fulfilled, (state, {payload}) => {			
 			if(payload == '') {
 				state.end = true
 				state.loading = false
@@ -79,13 +75,35 @@ export const postsSlice = createSlice({
 				state.loading = false
 				state.lastPage = state.page
 			}
+		}).addCase(createPost.fulfilled, (state, {payload}) => {
+			state.posts = [payload.post, ...state.posts]
+			state.loading = false
+			state.showCreatePostModal = false
 		})
 	}
 })
 
 export let { 
 			addPost, setShowEditModal,setEditId, removePost,
-			editPost, setShowList, setLoading, setPage, followPostUser
+			editPost, setShowList, setLoading, setPage, followPostUser,
+			setShowCreatePostModal
 		} = postsSlice.actions
 
 export default postsSlice.reducer
+
+
+export const getPosts = createAsyncThunk(
+	'posts/getPosts',
+	async (page, thunkAPI) => { 
+		thunkAPI.dispatch(setLoading(true));
+		return await api.GET('posts?page=' + page)
+	}
+)
+
+export const createPost = createAsyncThunk(
+	'posts/createPost',
+	async (form, thunkAPI) => { 
+		thunkAPI.dispatch(setLoading(true));
+		return await api.POST('posts',form)
+	}
+)

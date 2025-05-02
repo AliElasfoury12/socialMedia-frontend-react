@@ -26,8 +26,13 @@ class API {
         let res = await fetch(this.baseURL+URL, options)
         let status = res.status
         res = await res.json()
-        if( status !== 200) throw res
-        else return res
+        if( status !== 200){
+            console.log(URL, res);
+            throw res
+        }else {
+            console.log(URL, res);
+            return res
+        }
     }
 
     GET(URL, headers = {}) {

@@ -10,17 +10,16 @@ export default function PostCardHeader({post}) {
     let storage = profileStorage
   
     return (
-        <div
+        <header
             className="flex justify-between px-2 " 
             style={{width:'29.8rem'}}>
 
-            <div className="flex ">
+            <section className="flex ">
 
                 <img 
                     className="w-12 h-12 border-blue-950  border-2 p-px rounded-full" 
                     src={post.user.img ? storage + post.user.img : user} /> 
             
-               <div className='flex'>
                     <div 
                         className='flex flex-col ml-2'>
                         <Link
@@ -41,13 +40,11 @@ export default function PostCardHeader({post}) {
                     <Follow 
                         id={post.user.id} 
                         follows={post.user.follows} 
-                        ClassName={'self-start ml-3 mt-px text-blue-950'}/>
-                </div>
-                
-            </div> 
+                        ClassName={'self-start ml-3 mt-px text-blue-950'}/>                
+            </section> 
 
             <DownList post={post}/>
-        </div> 
+        </header> 
     )
 }
 

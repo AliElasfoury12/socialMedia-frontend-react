@@ -5,7 +5,7 @@ import Modal from '../../Modal'
 import api from '../../API/APIMethods'
 
 export default function PostCardBody({ post }) {
-    const [Post, setPost] = useState(post.post ?? '')
+    const [Post, setPost] = useState(post.content ?? '')
     let images = post.post_imgs ?? []
     const [show, setShow] = useState(false)
     let storage = postsStorage
@@ -18,7 +18,7 @@ export default function PostCardBody({ post }) {
         })
     }
 
-    useEffect(() =>{setPost(post.post)},[post])
+    useEffect(() =>{setPost(post.content)},[post])
 
     let component = () => {
         let showImages = images.map((img,index) => {

@@ -2,25 +2,23 @@ import PropTypes from 'prop-types'
 import BigLoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
 
 export default function ShowLoop(props) {
-    let { loading, LoopComponent, array, message} = props
+    const { loading, LoopComponent, array, message} = props
 
-    let showArray = array?.map((item) => 
+    const showArray = array?.map((item) => 
         <LoopComponent key={item.id} element={item} />
     )
     
     return (
-       <div className='mb-2 w-fit'>
-            <div>
-                {showArray != '' ?
-                    showArray :
-                    <h1 className=" mt-5 text-center text-2xl text-blue-600">
-                        {!loading && message} 
-                    </h1> 
-                }
-            </div>
+       <div className='mb-2 w-fit m-auto'>
+            {showArray != '' ?
+                showArray :
+                <h1 className=" mt-5 text-center text-2xl text-blue-600">
+                    {!loading && message} 
+                </h1> 
+            }
 
             <div 
-                className="m-auto h-14">
+                className="h-14">
                 {loading &&  <BigLoadingSpinner/>} 
             </div> 
            

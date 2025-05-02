@@ -9,13 +9,12 @@ export default function PostCard({element: post}) {
     return(
         <div 
             className="h-fit border border-1 border-gray-800 rounded-lg
-            my-3 py-1 relative bg-slate-100"
-            style={{width: '30rem'}}>
+            my-3 py-1 relative bg-slate-100 w-[30rem]">
             
             <PostCardHeader post={post}/>
             <PostCardBody   post={post}/>
 
-            {!emptyObject(post?.shared_post) &&
+            {!emptyObject(post.shared_post ?? {}) &&
                 <div 
                     className='border border-black my-4 border-x-0 p-2'>
                     <PostCardHeader post={post.shared_post}/>
@@ -24,7 +23,6 @@ export default function PostCard({element: post}) {
             }
 
             <PostCardFooter className='flex mb-1' post={post}/> 
-
         </div>
     )
 }
