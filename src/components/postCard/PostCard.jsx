@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import PostCardFooter from './components/postCardFooter/PostCardFooter'
-import PostCardHeader from './components/PostCardHeader'
+import PostCardHeader from './components/postCardHeader/PostCardHeader'
 import PostCardBody from './components/PostCardBody'
 import { emptyObject } from '../../utils/objects'
 

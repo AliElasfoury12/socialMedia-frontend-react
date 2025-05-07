@@ -22,14 +22,14 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 let router = createBrowserRouter([
     {
         path: '/login',
-        element: <LoginPage/>
-    },{
+        element: <LoginPage />
+    }, {
         path: '/register',
-        element: <RegisterPage/>
-    },{
+        element: <RegisterPage />
+    }, {
         path: '/',
-        element: <HomePage/>
-    },/*{
+        element: <HomePage />
+    }/*{
         path: '/home',
         element: <DefaultLayout/>,
         children: [
@@ -112,7 +112,7 @@ let router = createBrowserRouter([
             },
         ]
     },*/
-   
+
 ])
 
 export default router

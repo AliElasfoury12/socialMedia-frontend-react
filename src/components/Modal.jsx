@@ -17,8 +17,8 @@ export default function Modal(props) {
     }
 
     useEffect(() => {
-        document.body.classList.add('disableScrolling')
-    },[])
+       if(show) document.body.classList.add('disableScrolling')
+    },[show])
 
     window.onclick = (e) => {
         if(e.target === document.getElementById('modal')) {
@@ -27,7 +27,7 @@ export default function Modal(props) {
     }
     
   return (
-    <div >
+    <>
         {show && 
             <div 
                 id="modal" 
@@ -54,7 +54,7 @@ export default function Modal(props) {
                 
             </div>     
         }
-    </div>
+    </>
   )
 }
 

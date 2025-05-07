@@ -2,12 +2,13 @@ import { useState } from "react"
 import { useDispatch} from "react-redux"
 import { emptyObject } from "../../../../utils/objects"
 import CreatePostModal from "./CreatePostModal"
-import { createPost, setShowCreatePostModal } from "../../../../stores/postsStore"
+import { createPost } from "../../../../stores/postsStore"
+import PropTypes from 'prop-types'
 
-export default function CreatePost() {
+export default function CreatePost({show, setShow}) {
     const dispatch = useDispatch()
     const [error, setError] = useState('')
-    const [form, setForm] = useState({postContent: '', images: {}})
+    const [form, setForm] = useState({postContent: '', images: []})
 
     function handleSubmit (e) 
     { 
@@ -32,19 +33,18 @@ export default function CreatePost() {
     }
 
     return (
-        <>
-            <button 
-                className='w-96 bg-blue-600 h-12 mt-7 mb-3 text-white rounded-lg'
-                onClick={() => {dispatch(setShowCreatePostModal(true))}}
-                style={{width:'30rem'}}>
-                What is in your mind?
-            </button>
-            <CreatePostModal 
-                error={error} 
-                form={form}
-                setForm={setForm}
-                handleSubmit={handleSubmit} 
-            />
-        </>
+        <CreatePostModal 
+            show={show}
+            setShow={setShow}
+            error={error} 
+            form={form}
+            setForm={setForm}
+            handleSubmit={handleSubmit} 
+        />
     )
+}
+
+CreatePost.propTypes = {
+    show: PropTypes.bool,
+    setShow: PropTypes.func
 }

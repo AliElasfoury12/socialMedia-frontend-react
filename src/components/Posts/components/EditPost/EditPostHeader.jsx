@@ -3,8 +3,7 @@ import user from '../../../../assets/user.png'
 import PropTypes from 'prop-types'
 import { profileStorage } from '../../../../stores/statices'
 
-export default function EditPostHeader(props) {
-    let { post, edit } = props
+export default function EditPostHeader({ post, edit }) {
     let storage = profileStorage
     return (
         <div className='flex items-center justify-between'>

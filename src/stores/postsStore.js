@@ -6,7 +6,7 @@ export const postsSlice = createSlice({
 
 	initialState: {
 		posts: [],
-		showEditModal: false,
+		showEditPostModal: false,
 		showCreatePostModal: false,
 		editId: '',
 		showList: false,
@@ -31,8 +31,8 @@ export const postsSlice = createSlice({
 			state.posts = state.posts.filter((post) => post.id !== payload)
 		},
 
-		setShowEditModal: (state, {payload}) => {
-			state.showEditModal = payload
+		setShowEditPostModal: (state, {payload}) => {
+			state.showEditPostModal = payload
 		},
 
 		setEditId: (state, {payload}) => {
@@ -84,7 +84,7 @@ export const postsSlice = createSlice({
 })
 
 export let { 
-			addPost, setShowEditModal,setEditId, removePost,
+			addPost, setShowEditPostModal,setEditId, removePost,
 			editPost, setShowList, setLoading, setPage, followPostUser,
 			setShowCreatePostModal
 		} = postsSlice.actions

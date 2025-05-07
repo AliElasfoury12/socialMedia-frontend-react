@@ -4,27 +4,29 @@ import Modal from "../../../Modal"
 import PropTypes from 'prop-types'
 import { emptyObject } from "../../../../utils/objects"
 import { useEffect } from "react"
-import {  setShowCreatePostModal as setShow} from "../../../../stores/postsStore"
-import { useDispatch, useSelector } from "react-redux"
-
+import { useSelector } from "react-redux"
 
 export default function CreatePostModal(props) {
-    const dispatch = useDispatch()
-    const {form, setForm, handleSubmit, error} = props
-    const {showCreatePostModal: show, loading} = useSelector( state => state.posts)
+    const {form, setForm, handleSubmit, error, show, setShow} = props
+    const {loading} = useSelector( state => state.posts)
 
     function handleChange (e) {
         const {name, value, type, files} = e.target
-        if(type == 'file') setForm(prev => ({...prev, [name]: files}))
+        if(type == 'file') setForm(prev => ({...prev, [name]: [...prev[name],...files]}))
         else setForm(prev => ({...prev, [name]: value}))
     }
+
+    useEffect(() => {
+        console.log(form);
+        
+    },[form])
 
     useEffect(() => {
         document.getElementById('create-post')?.focus()
     }, [show])
 
     return (
-        <Modal show={show} setShow={(state) => dispatch(setShow(state))} >
+        <Modal show={show} setShow={setShow} >
             <form 
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-3 w-96 py-2">
@@ -58,4 +60,6 @@ CreatePostModal.propTypes = {
     setForm: PropTypes.func,
     handleSubmit: PropTypes.func,
     error: PropTypes.string,
+    show: PropTypes.bool,
+    setShow: PropTypes.func
 }
