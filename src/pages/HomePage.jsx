@@ -1,5 +1,5 @@
 import DefaultLayout from "../components/layouts/DefaultLayout";
-import CreatePost from "../components/Posts/components/createPost/CreatePost";
+import CreatePostModal from "../components/Posts/components/createPost/CreatePostModal";
 import ShowPosts from "../components/Posts/components/ShowPosts";
 import { useState } from "react";
 
@@ -13,7 +13,7 @@ export default function HomePage() {
                 onClick={() => {setShowCreatePostModal(true)}}>
                 What is in your mind?
             </button>
-            <CreatePost show={showCreatePostModal} setShow={setShowCreatePostModal}/>
+            <CreatePostModal show={showCreatePostModal} setShow={setShowCreatePostModal}/>
             <ShowPosts/>
         </DefaultLayout>
     )

@@ -1,30 +1,48 @@
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector} from "react-redux"
+import { createPost } from "../../../../stores/postsStore"
 import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner"
 import ImagesPreview from "./ImagesPreview"
-import Modal from "../../../Modal"
 import PropTypes from 'prop-types'
-import { emptyObject } from "../../../../utils/objects"
-import { useEffect } from "react"
-import { useSelector } from "react-redux"
+import Modal from "../../../Modal"
 
-export default function CreatePostModal(props) {
-    const {form, setForm, handleSubmit, error, show, setShow} = props
-    const {loading} = useSelector( state => state.posts)
-
+export default function CreatePostModal({show, setShow}) {
+    const [form, setForm] = useState({postContent: '', images: []})
+    const dispatch = useDispatch()
+    const [error, setError] = useState('')
+    const {loading} = useSelector(state => state.posts)
+    
     function handleChange (e) {
         const {name, value, type, files} = e.target
         if(type == 'file') setForm(prev => ({...prev, [name]: [...prev[name],...files]}))
         else setForm(prev => ({...prev, [name]: value}))
     }
 
-    useEffect(() => {
-        console.log(form);
-        
-    },[form])
+    function handleSubmit (e) { 
+        e.preventDefault()        
+        if(form.postContent || form.images.length > 0){
+            const formdata = createFormData()
+            dispatch(createPost(formdata))
+            .then(setShow(false))
+        }else{
+            setError("Post Can't be Empty")
+            setTimeout(() => setError(''), 3000)
+        }
+    }
+
+    function createFormData () {
+        let formdata = new FormData
+        formdata.append('content', form.postContent)
+        for (let i = 0; i < form.images.length; i++) {
+            formdata.append('image'+i, form.images[i])
+        }
+        return formdata
+    }
 
     useEffect(() => {
         document.getElementById('create-post')?.focus()
-    }, [show])
-
+    }, [])
+    
     return (
         <Modal show={show} setShow={setShow} >
             <form 
@@ -49,17 +67,13 @@ export default function CreatePostModal(props) {
                         Add Images +
                 </label>
                 <input name="images" onChange={handleChange} type="file" id="images" className="hidden" multiple/>
-                {!emptyObject(form.images) && <ImagesPreview images={form.images} setForm={setForm} /> }
+                {form.images.length > 0 && <ImagesPreview images={form.images} setForm={setForm} /> }
             </form>
         </Modal>
     )
 }
 
 CreatePostModal.propTypes = {
-    form: PropTypes.object,
-    setForm: PropTypes.func,
-    handleSubmit: PropTypes.func,
-    error: PropTypes.string,
     show: PropTypes.bool,
     setShow: PropTypes.func
 }
