@@ -20,7 +20,7 @@ export default function PostCardBody({ post }) {
 
     useEffect(() =>{setPost(post.content)},[post])
 
-    let component = () => {
+    let Component = () => {
         let showImages = images.map((img,index) => {
             return (
                 <img 
@@ -87,7 +87,9 @@ export default function PostCardBody({ post }) {
                 }
                 </div>
 
-                {show && <Modal show={show} setShow={setShow} Component={component} />}
+                 <Modal show={show} setShow={setShow}>
+                    <Component/>
+                 </Modal>
         
         </div>
     )

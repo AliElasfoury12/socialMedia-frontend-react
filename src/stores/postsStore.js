@@ -14,9 +14,6 @@ export const postsSlice = createSlice({
 	},
 
 	reducers: {
-		addPost: (state, {payload}) => {
-			state.posts = [payload, ...state.posts]
-		},
 		removePost: (state, {payload}) => {
 			state.posts = state.posts.filter((post) => post.id !== payload)
 		},
@@ -25,9 +22,6 @@ export const postsSlice = createSlice({
 		},
 		setPage: state => {
 			state.page +=1
-		},
-		setShowCreatePostModal: (state, {payload}) => {
-			state.showCreatePostModal = payload
 		},
 		followPostUser: (state, {payload}) => {
 			state.posts = state.posts.map((post) => {
@@ -66,7 +60,7 @@ export const postsSlice = createSlice({
 	}
 })
 
-export const { addPost,removePost, setShowList, setPage, followPostUser} = postsSlice.actions
+export const {removePost, setShowList, setPage, followPostUser} = postsSlice.actions
 
 export default postsSlice.reducer
 

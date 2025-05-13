@@ -8,7 +8,7 @@ import { updatePost } from "../../stores/postsStore";
 
 export default function EditPostModal({ post, show, setShow }) {
     const dispatch = useDispatch()
-    const [form , setForm] = useState({postContent: post.content, images : post.post_imgs})
+    const [form , setForm] = useState({postContent: post.content, images : []})
     const [error, setError] = useState('')
     const {loading} = useSelector(state => state.posts)
 
@@ -70,7 +70,7 @@ export default function EditPostModal({ post, show, setShow }) {
                 <input name="images" 
                 onChange={handleChange} 
                 type="file" id="images" className="hidden" multiple/>
-                <ImagesPreview images={form.images} setForm={setForm}/>
+                <ImagesPreview images={[...post.post_imgs, ...form.images]} setForm={setForm}/>
             </form>
         </Modal>
     )
