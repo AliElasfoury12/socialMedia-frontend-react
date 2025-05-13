@@ -1,10 +1,10 @@
-import Modal from "../../../Modal";
+import Modal from "../Modal";
 import propTypes from "prop-types"
-import ImagesPreview from "../createPost/ImagesPreview";
-import { useState } from "react";
-import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner";
+import ImagesPreview from "./createPost/ImagesPreview";
+import { useEffect, useState } from "react";
+import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePost } from "../../../../stores/postsStore";
+import { updatePost } from "../../stores/postsStore";
 
 export default function EditPostModal({ post, show, setShow }) {
     const dispatch = useDispatch()
@@ -18,19 +18,7 @@ export default function EditPostModal({ post, show, setShow }) {
         else setForm(prev => ({...prev, [name]: value}))
     }
 
-    function handleSubmit(e, form){
-        e.preventDefault()        
-        if(form.postContent || form.images.length > 0){
-            const formdata = createFormData(form)
-            dispatch(updatePost({postId: post.id, formdata}))
-            .then(() => {setShow(false)})  
-        }else{
-            setError("Post Can't be Empty")
-            setTimeout(() => setError(''), 3000)
-        }
-    }
-
-    function createFormData (form) {
+    function createFormData () {
         let formdata = new FormData
         formdata.append('_method','PUT');
         formdata.append('content', form.postContent)
@@ -39,6 +27,22 @@ export default function EditPostModal({ post, show, setShow }) {
         }
         return formdata
     }
+
+    function handleSubmit(e) {
+        e.preventDefault()        
+        if(form.postContent || form.images.length > 0){
+            const formdata = createFormData()
+            dispatch(updatePost({postId: post.id, formdata}))
+            .then(() => setShow(false))  
+        }else{
+            setError("Post Can't be Empty")
+            setTimeout(() => setError(''), 3000)
+        }
+    }
+
+    useEffect(() => {
+        document.getElementById('edit-post')?.focus()
+    }, [])
 
     return (
         <Modal show={show} setShow={setShow} >

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import Delete from '../../API/Delete'
-import { removePost } from '../../../stores/postsStore' 
+import Delete from '../API/Delete'
+import { removePost } from '../../stores/postsStore' 
 import { useDispatch } from 'react-redux';
 
 export default function DeletePost({ id }) {

@@ -1,10 +1,10 @@
-import DownList from '../../../Posts/components/DownList'
+import DownList from '../../../Posts/DownList'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import more from '../../../../assets/more.png'
 import { useState } from 'react'
 import PostCardHeaderRight from './PostCardHeaderRight'
-import EditPostModal from '../../../Posts/components/EditPost/EditPostModal'
+import EditPostModal from '../../../Posts/EditPostModal'
 
 export default function PostCardHeader({post}) {
     const {authUser}  = useSelector(state => state.auth)

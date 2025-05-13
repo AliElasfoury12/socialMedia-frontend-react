@@ -1,7 +1,7 @@
 import DefaultLayout from "../components/layouts/DefaultLayout";
-import CreatePostModal from "../components/Posts/components/createPost/CreatePostModal";
-import ShowPosts from "../components/Posts/components/ShowPosts";
 import { useState } from "react";
+import CreatePostModal from "../components/Posts/createPost/CreatePostModal"
+import ShowPosts from "../components/Posts/ShowPosts"
 
 export default function HomePage() {
     const [showCreatePostModal, setShowCreatePostModal] = useState(false)

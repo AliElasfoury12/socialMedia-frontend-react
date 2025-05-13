@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector} from "react-redux"
-import { createPost } from "../../../../stores/postsStore"
+import { createPost } from "../../../stores/postsStore"
 import propTypes from "prop-types"
-import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner"
+import SmallLoadingSpinner from "../../LoadingSpinner/SmallLoadingSpinner"
 import ImagesPreview from "./ImagesPreview"
-import Modal from "../../../Modal"
+import Modal from "../../Modal"
 
 export default function CreatePostModal({show, setShow}) {
     const dispatch = useDispatch()
@@ -18,7 +18,7 @@ export default function CreatePostModal({show, setShow}) {
         else setForm(prev => ({...prev, [name]: value}))
     }
 
-    function createFormData (form) {
+    function createFormData () {
         let formdata = new FormData
         formdata.append('content', form.postContent)
         for (let i = 0; i < form.images.length; i++) {
@@ -27,10 +27,10 @@ export default function CreatePostModal({show, setShow}) {
         return formdata
     }
     
-    function handleSubmit (e, form) { 
+    function handleSubmit (e) { 
         e.preventDefault()        
         if(form.postContent || form.images.length > 0){
-            const formdata = createFormData(form)
+            const formdata = createFormData()
             dispatch(createPost(formdata))
             .then(() => setShow(false))
         }else{

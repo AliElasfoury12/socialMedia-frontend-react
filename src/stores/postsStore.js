@@ -6,9 +6,6 @@ export const postsSlice = createSlice({
 
 	initialState: {
 		posts: [],
-		showEditPostModal: false,
-		showCreatePostModal: false,
-		editId: '',
 		showList: false,
 		loading: false,
 		end: false,
@@ -22,12 +19,6 @@ export const postsSlice = createSlice({
 		},
 		removePost: (state, {payload}) => {
 			state.posts = state.posts.filter((post) => post.id !== payload)
-		},
-		setShowEditPostModal: (state, {payload}) => {
-			state.showEditPostModal = payload
-		},
-		setEditId: (state, {payload}) => {
-			state.editId = payload
 		},
 		setShowList: (state, {payload}) => {
 			state.showList = payload
@@ -57,13 +48,12 @@ export const postsSlice = createSlice({
 			}
 			state.loading = false
 		})
-		.addCase(getPosts.pending, (state) => state.loading = true )
+		.addCase(getPosts.pending, (state) => { state.loading = true })
 		.addCase(createPost.fulfilled, (state, {payload}) => {
 			state.posts = [payload.post, ...state.posts]
 			state.loading = false
-			state.showCreatePostModal = false
 		})
-		.addCase(createPost.pending, (state) => state.loading = true )
+		.addCase(createPost.pending,  (state) => { state.loading = true })
 		.addCase(updatePost.fulfilled, (state, {payload}) => {			
 			let post = state.posts.find((post) => post.id == payload.id)
 			payload = payload.post
@@ -71,25 +61,17 @@ export const postsSlice = createSlice({
 			post.post_imgs = payload.post_imgs
 			state.loading = false
 		})
-		.addCase(updatePost.pending, (state) => state.loading = true )
+		.addCase(updatePost.pending, (state) => { state.loading = true })
+
 	}
 })
 
-export let { 
-			addPost, setShowEditPostModal,setEditId, removePost,
-			setShowList, setPage, followPostUser,
-			setShowCreatePostModal
-		} = postsSlice.actions
+export const { addPost,removePost, setShowList, setPage, followPostUser} = postsSlice.actions
 
 export default postsSlice.reducer
 
-
 export let getPosts = createAsyncThunk(
-	'posts/getPosts',
-	async (page) => {
-		console.log('ao')
-		return await api.GET('posts?page=' + page)
-	}
+	'posts/getPosts', async (page) =>  await api.GET('posts?page=' + page)
 )
 
 export const createPost = createAsyncThunk(
