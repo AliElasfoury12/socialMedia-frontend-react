@@ -5,12 +5,15 @@ import { useEffect, useState } from "react";
 import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePost } from "../../stores/postsStore";
+import api from "../API/APIMethods";
 
 export default function EditPostModal({ post, show, setShow }) {
     const dispatch = useDispatch()
-    const [form , setForm] = useState({postContent: post.content, images : []})
-    const [error, setError] = useState('')
     const {loading} = useSelector(state => state.posts)
+    const [images , setImages] = useState([...post.post_imgs])
+    const [form , setForm] = useState({postContent: post.content, images: images})
+    const [error, setError] = useState('')
+    const [toDeleteImages, setToDeleteImages] = useState([])
 
     function handleChange (e) {
         const {name, value, type, files} = e.target
@@ -33,7 +36,10 @@ export default function EditPostModal({ post, show, setShow }) {
         if(form.postContent || form.images.length > 0){
             const formdata = createFormData()
             dispatch(updatePost({postId: post.id, formdata}))
-            .then(() => setShow(false))  
+            .then(() => {
+                setShow(false)
+                api.DELETE(`delete-images/${post.id}`, {images: toDeleteImages})
+            })  
         }else{
             setError("Post Can't be Empty")
             setTimeout(() => setError(''), 3000)
@@ -70,7 +76,10 @@ export default function EditPostModal({ post, show, setShow }) {
                 <input name="images" 
                 onChange={handleChange} 
                 type="file" id="images" className="hidden" multiple/>
-                <ImagesPreview images={[...post.post_imgs, ...form.images]} setForm={setForm}/>
+                <ImagesPreview 
+                    images={images}
+                    setImages={setImages} 
+                    setToDeletedImages={setToDeleteImages}/>
             </form>
         </Modal>
     )

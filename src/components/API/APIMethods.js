@@ -7,7 +7,7 @@ class API {
 
         if (this.token) headers = {'Authorization':`Bearer ${this.token}`, ...headers}
         
-        if((method === 'POST' || method === 'PUT')) {
+        if(method != 'GET') {
             if(body instanceof FormData ){
                 headers = {...headers}
             }else{
@@ -47,8 +47,8 @@ class API {
         return this.request(URL, 'PUT', body, headers)
     }
     
-    DELETE(URL, headers = {}) {
-        return this.request(URL, 'DELETE', '', headers)
+    DELETE(URL, body, headers = {}) {
+        return this.request(URL, 'DELETE', body , headers)
     }
 
     setToken (token)

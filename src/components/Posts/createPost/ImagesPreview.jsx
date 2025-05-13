@@ -2,15 +2,17 @@ import { Trash } from 'lucide-react'
 import PropTypes from 'prop-types'
 import { postsStorage } from '../../../stores/statices';
 
-export default function ImagesPreview(props) {
-    let { images , setForm } = props
-
-    let deleteImg = (index) => {
-        const newImages = images.filter((_, i) => i != index )
-        setForm(prev => ({...prev, images: newImages}))
+export default function ImagesPreview({images, setImages, setToDeletedImages}) 
+{
+    function deleteImg (index) 
+    {        
+        let image = images[index]
+        if(image.img) setToDeletedImages(I => [...I, image])
+        const newImages = images.filter((_, i) => i != index)        
+        setImages(newImages)
     }
     
-    let imagesPreview = images.map((image, index) => {        
+    const imagesPreview = images.map((image, index) => {        
         return ( 
             <div 
                 className='relative'
@@ -25,7 +27,7 @@ export default function ImagesPreview(props) {
 
     return (
         <div 
-            className="grid grid-cols-4 gap-2 self-start mx-2 "> 
+            className="grid grid-cols-4 gap-2 self-start mx-2 overflow-scroll"> 
             {imagesPreview}
         </div>
     )
@@ -33,5 +35,6 @@ export default function ImagesPreview(props) {
 
 ImagesPreview.propTypes = {
     images: PropTypes.array,
-    setForm: PropTypes.func
+    setImages: PropTypes.func,
+    setToDeletedImages: PropTypes.func
 }
