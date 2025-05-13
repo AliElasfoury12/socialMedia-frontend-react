@@ -32,6 +32,6 @@ export default function ImagesPreview(props) {
 }
 
 ImagesPreview.propTypes = {
-    images: PropTypes.object,
+    images: PropTypes.array,
     setForm: PropTypes.func
 }

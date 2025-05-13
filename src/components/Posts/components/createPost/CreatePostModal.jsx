@@ -1,36 +1,24 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector} from "react-redux"
 import { createPost } from "../../../../stores/postsStore"
+import propTypes from "prop-types"
 import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner"
 import ImagesPreview from "./ImagesPreview"
-import PropTypes from 'prop-types'
 import Modal from "../../../Modal"
 
 export default function CreatePostModal({show, setShow}) {
-    const [form, setForm] = useState({postContent: '', images: []})
     const dispatch = useDispatch()
     const [error, setError] = useState('')
+    const [form , setForm] = useState({postContent: '', images: []})
     const {loading} = useSelector(state => state.posts)
-    
+
     function handleChange (e) {
         const {name, value, type, files} = e.target
         if(type == 'file') setForm(prev => ({...prev, [name]: [...prev[name],...files]}))
         else setForm(prev => ({...prev, [name]: value}))
     }
 
-    function handleSubmit (e) { 
-        e.preventDefault()        
-        if(form.postContent || form.images.length > 0){
-            const formdata = createFormData()
-            dispatch(createPost(formdata))
-            .then(setShow(false))
-        }else{
-            setError("Post Can't be Empty")
-            setTimeout(() => setError(''), 3000)
-        }
-    }
-
-    function createFormData () {
+    function createFormData (form) {
         let formdata = new FormData
         formdata.append('content', form.postContent)
         for (let i = 0; i < form.images.length; i++) {
@@ -38,11 +26,23 @@ export default function CreatePostModal({show, setShow}) {
         }
         return formdata
     }
+    
+    function handleSubmit (e, form) { 
+        e.preventDefault()        
+        if(form.postContent || form.images.length > 0){
+            const formdata = createFormData(form)
+            dispatch(createPost(formdata))
+            .then(() => setShow(false))
+        }else{
+            setError("Post Can't be Empty")
+            setTimeout(() => setError(''), 3000)
+        }
+    }
 
     useEffect(() => {
         document.getElementById('create-post')?.focus()
     }, [])
-    
+
     return (
         <Modal show={show} setShow={setShow} >
             <form 
@@ -74,6 +74,6 @@ export default function CreatePostModal({show, setShow}) {
 }
 
 CreatePostModal.propTypes = {
-    show: PropTypes.bool,
-    setShow: PropTypes.func
+    show: propTypes.bool,
+    setShow: propTypes.func
 }

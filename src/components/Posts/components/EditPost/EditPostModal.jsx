@@ -2,10 +2,15 @@ import Modal from "../../../Modal";
 import propTypes from "prop-types"
 import ImagesPreview from "../createPost/ImagesPreview";
 import { useState } from "react";
+import SmallLoadingSpinner from "../../../LoadingSpinner/SmallLoadingSpinner";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePost } from "../../../../stores/postsStore";
 
 export default function EditPostModal({ post, show, setShow }) {
-    const [form , setForm] = useState({postContent: '', images : post.post_imgs})
-
+    const dispatch = useDispatch()
+    const [form , setForm] = useState({postContent: post.content, images : post.post_imgs})
+    const [error, setError] = useState('')
+    const {loading} = useSelector(state => state.posts)
 
     function handleChange (e) {
         const {name, value, type, files} = e.target
@@ -13,9 +18,27 @@ export default function EditPostModal({ post, show, setShow }) {
         else setForm(prev => ({...prev, [name]: value}))
     }
 
+    function handleSubmit(e, form){
+        e.preventDefault()        
+        if(form.postContent || form.images.length > 0){
+            const formdata = createFormData(form)
+            dispatch(updatePost({postId: post.id, formdata}))
+            .then(() => {setShow(false)})  
+        }else{
+            setError("Post Can't be Empty")
+            setTimeout(() => setError(''), 3000)
+        }
+    }
 
-    function handleSubmit(){}
-
+    function createFormData (form) {
+        let formdata = new FormData
+        formdata.append('_method','PUT');
+        formdata.append('content', form.postContent)
+        for (let i = 0; i < form.images.length; i++) {
+            formdata.append('image'+i, form.images[i])
+        }
+        return formdata
+    }
 
     return (
         <Modal show={show} setShow={setShow} >
@@ -33,8 +56,8 @@ export default function EditPostModal({ post, show, setShow }) {
                     className="resize-none h-40 focus:outline-none border-none p-2" >
                         {post.content}
                 </textarea>
-                {/* {loading && <SmallLoadingSpinner/>}
-                {error && <p className="text-red-700 m-auto">{error}</p> } */}
+                 {loading && <SmallLoadingSpinner/>}
+                {error && <p className="text-red-700 m-auto">{error}</p> } 
                 <label
                     htmlFor="images" 
                     className="bg-blue-800 text-white rounded-md w-28 py-1 hover:cursor-pointer text-center m-2">

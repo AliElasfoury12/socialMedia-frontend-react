@@ -9,14 +9,12 @@ export default function ShowPosts () {
     let {posts, loading, end, page, lastPage}  = useSelector(state => state.posts)
 
     let handleGetPosts = () => {
-        if (!end && page > lastPage) {
-            dispatch(getPosts(page))
-        }
+        if (!end && page > lastPage){ dispatch(getPosts(page))}
     }
 
     useInfinteScroll(page, setPage, handleGetPosts)
     
     return (
-       <ShowLoop loading={loading} array={posts} LoopComponent={PostCard}/>
+        <ShowLoop loading={loading} array={posts} LoopComponent={PostCard}/>
     )
 }

@@ -35,7 +35,7 @@ class API {
         }
     }
 
-    GET(URL, headers = {}) {
+    GET(URL, headers = {}) {        
         return this.request(URL, 'GET', '', headers)
     }
     

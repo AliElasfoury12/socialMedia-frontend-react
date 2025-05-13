@@ -32,7 +32,7 @@ export default function useInfinteScroll(page, setPage, infinteScrollFun, elemen
         }
     },[])
 
-    useEffect(() => {
+    useEffect(() => {        
         infinteScrollFun()
     }, [page])
 }

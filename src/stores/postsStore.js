@@ -20,90 +20,86 @@ export const postsSlice = createSlice({
 		addPost: (state, {payload}) => {
 			state.posts = [payload, ...state.posts]
 		},
-
-		editPost: (state, {payload}) => {
-			let post = state.posts.find((post) => post.id == state.editId)
-			post.post = payload.post
-			post.post_imgs = payload.post_imgs
-		}, 
-		
 		removePost: (state, {payload}) => {
 			state.posts = state.posts.filter((post) => post.id !== payload)
 		},
-
 		setShowEditPostModal: (state, {payload}) => {
 			state.showEditPostModal = payload
 		},
-
 		setEditId: (state, {payload}) => {
 			state.editId = payload
 		},
-
 		setShowList: (state, {payload}) => {
 			state.showList = payload
 		},
-
-		setLoading: (state, {payload}) => {
-			state.loading = payload
-		},
-
 		setPage: state => {
 			state.page +=1
 		},
-
 		setShowCreatePostModal: (state, {payload}) => {
 			state.showCreatePostModal = payload
 		},
-
 		followPostUser: (state, {payload}) => {
-		state.posts = state.posts.map((post) => {
-			if(post.user.id == payload.id) {
-				post.user.follows = payload.follows
-			}
-			return post
-		})			
+			state.posts = state.posts.map((post) => {
+				if(post.user.id == payload.id) {
+					post.user.follows = payload.follows
+				}
+				return post
+			})			
 		}
 	},
 
 	extraReducers: (builder) => {
 		builder.addCase(getPosts.fulfilled, (state, {payload}) => {			
-			if(payload == '') {
-				state.end = true
-				state.loading = false
-			}else {
+			if(payload == '') state.end = true
+			else {
 				state.posts.push(...payload.posts)
-				state.loading = false
 				state.lastPage = state.page
 			}
-		}).addCase(createPost.fulfilled, (state, {payload}) => {
+			state.loading = false
+		})
+		.addCase(getPosts.pending, (state) => state.loading = true )
+		.addCase(createPost.fulfilled, (state, {payload}) => {
 			state.posts = [payload.post, ...state.posts]
 			state.loading = false
 			state.showCreatePostModal = false
 		})
+		.addCase(createPost.pending, (state) => state.loading = true )
+		.addCase(updatePost.fulfilled, (state, {payload}) => {			
+			let post = state.posts.find((post) => post.id == payload.id)
+			payload = payload.post
+			post.content = payload.content
+			post.post_imgs = payload.post_imgs
+			state.loading = false
+		})
+		.addCase(updatePost.pending, (state) => state.loading = true )
 	}
 })
 
 export let { 
 			addPost, setShowEditPostModal,setEditId, removePost,
-			editPost, setShowList, setLoading, setPage, followPostUser,
+			setShowList, setPage, followPostUser,
 			setShowCreatePostModal
 		} = postsSlice.actions
 
 export default postsSlice.reducer
 
 
-export const getPosts = createAsyncThunk(
+export let getPosts = createAsyncThunk(
 	'posts/getPosts',
-	async (page, thunkAPI) => { 
-		thunkAPI.dispatch(setLoading(true));
+	async (page) => {
+		console.log('ao')
 		return await api.GET('posts?page=' + page)
 	}
 )
 
 export const createPost = createAsyncThunk(
-	'posts/createPost',
-	async (form, thunkAPI) => { 
-		thunkAPI.dispatch(setLoading(true));
-		return await api.POST('posts',form)
+	'posts/createPost', async (form) => await api.POST('posts',form)
+)
+
+export const updatePost = createAsyncThunk(
+	'posts/updatePost', async ({postId, formdata}) =>{
+		let paylod = await api.POST(`posts/${postId}`, formdata) 
+		paylod = {id : postId, ... paylod};
+		return paylod;
 	}
 )
