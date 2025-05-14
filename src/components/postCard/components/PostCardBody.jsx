@@ -6,19 +6,21 @@ import api from '../../API/APIMethods'
 
 export default function PostCardBody({ post }) {
     const [Post, setPost] = useState(post.content ?? '')
-    let images = post.post_imgs ?? []
     const [show, setShow] = useState(false)
+    const [images, setImages] = useState(post.post_imgs ?? [])
     let storage = postsStorage
 
-    function getPost ()
-    {
+    function getPost (){
         api.GET('posts/'+ post.id)
         .then((data)=> {
             setPost(data)
         })
     }
 
-    useEffect(() =>{setPost(post.content)},[post])
+    useEffect(() =>{        
+        setImages(post.post_imgs)
+        setPost(post.content )
+    },[post])
 
     let Component = () => {
         let showImages = images.map((img,index) => {
@@ -65,7 +67,7 @@ export default function PostCardBody({ post }) {
                     <img 
                         className=" mb-4" 
                         style={{width:'29.8rem', maxHeight:'30rem'}}
-                        src={storage + images[0]?.img} /> :
+                        src={storage + images[0].img} /> :
 
                   <div>
                     {images != '' &&

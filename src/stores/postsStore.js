@@ -6,7 +6,6 @@ export const postsSlice = createSlice({
 
 	initialState: {
 		posts: [],
-		showList: false,
 		loading: false,
 		end: false,
 		page: 1 ,
@@ -14,11 +13,12 @@ export const postsSlice = createSlice({
 	},
 
 	reducers: {
+		setPostImages: (state, {payload}) => {
+			let post = state.posts.find((post) => post.id == payload.id)
+			post.post_imgs = payload.images
+		},
 		removePost: (state, {payload}) => {
 			state.posts = state.posts.filter((post) => post.id !== payload)
-		},
-		setShowList: (state, {payload}) => {
-			state.showList = payload
 		},
 		setPage: state => {
 			state.page +=1
@@ -49,22 +49,21 @@ export const postsSlice = createSlice({
 		})
 		.addCase(createPost.pending,  (state) => { state.loading = true })
 		.addCase(updatePost.fulfilled, (state, {payload}) => {			
-			let post = state.posts.find((post) => post.id == payload.id)
+			let post = state.posts.find((post) => post.id == payload.id)			
 			payload = payload.post
 			post.content = payload.content
 			post.post_imgs = payload.post_imgs
 			state.loading = false
 		})
 		.addCase(updatePost.pending, (state) => { state.loading = true })
-
 	}
 })
 
-export const {removePost, setShowList, setPage, followPostUser} = postsSlice.actions
+export const {setPostImages, removePost, setPage, followPostUser} = postsSlice.actions
 
 export default postsSlice.reducer
 
-export let getPosts = createAsyncThunk(
+export const getPosts = createAsyncThunk(
 	'posts/getPosts', async (page) =>  await api.GET('posts?page=' + page)
 )
 
@@ -74,8 +73,8 @@ export const createPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
 	'posts/updatePost', async ({postId, formdata}) =>{
-		let paylod = await api.POST(`posts/${postId}`, formdata) 
-		paylod = {id : postId, ... paylod};
-		return paylod;
+		let payload = await api.POST(`posts/${postId}`, formdata) 
+		payload = {id : postId, ...payload};
+		return payload;
 	}
 )
