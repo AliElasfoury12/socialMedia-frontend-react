@@ -99,3 +99,4 @@ EditPostModal.propTypes = {
     show: propTypes.bool,
     setShow: propTypes.func
 }
+
