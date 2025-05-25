@@ -56,6 +56,9 @@ export const postsSlice = createSlice({
 			state.loading = false
 		})
 		.addCase(updatePost.pending, (state) => { state.loading = true })
+		.addCase(deletePost.fulfilled, (state, {payload}) => {			
+			state.posts = state.posts.filter((post) => post.id !== payload)
+		})
 	}
 })
 
@@ -77,4 +80,13 @@ export const updatePost = createAsyncThunk(
 		payload = {id : postId, ...payload};
 		return payload;
 	}
+)
+
+export const deletePost = createAsyncThunk(
+	'posts/deletePost', async (postId) =>
+	{
+		await api.DELETE(`posts/${postId}`)
+		return postId;
+	}
+
 )
