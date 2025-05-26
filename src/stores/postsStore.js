@@ -11,7 +11,7 @@ export const postsSlice = createSlice({
 		page: 1 ,
 		lastPage: 0
 	},
-
+  
 	reducers: {
 		setPostImages: (state, {payload}) => {
 			let post = state.posts.find((post) => post.id == payload.id)
@@ -85,5 +85,4 @@ export const deletePost = createAsyncThunk(
 		await api.DELETE(`posts/${postId}`)
 		return postId;
 	}
-
 )

@@ -5,11 +5,13 @@ import more from '../../../../assets/more.png'
 import { useState } from 'react'
 import PostCardHeaderRight from './PostCardHeaderRight'
 import EditPostModal from '../../../Posts/EditPostModal'
+import DeletePostConfirmModal from '../../../Posts/DeletePostConfirmModal'
 
 export default function PostCardHeader({post}) {
     const {authUser}  = useSelector(state => state.auth)
     const [showDownList, setShowDownList] = useState(false)
     const [showEditPost ,setShowEditPostModal] = useState(false)
+    const [showConfirmDelte, setShowConfirmDelete] = useState(false)
 
     return (
         <header
@@ -23,16 +25,24 @@ export default function PostCardHeader({post}) {
                         onClick={()=>(setShowDownList(!showDownList))}
                         src={more}/> 
                 } 
+
                 {showDownList &&
                     <DownList 
                         post={post} 
                         setShowDownList={setShowDownList} 
-                        setShowEditPostModal={setShowEditPostModal}/>
+                        setShowEditPostModal={setShowEditPostModal}
+                        setShowConfirmDelete={setShowConfirmDelete}/>
                 }
+
                 <EditPostModal 
                     post={post} 
                     show={showEditPost} 
                     setShow={setShowEditPostModal}/>
+                    
+                <DeletePostConfirmModal
+                    postId={post.id}
+                    showConfirmDelte={showConfirmDelte}
+                    setShowConfirmDelete={setShowConfirmDelete}/>
             </section>       
         </header> 
     )

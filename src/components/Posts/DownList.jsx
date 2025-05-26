@@ -1,7 +1,6 @@
-import DeletePost from "./DeletePost"
 import PropTypes from 'prop-types'
 
-export default function DownList({post, setShowDownList, setShowEditPostModal}) {
+export default function DownList({setShowConfirmDelete, setShowDownList, setShowEditPostModal}) {
 
     return (
         <div 
@@ -17,13 +16,20 @@ export default function DownList({post, setShowDownList, setShowEditPostModal}) 
                 Edit
             </button>
             
-                <DeletePost id={post?.id}/>
+            <button 
+                onClick={() => {
+                    setShowConfirmDelete(true)
+                    setShowDownList(false)
+                }} 
+                className="hover:bg-blue-400 rounded-full px-2">
+                Delete
+            </button>
         </div>
     )
 }
 
 DownList.propTypes = {
-   post: PropTypes.object,
+   setShowConfirmDelete: PropTypes.func,
    setShowDownList: PropTypes.func,
    setShowEditPostModal: PropTypes.func
 }
