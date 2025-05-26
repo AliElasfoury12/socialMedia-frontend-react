@@ -17,9 +17,6 @@ export const postsSlice = createSlice({
 			let post = state.posts.find((post) => post.id == payload.id)
 			post.post_imgs = payload.images
 		},
-		removePost: (state, {payload}) => {
-			state.posts = state.posts.filter((post) => post.id !== payload)
-		},
 		setPage: state => {
 			state.page +=1
 		},
