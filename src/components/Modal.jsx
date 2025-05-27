@@ -1,23 +1,26 @@
 import { X } from "lucide-react"
 import { useEffect } from "react"
 import PropTypes from 'prop-types'
-import { useDispatch } from "react-redux"
 
 export default function Modal(props) {
-    let dispatch = useDispatch()
-    let {show, setShow, type, children} = props
+    let {show, setShow, children} = props
 
-    let close = () => {
+    function enableScrolling() {
         document.body.classList.remove('disableScrolling')
-        if(type === 'dispatch'){
-            dispatch(setShow(false))
-        }else{
-            setShow(false)
-        }
+    }
+
+    function disableScrolling() {
+        document.body.classList.add('disableScrolling')
+    }
+
+    function close () {
+        enableScrolling()
+        setShow(false)
     }
 
     useEffect(() => {
-       if(show) document.body.classList.add('disableScrolling')
+        if(show) disableScrolling()
+        else enableScrolling()
     },[show])
 
     window.onclick = (e) => {
@@ -35,8 +38,7 @@ export default function Modal(props) {
                 grid place-content-center bg-black bg-opacity-20 mt-6 ">
                     
                 <div 
-                    className="bg-slate-200 w-fit h-fit flex flex-col p-4 rounded-md"
-                   >
+                    className="bg-slate-200 w-fit h-fit flex flex-col p-4 rounded-md">
         
                     <button onClick={close}
                         className=" bg-red-600 rounded-full p-1  w-6 h-6 self-end mt-2 mr-2">
@@ -61,6 +63,5 @@ export default function Modal(props) {
 Modal.propTypes = {
     show: PropTypes.bool,
     setShow: PropTypes.func,
-    type: PropTypes.string,
     children: PropTypes.object
 }

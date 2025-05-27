@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import PostCardFooter from './components/postCardFooter/PostCardFooter'
 import PostCardHeader from './components/postCardHeader/PostCardHeader'
-import PostCardBody from './components/PostCardBody'
+import PostCardBody from './components/Body/PostCardBody'
 import { emptyObject } from '../../utils/objects'
 
 export default function PostCard({element: post}) {
@@ -14,7 +14,7 @@ export default function PostCard({element: post}) {
             <PostCardHeader post={post}/>
             <PostCardBody   post={post}/>
 
-            {!emptyObject(post.shared_post ?? {}) &&
+            {!emptyObject(post.shared_post) &&
                 <div 
                     className='border border-black my-4 border-x-0 p-2'>
                     <PostCardHeader post={post.shared_post}/>

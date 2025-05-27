@@ -14,7 +14,7 @@ import DeleteUser from "./components/settings/DeleteUser";
 import ShowPost from "./components/Notifications/ShowPost";
 import UserPosts from "./components/user/UserPosts";
 import ShowProfilePictures from "./components/user/ٍShowProfilePictures";
-import Test from "./Test";
+import Test from "./components/Test";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage.jsx";
@@ -29,6 +29,9 @@ let router = createBrowserRouter([
     }, {
         path: '/',
         element: <HomePage />
+    },{
+        path: '/test',
+        element: <Test /> 
     }/*{
         path: '/home',
         element: <DefaultLayout/>,
