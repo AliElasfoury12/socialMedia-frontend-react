@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
 import { postsStorage } from '../../../../stores/statices'
 
-export default function ImagesPreview ({images, setShow}) {
+export default function ImagesPreview ({images, setShowImagesGallery}) {
     let gridClassrepeat = 2
 
     function image (imageSrc) {
         return (
             <img 
                 loading="lazy"
-                onClick={() => {setShow(true)}}
+                onClick={() => {setShowImagesGallery(true)}}
                 className="w-full h-full object-cover rounded-lg" 
                 src={postsStorage + imageSrc?.img} /> 
         )
@@ -35,7 +35,7 @@ export default function ImagesPreview ({images, setShow}) {
         return (
         <div 
             className='w-full h-full max-h-80 relative'               
-            key={image.id}>
+            key={imageSrc.id}>
             {image(imageSrc)}
             {extraCount > 0 && index == 3 && <p className='text-2xl absolute top-1/2 left-1/2'>+{extraCount}</p> }
         </div>
@@ -51,5 +51,5 @@ export default function ImagesPreview ({images, setShow}) {
 
 ImagesPreview.propTypes = {
     images: PropTypes.array,
-    setShow: PropTypes.func,
+    setShowImagesGallery: PropTypes.func,
 }

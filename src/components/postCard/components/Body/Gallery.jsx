@@ -2,7 +2,7 @@ import Modal from '../../../Modal'
 import PropTypes from 'prop-types'
 import { postsStorage } from '../../../../stores/statices'
 
-export default function Gallery ({images, show, setShow}) {
+export default function Gallery ({images, showImagesGallery, setShowImagesGallery}) {
 
     const showImages = images.map((image,index) => {
         return (
@@ -16,7 +16,7 @@ export default function Gallery ({images, show, setShow}) {
 
     
     return (
-        <Modal show={show} setShow={setShow}>
+        <Modal show={showImagesGallery} setShow={setShowImagesGallery}>
             <div
                 className=" flex flex-col rounded-xl w-[40rem]
                 my-3 py-1 px-2 min-w-80 m-auto gap-2 overflow-y-scroll">
@@ -28,6 +28,6 @@ export default function Gallery ({images, show, setShow}) {
 
 Gallery.propTypes = {
     images: PropTypes.array,
-    show: PropTypes.bool,
-    setShow: PropTypes.func,
+    showImagesGallery: PropTypes.bool,
+    setShowImagesGallery: PropTypes.func,
 }
