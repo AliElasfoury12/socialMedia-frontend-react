@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../components/API/APIMethods'
+import { follow } from './profileStore'
 
 export const postsSlice = createSlice({
 	name: 'posts',
@@ -19,14 +20,6 @@ export const postsSlice = createSlice({
 		},
 		setPage: state => {
 			state.page +=1
-		},
-		followPostUser: (state, {payload}) => {
-			state.posts = state.posts.map((post) => {
-				if(post.user.id == payload.id) {
-					post.user.follows = payload.follows
-				}
-				return post
-			})			
 		}
 	},
 
@@ -56,6 +49,14 @@ export const postsSlice = createSlice({
 		.addCase(deletePost.fulfilled, (state, {payload}) => {			
 			state.posts = state.posts.filter((post) => post.id !== payload)
 		})
+		.addCase(follow.fulfilled, (state, {payload}) => {			
+			state.posts = state.posts.map((post) => {
+				if(post.user.id == payload.id) {
+					post.user.follows = payload.follows
+				}
+				return post
+			})			
+        })
 	}
 })
 

@@ -10,7 +10,7 @@ export default function PostCardHeaderRight({post}) {
     const user = post.user
 
     return (
-      <section className="flex ">
+        <section className="flex ">
             <img 
                 className="w-12 h-12 border-blue-950  border-2 p-px rounded-full" 
                 src={user.img ? storage + user.img : userLogo} /> 
