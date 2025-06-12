@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
-import { follow } from '../../../stores/profileStore'
+import { follow } from '../../../../stores/profileStore'
 
 export default function Follow({id, follows, ClassName}) {
     const dispatch = useDispatch()

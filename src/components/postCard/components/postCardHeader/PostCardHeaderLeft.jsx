@@ -3,9 +3,9 @@ import { profileStorage } from '../../../../stores/statices'
 import { Link } from 'react-router-dom'
 import userLogo from '../../../../assets/user.png'
 import { timeAgo } from '../../../../utils/Moments'
-import Follow from '../Follow'
+import Follow from './Follow'
 
-export default function PostCardHeaderRight({post}) {
+export default function PostCardHeaderLeft({post}) {
     const storage = profileStorage
     const user = post.user
 
@@ -40,6 +40,6 @@ export default function PostCardHeaderRight({post}) {
     )
 }
 
-PostCardHeaderRight.propTypes = {
+PostCardHeaderLeft.propTypes = {
     post: PropTypes.object
 }

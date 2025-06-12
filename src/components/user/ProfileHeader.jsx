@@ -1,7 +1,7 @@
 import cover from '../../assets/cover.jpeg'
 import ProfilePicture from "./ProfilePicture"
 import { useSelector } from "react-redux"
-import Follow from "../postCard/components/Follow"
+import Follow from "../postCard/components/postCardHeader/Follow"
 import { Link, useParams } from "react-router-dom"
 
 export default function ProfileHeader() {
