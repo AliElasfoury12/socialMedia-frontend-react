@@ -18,8 +18,8 @@ export default function Gallery ({images, showImagesGallery, setShowImagesGaller
     return (
         <Modal show={showImagesGallery} setShow={setShowImagesGallery}>
             <div
-                className=" flex flex-col rounded-xl w-[40rem]
-                my-3 py-1 px-2 min-w-80 m-auto gap-2 overflow-y-scroll">
+                className="flex flex-col rounded-xl w-[40rem]
+                my-3 p-1 m-auto gap-2 overflow-y-scroll">
                 {showImages}
             </div>
         </Modal>

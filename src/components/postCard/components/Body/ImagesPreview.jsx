@@ -48,7 +48,7 @@ export default function ImagesPreview ({images, setShowImagesGallery}) {
     })
 
     return (
-        <div className={`w-full h-80 px-1 my-1 gap-1 grid ${GridClassRepeat} overflow-hidden `}>
+        <div className={`w-full h-80 p-1 gap-1 grid ${GridClassRepeat} overflow-hidden `}>
             {showImages}
         </div>
     )

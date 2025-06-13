@@ -5,11 +5,11 @@ import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../ShowLoop"
 
 export default function ShowPosts () {
-    let dispatch = useDispatch()
-    let {posts, loading, end, page, lastPage}  = useSelector(state => state.posts)
+    const dispatch = useDispatch()
+    const {posts, loading, end, page, lastPage} = useSelector(state => state.posts)
 
-    let handleGetPosts = () => {
-        if (!end && page > lastPage){ dispatch(getPosts(page))}
+    function handleGetPosts () {
+        if (!end && page > lastPage) dispatch(getPosts(page))
     }
 
     useInfinteScroll(page, setPage, handleGetPosts)

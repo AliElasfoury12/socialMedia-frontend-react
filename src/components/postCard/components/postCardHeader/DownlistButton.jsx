@@ -4,7 +4,7 @@ import more from '../../../../assets/more.png'
 import { useState } from 'react'
 import EditPostModal from '../../../Posts/EditPostModal'
 import DeletePostConfirmModal from '../../../Posts/DeletePostConfirmModal'
-import DownList from '../../../Posts/DownList'
+import DownList from './DownList'
 
 export default function DownlistButton ({post}) {
     const {authUser}  = useSelector(state => state.auth)

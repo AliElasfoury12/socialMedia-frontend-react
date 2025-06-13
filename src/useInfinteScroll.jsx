@@ -19,12 +19,12 @@ export default function useInfinteScroll(page, setPage, infinteScrollFun, elemen
             return () => element.removeEventListener('scroll', handelScroll)
 
         }else{
-            let handelScroll = () => {
+            const handelScroll = () => {
                 let doc = document.documentElement
 
-                if(window.innerHeight + doc.scrollTop + 1 >= doc.scrollHeight ){
+                if(window.innerHeight + doc.scrollTop + 1 >= doc.scrollHeight )
                     type ? setPage((p) => p + 1) : dispatch(setPage()) 
-                }
+                
             }
     
             window.addEventListener('scroll', handelScroll)
