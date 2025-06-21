@@ -76,11 +76,13 @@ export default function EditPostModal({ post, show, setShow }) {
                 </textarea>
                 {loading && <SmallLoadingSpinner/>}
                 {error && <p className="text-red-700 m-auto">{error}</p>} 
-                <label
-                    htmlFor="images" 
-                    className="bg-blue-800 text-white rounded-md w-28 py-1 hover:cursor-pointer text-center m-2">
+                {post.shared_post == undefined && 
+                    <label
+                        htmlFor="images" 
+                        className="bg-blue-800 text-white rounded-md w-28 py-1 hover:cursor-pointer text-center m-2">
                         Add Images +
-                </label>
+                    </label>
+                }
                 <input 
                     name="images" 
                     onChange={handleChange} 

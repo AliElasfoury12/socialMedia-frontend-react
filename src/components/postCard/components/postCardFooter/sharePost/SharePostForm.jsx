@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
-import api from '../../../../API/APIMethods'
+import { useDispatch } from 'react-redux'
+import { SharePost } from '../../../../../stores/postsStore'
 
 export default function SharePostForm ({post, show, setShow}) {
     const [postContent, setPostContent] = useState('')
+    const dispatch = useDispatch()
     
-    function sharePost (e) {
+    function handleSubmit (e) {
         e.preventDefault()
-        api.POST('share-post', {post: postContent, shared_post_id: post.id})
+        dispatch(SharePost({postContent, post}))
         .then(() => {
             setShow(false)
         })
@@ -21,7 +23,7 @@ export default function SharePostForm ({post, show, setShow}) {
         <form>
             <button 
                 type='submit' 
-                onClick={sharePost}   
+                onClick={handleSubmit}   
                 className='bg-blue-600 rounded py-1 w-24 float-right mr-2'>
                 Share
             </button>

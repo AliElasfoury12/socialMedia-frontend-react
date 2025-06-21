@@ -11,13 +11,13 @@ export default function PostCard({element: post}) {
             className="h-fit border border-1 border-gray-800 rounded-lg
             my-3 py-1 relative bg-slate-100 w-[30rem]">
             
-            <PostCardHeader post={post}/>
+            <PostCardHeader post={post} isShared={false}/>
             <PostCardBody   post={post}/>
 
-            {!emptyObject(post.shared_post) &&
+            { post.shared_post != undefined && !emptyObject(post.shared_post) &&
                 <div 
-                    className='border border-black my-4 border-x-0 p-2'>
-                    <PostCardHeader post={post.shared_post}/>
+                    className='border border-black my-4 border-x-0 py-2'>
+                    <PostCardHeader post={post.shared_post} isShared={true}/>
                     <PostCardBody   post={post.shared_post}/>
                 </div>
             }

@@ -14,7 +14,7 @@ export default function PostCardFooter({ post }) {
 
 			<CommentsButton post={post} />
 
-			<SharePost post={emptyObject(post.shared_post) ? post : post.shared_post}/>
+			<SharePost post={( post.shared_post == undefined || emptyObject(post.shared_post) ) ? post : post.shared_post}/>
 
 		</div>
 	)
