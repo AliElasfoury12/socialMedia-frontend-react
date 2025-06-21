@@ -6,6 +6,7 @@ import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setPostImages, updatePost } from "../../stores/postsStore";
 import api from "../API/APIMethods";
+import { emptyObject } from '../../utils/objects'
 
 export default function EditPostModal({ post, show, setShow }) {
     const dispatch = useDispatch()
@@ -60,7 +61,7 @@ export default function EditPostModal({ post, show, setShow }) {
 
     return (
         <Modal show={show} setShow={setShow} >
-             <form 
+            <form 
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-3 w-96 py-2">
                 <button 
@@ -76,7 +77,7 @@ export default function EditPostModal({ post, show, setShow }) {
                 </textarea>
                 {loading && <SmallLoadingSpinner/>}
                 {error && <p className="text-red-700 m-auto">{error}</p>} 
-                {post.shared_post == undefined && 
+                { ( post.shared_post == undefined || emptyObject(post.shared_post) ) && 
                     <label
                         htmlFor="images" 
                         className="bg-blue-800 text-white rounded-md w-28 py-1 hover:cursor-pointer text-center m-2">

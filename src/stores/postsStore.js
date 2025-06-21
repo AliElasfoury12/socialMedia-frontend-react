@@ -36,7 +36,7 @@ export const postsSlice = createSlice({
 			let post = state.posts.find((post) => post.id == payload.id)			
 			payload = payload.post
 			post.content = payload.content
-			post.post_imgs = payload.post_imgs
+			post.post_imgs = [...post.post_imgs, ...payload.post_imgs]
 			state.loading = false
 		})
 		.addCase(deletePost.fulfilled, (state, {payload}) => {			
