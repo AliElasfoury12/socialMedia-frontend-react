@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import likeIcon from '../../../../assets/like.png'
 import blueLike from '../../../../assets/bluelike.png'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import countRound from '../../../../utils/CountRound'
 import api from '../../../API/APIMethods'
 
@@ -16,22 +16,12 @@ export default function Likes({ post }) {
         setLiked(!liked)
         liked ? setLikesCount(l => l-1) : setLikesCount (l => l+1)
 
-        api.GET('like/' + post.id,{
-            headers:{
-                'X-Socket-ID': window.Echo.socketId()
-            }
-        }).then(() => setIsLikeButtonDisabled(false))
+        api.GET('like/' + post.id)
+        .then((data) => {
+            setIsLikeButtonDisabled(false)
+            setLikesCount(data.likesCount)
+        })
     }
-
-	useEffect(() => {
-		window.Echo.private('like')
-		.listen('LikeEvent', (data) => {
-			if(data.postId == post.id) {
-				console.log(data.likes);
-				setLikesCount(data.likes)
-			}
-		})
-	}, [])
 
     return (
         <button 
