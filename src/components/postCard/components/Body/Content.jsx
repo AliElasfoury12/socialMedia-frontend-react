@@ -9,7 +9,7 @@ export default function Content ({post}) {
 
 
     useEffect(() =>{        
-        setPost(post.content )
+        setPost(post.content)
     },[post])
 
     function show_more () {

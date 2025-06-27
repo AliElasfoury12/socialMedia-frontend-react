@@ -6,7 +6,7 @@ import { setShow } from '../../../stores/commentStore'
 import { useEffect } from "react"
 
 export default function CommentsModal() {
-    let dispatch = useDispatch()
+    const dispatch = useDispatch()
     
     let close = () => {
         document.body.classList.remove('disableScrolling')

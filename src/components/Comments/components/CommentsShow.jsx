@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import CommentsCard from './CommentsCard'
-import { CommentContext } from '../CommentsButton'
+import { CommentContext } from '../components/CommentsContext'
 import Get from '../../API/Get'
 import useInfinteScroll from '../../../useInfinteScroll'
-import ShowLoop from '../../../ShowLoop'
+import ShowLoop from '../../../components/ShowLoop'
 
 export default function CommentsShow() {
     let { post, comments, setComments, commentsCount, page, setPage, lastPage, setLastPage, end, setEnd } = useContext(CommentContext) 

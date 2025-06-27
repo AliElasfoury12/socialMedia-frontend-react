@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
 import api from '../components/API/APIMethods'
 import { follow } from './profileStore'
+import { emptyObject } from '../utils/objects'
 
 export const postsSlice = createSlice({
 	name: 'posts',
@@ -36,7 +37,7 @@ export const postsSlice = createSlice({
 			let post = state.posts.find((post) => post.id == payload.id)			
 			payload = payload.post
 			post.content = payload.content
-			post.post_imgs = [...post.post_imgs, ...payload.post_imgs]
+			post.post_imgs.push(...payload.post_imgs)
 			state.loading = false
 		})
 		.addCase(deletePost.fulfilled, (state, {payload}) => {			
@@ -47,12 +48,17 @@ export const postsSlice = createSlice({
 				if(post.user.id == payload.id) {
 					post.user.follows = payload.follows
 				}
+				
+				if( ( post.shared_post != undefined && !emptyObject(post.shared_post) ) && post.shared_post.user.id == payload.id) {
+					post.shared_post.user.follows = payload.follows
+				}
+
 				return post
 			})			
         })
 		.addMatcher(
 			isFulfilled(createPost, SharePost),(state, {payload}) => {
-				state.posts = [payload.post, ...state.posts]
+				state.posts.unshift(payload.post)
 				state.loading = false
 		})
 		.addMatcher(
