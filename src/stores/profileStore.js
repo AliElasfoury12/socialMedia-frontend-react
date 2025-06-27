@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../components/API/APIMethods'
+import { Get } from '../components/API/APIMethods'
 
 export const profileUser = createAsyncThunk(
     'profile/profileuser',
     async (id) => {
-        return await api.GET(`users/${id}`)
+        return await Get(`users/${id}`)
     }
 )
 
 export const follow = createAsyncThunk(
     'profile/follow',
     async (id) => {
-        const res = await api.GET(`follow/${id}`)
+        const res = await Get(`follow/${id}`)
         return {...res, id: id}
     }
 )
@@ -19,7 +19,7 @@ export const follow = createAsyncThunk(
 export let userPosts = createAsyncThunk(
     'profile/userPosts',
     async ({id, page}) => {
-        let res = await api.GET(`user-posts/${id}?page=${page}`)
+        let res = await Get(`user-posts/${id}?page=${page}`)
         return {posts: res.posts, page: res.page, lastPage: res.lastPage, id}
     }
 )

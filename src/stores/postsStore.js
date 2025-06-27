@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
-import api from '../components/API/APIMethods'
+import { Delete, Get, Post } from '../components/API/APIMethods'
 import { follow } from './profileStore'
 import { emptyObject } from '../utils/objects'
 
@@ -72,12 +72,12 @@ export const {setPostImages, removePost, setPage, followPostUser} = postsSlice.a
 export default postsSlice.reducer
 
 export const getPosts = createAsyncThunk(
-	'posts/getPosts', async (page) =>  await api.GET('posts?page=' + page)
+	'posts/getPosts', async (page) =>  await Get('posts?page=' + page)
 )
 
 export const createPost = createAsyncThunk(
 	'posts/createPost', async (form, thunkAPI) => {
-		let res = await api.POST('posts',form)
+		let res = await Post('posts',form)
 		res.post.user = thunkAPI.getState().auth.authUser
 		return res
 	}
@@ -85,7 +85,7 @@ export const createPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
 	'posts/updatePost', async ({postId, formdata}) =>{
-		let payload = await api.POST(`posts/${postId}`, formdata) 
+		let payload = await Post(`posts/${postId}`, formdata) 
 		payload = {id : postId, ...payload};
 		return payload;
 	}
@@ -94,14 +94,14 @@ export const updatePost = createAsyncThunk(
 export const deletePost = createAsyncThunk(
 	'posts/deletePost', async (postId) =>
 	{
-		await api.DELETE(`posts/${postId}`)
+		await Delete(`posts/${postId}`)
 		return postId;
 	}
 )
 
 export const SharePost = createAsyncThunk(
 	'posts/SharePost', async ({postContent, post}, thunkAPI) => {
-		let res = await api.POST('share-post', {content: postContent, shared_post_id: post.id})
+		let res = await Post('share-post', {content: postContent, shared_post_id: post.id})
 		res.post.user = thunkAPI.getState().auth.authUser
 		res.post.shared_post = post
 		res.post.post_imgs = []

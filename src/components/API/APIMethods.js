@@ -62,6 +62,8 @@ class API {
     }
 }
 
-const api = new API;
-export default api;
-
+export const api = new API;
+export const Get    = (...params) => api.GET(...params)
+export const Post   = (...params) => api.POST(...params)
+export const Put    = (...params) => api.PUT(...params)
+export const Delete = (...params) => api.DELETE(...params)

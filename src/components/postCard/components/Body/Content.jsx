@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
-import api from '../../../API/APIMethods'
+import {api} from '../../../API/APIMethods'
 
 export default function Content ({post}) {
     const [Post, setPost] = useState(post.content ?? '')

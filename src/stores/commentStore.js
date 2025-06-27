@@ -1,7 +1,7 @@
 import {  createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Get from '../components/API/Get'
 
-export let getComments = createAsyncThunk(
+export const getComments = createAsyncThunk(
 	'comments/getComments',
 	async ({post, page}) => { 
 		return await Get('comments/'+ post.id +'?page=' + page)
@@ -13,6 +13,7 @@ export const commentsSlice = createSlice({
 
 	initialState: {
 		comments: [],
+		
 		show: false,
 		showList: false,
 		editing: false,

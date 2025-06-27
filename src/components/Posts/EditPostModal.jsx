@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setPostImages, updatePost } from "../../stores/postsStore";
-import api from "../API/APIMethods";
+import { Delete } from "../API/APIMethods";
 import { emptyObject } from '../../utils/objects'
 
 export default function EditPostModal({ post, show, setShow }) {
@@ -34,7 +34,7 @@ export default function EditPostModal({ post, show, setShow }) {
     }
 
     function deleteImages () {
-        api.DELETE(`delete-images/${post.id}`, {images: toDeleteImages})
+        Delete(`delete-images/${post.id}`, {images: toDeleteImages})
         .then(() => {
             dispatch(setPostImages({id: post.id, images: form.images}))
         })

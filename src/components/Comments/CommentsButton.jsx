@@ -12,7 +12,7 @@ export default function CommentsButton({post}) {
     const dispatch = useDispatch()
     const { show } = useSelector(state => state.comments)
     const [comments, setComments] = useState([])
-    const [commentsCount, setCommentsCount] = useState(post.commentsCount)
+    const [commentsCount, setCommentsCount] = useState(post.comments_count)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(0)
     const [end, setEnd] = useState(false)
@@ -28,7 +28,7 @@ export default function CommentsButton({post}) {
             onClick={onCommentButtonClick}
             className='flex bg-blue-500 w-28 justify-center items-center h-7 rounded-full py-4'>
             <MessageCircle className='w-7 mr-1'/>
-            <p >{countRound(commentsCount) ?? 0}</p>
+            <p >{countRound(commentsCount)}</p>
         </button>
 
         <CommentsContext {...{

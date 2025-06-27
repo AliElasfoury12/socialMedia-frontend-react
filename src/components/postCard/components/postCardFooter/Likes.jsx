@@ -3,7 +3,7 @@ import likeIcon from '../../../../assets/like.png'
 import blueLike from '../../../../assets/bluelike.png'
 import { useState } from 'react'
 import countRound from '../../../../utils/CountRound'
-import api from '../../../API/APIMethods'
+import { Get } from '../../../API/APIMethods'
 
 export default function Likes({ post }) {
     const [liked, setLiked] = useState(post.isLikedByAuthUser)
@@ -16,7 +16,7 @@ export default function Likes({ post }) {
         setLiked(!liked)
         liked ? setLikesCount(l => l-1) : setLikesCount (l => l+1)
 
-        api.GET('like/' + post.id)
+        Get('like/' + post.id)
         .then((data) => {
             setIsLikeButtonDisabled(false)
             setLikesCount(data.likesCount)

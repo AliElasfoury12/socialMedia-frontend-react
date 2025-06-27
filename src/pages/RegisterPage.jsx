@@ -1,14 +1,14 @@
 import { useState} from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Form from "../components/Form/Form"
-import api from "../components/API/APIMethods"
+import { Post } from "../components/API/APIMethods"
 import GuestLayout from "../components/layouts/GuestLayout"
 
 export default function RegisterPage () {
-    let navigate = useNavigate()
-    let [errors, setErrors] = useState({})
+    const navigate = useNavigate()
+    const [errors, setErrors] = useState({})
 
-    let validation = {
+    const validation = {
         name: 'required|min:4',
         email: 'required|min:4|email',
         password: 'required|min:4',
@@ -17,7 +17,7 @@ export default function RegisterPage () {
 
     function register (form)
     {
-        api.POST('register', form)
+        Post('register', form)
         .then(() => {
             navigate('/login')
         })

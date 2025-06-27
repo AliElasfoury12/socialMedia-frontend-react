@@ -1,24 +1,24 @@
 import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import Form from "../components/Form/Form"
-import api from "../components/API/APIMethods"
+import { api, Post } from "../components/API/APIMethods"
 import { setAuthUser, setToken } from "../stores/authStore"
 import { useState } from "react"
 import GuestLayout from "../components/layouts/GuestLayout"
 import router from "../Router"
 
 export default function LoginPage() {
-    let dispatch = useDispatch()
-    let [errors, setErrors] = useState({})
+    const dispatch = useDispatch()
+    const [errors, setErrors] = useState({})
 
-    let validation = {
+    const validation = {
         email: 'required|min:4|email',
         password: 'required|min:4'
     }
     
     function login (form) 
     {
-        api.POST('login',form)
+        Post('login',form)
         .then((data) => {               
             if(data && data.user && data.token) {
                 dispatch(setAuthUser(data.user))

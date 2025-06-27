@@ -1,31 +1,31 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../components/API/APIMethods'
+import { Get } from '../components/API/APIMethods'
 
 export let getNotifications = createAsyncThunk(
 	'Notiofications/getNotifications',
 	async (page) => { 			
-		return await api.GET('notifications?page=' + page)
+		return await Get('notifications?page=' + page)
 	}
 )
 
 export let seen = createAsyncThunk(
 	'Notiofications/seen',
 	async () => { 			
-		return await api.GET('notifications/seen')
+		return await Get('notifications/seen')
 	}
 )
 
 export let markAllAsRead = createAsyncThunk(
 	'Notiofications/markAllAsRead',
 	async () => { 			
-		return await api.GET('notifications/mark-all-as-read')
+		return await Get('notifications/mark-all-as-read')
 	}
 )
 
 export let read = createAsyncThunk(
 	'Notiofications/read',
 	async (id) => { 
-        await api.GET('notifications/mark-as-read/' + id)			
+        await Get('notifications/mark-as-read/' + id)			
 		return id
 	}
 )
