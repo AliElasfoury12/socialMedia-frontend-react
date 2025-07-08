@@ -1,5 +1,3 @@
-const array = [1,2,3,4,5];
+const comments = {}
 
-let a = array.splice(0,4);
-
-console.log(a);
+if(comments.name != undefined) console.log('ali');

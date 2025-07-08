@@ -23,7 +23,7 @@ export default function CommentDownList(props) {
     })
    
    return (
-      <div>
+      <div className='mt-3 relative'>
             {authUser.id == comment.user.id && !editing &&
                 <img 
                     id='comment-list'

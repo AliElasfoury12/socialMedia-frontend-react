@@ -9,27 +9,22 @@ export const postsSlice = createSlice({
 	initialState: {
 		posts: [],
 		loading: false,
-		end: false,
-		page: 1 ,
-		lastPage: 0
+		cursor: '' ,
 	},
   
 	reducers: {
 		setPostImages: (state, {payload}) => {
 			let post = state.posts.find((post) => post.id == payload.id)
 			post.post_imgs = payload.images
-		},
-		setPage: state => {
-			state.page +=1
 		}
 	},
 
 	extraReducers: (builder) => {
 		builder.addCase(getPosts.fulfilled, (state, {payload}) => {			
-			if(payload == '') state.end = true
-			else {
+			if(payload == undefined) state.cursor = null
+			else {		
+				state.cursor = payload.nextCursor		
 				state.posts.push(...payload.posts)
-				state.lastPage = state.page
 			}
 			state.loading = false
 		})
@@ -67,12 +62,16 @@ export const postsSlice = createSlice({
 	}
 })
 
-export const {setPostImages, removePost, setPage, followPostUser} = postsSlice.actions
+export const {setPostImages, removePost, followPostUser} = postsSlice.actions
 
 export default postsSlice.reducer
 
 export const getPosts = createAsyncThunk(
-	'posts/getPosts', async (page) =>  await Get('posts?page=' + page)
+	'posts/getPosts', async (_,thunkAPI) =>  {
+		const state = thunkAPI.getState().posts		
+		if(state.cursor == null) return
+		return await Get('posts?cursor=' + state.cursor)
+	}
 )
 
 export const createPost = createAsyncThunk(

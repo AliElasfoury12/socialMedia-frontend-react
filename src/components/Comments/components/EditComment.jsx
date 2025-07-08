@@ -26,7 +26,7 @@ export default  function EditComment(props) {
  
   return (
     <div>
-         {editing & comment.user?.id == authUser?.id & comment.id == editId ?
+         {editing & comment.user.id == authUser.id & comment.id == editId ?
             <form 
                 className='relative'
                 onSubmit={edit} >

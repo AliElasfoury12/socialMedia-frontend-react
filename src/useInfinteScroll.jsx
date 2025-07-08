@@ -1,40 +1,37 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 
-export default function useInfinteScroll(page, setPage, infinteScrollFun, elementId, type) {
-    let dispatch = useDispatch()
+export default function useInfinteScroll(infinteScrollFun, elementId) {
 
-    useEffect(() => {
+    function infinteScrolleInDiv () {
+        const element = document.getElementById(elementId)
 
-        if(elementId) {
-            let element = document.getElementById(elementId) 
-
-            let handelScroll = () => {         
-                if(Number(element.clientHeight) + Number(element.scrollTop.toFixed()) + 1 >= Number(element.scrollHeight) ){            
-                    type ? setPage((p) => p + 1) : dispatch(setPage()) 
-               }
-            }
-      
-            element.addEventListener('scroll',handelScroll)
-            return () => element.removeEventListener('scroll', handelScroll)
-
-        }else{
-            const handelScroll = () => {
-                let doc = document.documentElement
-
-                if(window.innerHeight + doc.scrollTop + 1 >= doc.scrollHeight )
-                    type ? setPage((p) => p + 1) : dispatch(setPage()) 
-                
-            }
-    
-            window.addEventListener('scroll', handelScroll)
-            return () => window.removeEventListener('scroll', handelScroll)
+        const handelScroll = () => {         
+            if(Number(element.clientHeight) + Number(element.scrollTop.toFixed()) + 1 >= Number(element.scrollHeight) ) 
+                infinteScrollFun()            
         }
-    },[])
+    
+        element.addEventListener('scroll',handelScroll)
+        return () => element.removeEventListener('scroll', handelScroll)
+    }
+
+    function infinteScroll() {
+        const handelScroll = () => {
+            const doc = document.documentElement
+            if( window.innerHeight + doc.scrollTop >= doc.scrollHeight ) infinteScrollFun()                
+        }
+
+        window.addEventListener('scroll', handelScroll)
+        return () => window.removeEventListener('scroll', handelScroll)
+    }
 
     useEffect(() => {        
+        if(elementId) 
+           infinteScrolleInDiv()
+        else
+           infinteScroll()
+
         infinteScrollFun()
-    }, [page])
+    },[])
 }
 
 

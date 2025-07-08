@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import arrow from '../../../assets/right-arrow.png'
-import { CommentContext } from '../components/CommentsContext'
 import Post from '../../API/Post'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPostId, setShow, addComment } from '../../../stores/commentStore'
+import PropTypes from 'prop-types'
 
-export default function CreateComment() {
+
+export default function CreateComment({post}) {
    const dispatch = useDispatch()
    const { authUser }  = useSelector(state => state.auth)
-   const {setCommentsCount, post} = useContext(CommentContext) 
+  // const {setCommentsCount, post} = useContext(CommentContext) 
    const [comment,setComment] = useState('')
  
     async function submitComment (e) {
@@ -20,7 +21,7 @@ export default function CreateComment() {
 			dispatch(addComment(data.comment))
 			document.getElementById('comments').scrollTop = 0
 			dispatch(setShow(true))
-			setCommentsCount(c => c + 1)
+			//setCommentsCount(c => c + 1)
 			setComment('')
 		})
    }
@@ -50,4 +51,8 @@ export default function CreateComment() {
 			</button> 
       </form>  
 	)
+}
+
+CreateComment.propTypes = {
+	post: PropTypes.object
 }

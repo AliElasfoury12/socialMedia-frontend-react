@@ -20,7 +20,7 @@ export default function Modal(props) {
 
     useEffect(() => {
         if(show) disableScrolling()
-        else enableScrolling()
+        else enableScrolling
     },[show])
 
     window.onclick = (e) => {
@@ -32,7 +32,8 @@ export default function Modal(props) {
   return (
     <>
         {show && 
-            <div 
+            <div
+
                 id="modal" 
                 className="fixed w-full h-full z-10 top-0 left-0 
                 grid place-content-center bg-black bg-opacity-20 mt-6 ">

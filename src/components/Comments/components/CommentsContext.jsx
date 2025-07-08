@@ -42,7 +42,7 @@ export default  function CommentsContext(props) {
 			lastPage,setLastPage
 		}}>
 			{post.id == postId  && 
-				<Modal show={show} setShow={(s) =>dispatch(setShow(s))}>
+				<Modal show={show} setShow={(s) => dispatch(setShow(s))}>
 					<div
 						className="flex flex-col m-auto">
 						<CommentsShow/> 

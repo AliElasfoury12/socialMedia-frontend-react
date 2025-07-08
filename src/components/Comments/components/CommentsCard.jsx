@@ -6,15 +6,13 @@ import EditComment from './EditComment'
 import { timeAgo } from '../../../utils/Moments'
 import { profileStorage } from '../../../stores/statices'
 
-export default function CommentsCard(props) {
-  let { element: comment } = props
-  let storage = profileStorage
+export default function CommentsCard({ element: comment }) {
+  const storage = profileStorage
 
     return (
         <div  className='flex relative'>
             <div 
-                className=" w-fit h-fit mt-2"
-                style={{maxWidth: '25rem'}}>
+                className="w-fit h-fit mt-2 max-w-[25rem]">
                 <div className="flex">
                     <div className="flex">
                         <img 
@@ -23,8 +21,8 @@ export default function CommentsCard(props) {
                        <div 
                             className='text-left ml-2'>
                             <Link
-                                to={'user/profile/' + comment.user?.id}>
-                                {comment.user?.name}
+                                to={'user/profile/' + comment.user.id}>
+                                {comment.user.name}
                             </Link>
                             <p 
                                 className='text-xs text-gray-800'>
@@ -38,9 +36,8 @@ export default function CommentsCard(props) {
                     <EditComment comment = {comment}/>
                 </div>
             </div>
-            <div className='mt-3 relative'>
-                    <CommentDownList  comment={comment} />
-            </div>
+            
+            <CommentDownList  comment={comment} />
         </div> 
     )
 }

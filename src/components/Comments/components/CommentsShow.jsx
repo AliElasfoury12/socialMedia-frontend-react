@@ -1,42 +1,30 @@
-import { useContext, useState } from 'react'
 import CommentsCard from './CommentsCard'
-import { CommentContext } from '../components/CommentsContext'
-import Get from '../../API/Get'
 import useInfinteScroll from '../../../useInfinteScroll'
 import ShowLoop from '../../../components/ShowLoop'
+import { useDispatch, useSelector } from 'react-redux'
+import { getComments } from '../../../stores/commentStore'
+import PropTypes from 'prop-types'
+import { useEffect } from 'react'
 
-export default function CommentsShow() {
-    let { post, comments, setComments, commentsCount, page, setPage, lastPage, setLastPage, end, setEnd } = useContext(CommentContext) 
-    let [loading, setLoading] = useState(false)
-
-    let getComments = () => {
-        Get('comments/'+ post.id +'?page=' + page)
-        .then((data)=> {
-            if(data == '') {
-                setLoading(false)
-                setEnd(true)
-            }else{
-                setComments([...comments, ...data])
-                setLoading(false)
-                setLastPage(page)
-            }
-        })
-    }
-
-    let handleGetComments = () => {
-        if(commentsCount && !end && page > lastPage) {
-            setLoading(true)
-            getComments()
-        }
-    }
-
-   useInfinteScroll(page, setPage, handleGetComments, 'comments','!dispatch')
+export default function CommentsShow({post}) {
+    const dispatch = useDispatch()
+	const { loading, comments } = useSelector(state => state.comments)
   
-  return (
-    <div id='comments'
-        className='max-h-60 overflow-auto mt-3 min-h-3 px-2'
-        style={{width: '26.8rem'}} > 
-         <ShowLoop loading={loading} array={comments} LoopComponent={CommentsCard} message={'No Comments Yet.'}/>
-    </div>
-  )
+	useInfinteScroll(() => dispatch(getComments({post})),'comments')
+
+    useEffect(() => {
+        console.log(comments);
+    },[comments])
+    
+    return (
+        <div 
+            id='comments'
+            className='max-h-60 overflow-auto mt-3 min-h-3 px-2 w-[27rem]'> 
+            <ShowLoop loading={loading} array={comments[post.id]?.data ?? [] } LoopComponent={CommentsCard} message={'No Comments Yet.'}/>
+        </div>
+    )
+}
+
+CommentsShow.propTypes = {
+	post: PropTypes.object
 }
