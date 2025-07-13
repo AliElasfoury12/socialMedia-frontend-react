@@ -15,7 +15,7 @@ export default function CreateComment({post}) {
 		dispatch(createComment({postId: post.id, content, authUser}))
 		.then(() => {
 			setContent('')
-			document.getElementById('comments').scrollTop = 0
+			document.getElementById('comments-show-div').scrollTop = 0
 		})
    }
 

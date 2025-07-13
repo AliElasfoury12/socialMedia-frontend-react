@@ -10,9 +10,9 @@ export const getComments = createAsyncThunk(
 				
 		if(post.id != state.postId || post.comments_count == 0 || postComments?.end) return 
 		
-		const page = (postComments?.page) ? postComments.page : 1
+		const cursor = (postComments?.cursor) ? postComments.cursor : ''
 
-		const res =  await Get(`posts/${post.id}/comments?page=${page}`)		
+		const res =  await Get(`posts/${post.id}/comments?cursor=${cursor}`)		
 		return {...res, postId:  post.id, comments_count: post.comments_count}
 	}
 )
@@ -87,12 +87,12 @@ export const commentsSlice = createSlice({
 			let postComments = state.comments[payload.postId]
 							
 			if(postComments == undefined){ 
-				state.comments[payload.postId] = {data: payload.comments, page: 1, end: false}
+				state.comments[payload.postId] = {data: payload.comments, cursor: '', end: false}
 				postComments = state.comments[payload.postId]
 			}else
 				postComments.data.push(...payload.comments)
 
-			postComments.page++
+			postComments.cursor = payload.nextCursor
 
 			if(postComments.data.length == payload.comments_count)
 				postComments.end = true
