@@ -1,9 +1,10 @@
 import {  createAsyncThunk, createSlice, isPending } from '@reduxjs/toolkit'
-import { Get } from '../components/API/APIMethods'
+import { Get, Post } from '../components/API/APIMethods'
+import { increasePostCount } from './postsStore'
 
 export const getComments = createAsyncThunk(
 	'comments/getComments',
-	async ({post}, thunkAPI) => { 
+	async (post, thunkAPI) => { 
 		const state = thunkAPI.getState().comments
 		const postComments = state.comments[post.id]
 				
@@ -13,6 +14,16 @@ export const getComments = createAsyncThunk(
 
 		const res =  await Get(`posts/${post.id}/comments?page=${page}`)		
 		return {...res, postId:  post.id, comments_count: post.comments_count}
+	}
+)
+
+export const createComment = createAsyncThunk(
+	'comments/createComments',
+	async ({postId, comment, authUser}, thunkAPI) => { 
+		const res =  await Post(`posts/${postId}/comments`, {comment: comment})	
+		res.comment.user = authUser
+		thunkAPI.dispatch(increasePostCount(postId))
+		return {...res, postId: postId}
 	}
 )
 
@@ -34,7 +45,7 @@ export const commentsSlice = createSlice({
 
 	reducers: {
 		setPostId: (state, {payload}) => { state.postId = payload },
-		
+
 		setShow: (state, {payload}) => { state.show = payload },
 
 
@@ -83,8 +94,19 @@ export const commentsSlice = createSlice({
 			if(postComments.data.length == payload.comments_count)
 				postComments.end = true
 		})
+		.addCase(createComment.fulfilled, (state, {payload}) => {	
+			state.loading = false;	
+			
+			const postComments = state.comments[payload.postId]
+							
+			if(postComments == undefined)
+				state.comments[payload.postId].data.push(payload.comment) 
+			else
+				postComments.data.unshift(payload.comment)
+				
+		})
 		.addMatcher(
-			isPending(getComments),(state) => {state.loading = true}
+			isPending(getComments, createComment),(state) => {state.loading = true}
 		)
 	}
 

@@ -1,55 +1,46 @@
 import { useEffect, useState } from 'react'
 import arrow from '../../../assets/right-arrow.png'
-import Post from '../../API/Post'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPostId, setShow, addComment } from '../../../stores/commentStore'
+import { createComment } from '../../../stores/commentStore'
 import PropTypes from 'prop-types'
 
 
 export default function CreateComment({post}) {
-   const dispatch = useDispatch()
-   const { authUser }  = useSelector(state => state.auth)
-  // const {setCommentsCount, post} = useContext(CommentContext) 
-   const [comment,setComment] = useState('')
+	const dispatch = useDispatch()
+	const { authUser }  = useSelector(state => state.auth)
+	const [comment, setComment] = useState('')
  
-    async function submitComment (e) {
+    function submitComment (e) {
 		e.preventDefault()
-
-		Post('comments', {comment: comment, postId: post.id})
-		.then((data) => {
-			dispatch(setPostId(post.id))
-			dispatch(addComment(data.comment))
-			document.getElementById('comments').scrollTop = 0
-			dispatch(setShow(true))
-			//setCommentsCount(c => c + 1)
+		dispatch(createComment({postId: post.id, comment, authUser}))
+		.then(() => {
 			setComment('')
+			document.getElementById('comments').scrollTop = 0
 		})
    }
 
-   useEffect(() => {
-      document.getElementById('commentInput').focus()
-   }, [])
+	useEffect(() => {
+		document.getElementById('commentInput').focus()
+	}, [])
+
     
 	return (
 		<form 
 			onSubmit={submitComment} 
-			className='relative w-fit m-auto'>
+			className='relative w-full px-1'>
 			<textarea 
 				id='commentInput'
-				className='outline outline-1 outline-gray-500 rounded-md mt-4 mb-2 px-2 
-					ml-1 min-h-20 focus:outline-none focus:border-sky-500 border-2 resize-none h-fit' 
-				style={{width: '26rem'}}
-				type="text" 
+				className='rounded-md mt-2 px-2 min-h-20  resize-none h-fit w-full' 
 				placeholder={'Comment as ' + authUser.name}
-				value={comment ?? ''} 
+				value={comment}
 				onChange={(e) => {setComment(e.target.value)}} />
 	
 			<button type='submit'>
 				{comment.trim() != '' &&       
-					<img className='w-4 h-5 absolute bottom-4 right-2' src={arrow} />
+					<img className='w-4 h-5 absolute bottom-1 right-2' src={arrow} />
 				}
 			</button> 
-      </form>  
+		</form>  
 	)
 }
 

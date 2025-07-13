@@ -28,7 +28,7 @@ export default function CommentsButton({post}) {
 
             <Modal show={show && postId == post.id } setShow={(s) => dispatch(setShow(s))}>
                 <CommentsShow post={post}/>
-                <CreateComment/>
+                <CreateComment post={post}/>
             </Modal>
         </div>
     )

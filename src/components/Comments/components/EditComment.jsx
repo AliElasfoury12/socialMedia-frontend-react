@@ -5,28 +5,25 @@ import Put from '../../API/Put'
 import { useDispatch, useSelector } from 'react-redux'
 import { setShowList, setEditing } from '../../../stores/commentStore'
 
-export default  function EditComment(props) {
-   let dispatch = useDispatch()
-   
-   let { authUser }  = useSelector(state => state.auth)
-   let { editId, editing } = useSelector(state => state.comments)
+export default  function EditComment({ comment }) {
+   const dispatch = useDispatch()
+   const { authUser }  = useSelector(state => state.auth)
+   const { editId, editing } = useSelector(state => state.comments)
+   const [commentVale, setCommentValue] = useState(comment.comment)
 
-   let { comment } = props
-   let [commentVale, setCommentValue] = useState(comment.comment)
+    function edit (e) {
+        e.preventDefault()
 
-   let edit = async (e) => {
-      e.preventDefault()
-
-      Put('comments/' + comment.id,{comment: commentVale})
-      .then(() => {
-            dispatch(setEditing(false))
-            dispatch(setShowList(false))
-      }) 
-   }
- 
+        Put('comments/' + comment.id,{comment: commentVale})
+        .then(() => {
+                dispatch(setEditing(false))
+                dispatch(setShowList(false))
+        }) 
+    }
+    
   return (
     <div>
-         {editing & comment.user.id == authUser.id & comment.id == editId ?
+         {editing && comment.user.id == authUser.id && comment.id == editId ?
             <form 
                 className='relative'
                 onSubmit={edit} >

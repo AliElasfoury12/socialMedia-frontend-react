@@ -64,5 +64,5 @@ export default function Modal(props) {
 Modal.propTypes = {
     show: PropTypes.bool,
     setShow: PropTypes.func,
-    children: PropTypes.object
+    children: PropTypes.any
 }

@@ -8,7 +8,7 @@ export default function ShowPosts () {
     const dispatch = useDispatch()
     const {posts, loading} = useSelector(state => state.posts)
 
-    useInfinteScroll(() => dispatch(getPosts()))
+    useInfinteScroll(() => dispatch(getPosts()), posts.length == 0)
     
     return (
        <div className="m-auto">

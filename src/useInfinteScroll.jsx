@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export default function useInfinteScroll(infinteScrollFun, elementId) {
+export default function useInfinteScroll(infinteScrollFun, firstMount, elementId) {
 
     function infinteScrolleInDiv () {
         const element = document.getElementById(elementId)
@@ -30,7 +30,7 @@ export default function useInfinteScroll(infinteScrollFun, elementId) {
         else
            infinteScroll()
 
-        infinteScrollFun()
+        if(firstMount) infinteScrollFun()
     },[])
 }
 

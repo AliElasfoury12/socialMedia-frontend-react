@@ -3,7 +3,7 @@ import PostCard from '../postCard/PostCard'
 import { useEffect, useState } from 'react'
 import Get from '../API/Get'
 import BigLoadingSpinner from '../LoadingSpinner/LoadingSpinner'
-import CommentsCard from '../Comments/components/CommentsCard'
+import CommentsCard from '../Comments/components/CommentsCard/CommentsCard'
 
 export default function ShowPost() {
 	let { post_id, comment_id } = useParams()

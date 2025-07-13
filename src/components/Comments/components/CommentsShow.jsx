@@ -1,21 +1,16 @@
-import CommentsCard from './CommentsCard'
+import CommentsCard from './CommentsCard/CommentsCard'
 import useInfinteScroll from '../../../useInfinteScroll'
 import ShowLoop from '../../../components/ShowLoop'
 import { useDispatch, useSelector } from 'react-redux'
 import { getComments } from '../../../stores/commentStore'
 import PropTypes from 'prop-types'
-import { useEffect } from 'react'
 
 export default function CommentsShow({post}) {
     const dispatch = useDispatch()
 	const { loading, comments } = useSelector(state => state.comments)
   
-	useInfinteScroll(() => dispatch(getComments({post})),'comments')
-
-    useEffect(() => {
-        console.log(comments);
-    },[comments])
-    
+    useInfinteScroll(() => dispatch(getComments(post)), comments[post.id] == undefined, 'comments')
+  
     return (
         <div 
             id='comments'

@@ -16,6 +16,10 @@ export const postsSlice = createSlice({
 		setPostImages: (state, {payload}) => {
 			let post = state.posts.find((post) => post.id == payload.id)
 			post.post_imgs = payload.images
+		},
+		increasePostCount: (state, {payload}) => {
+			const post = state.posts.find((post) => post.id == payload)
+			post.comments_count++
 		}
 	},
 
@@ -62,7 +66,7 @@ export const postsSlice = createSlice({
 	}
 })
 
-export const {setPostImages, removePost, followPostUser} = postsSlice.actions
+export const {setPostImages, removePost, followPostUser, increasePostCount} = postsSlice.actions
 
 export default postsSlice.reducer
 
