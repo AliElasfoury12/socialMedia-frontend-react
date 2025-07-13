@@ -9,7 +9,7 @@ export default  function EditComment({ comment }) {
    const dispatch = useDispatch()
    const { authUser }  = useSelector(state => state.auth)
    const { editId, editing } = useSelector(state => state.comments)
-   const [commentVale, setCommentValue] = useState(comment.comment)
+   const [commentVale, setCommentValue] = useState(comment.content)
 
     function edit (e) {
         e.preventDefault()

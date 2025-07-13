@@ -19,8 +19,8 @@ export const getComments = createAsyncThunk(
 
 export const createComment = createAsyncThunk(
 	'comments/createComments',
-	async ({postId, comment, authUser}, thunkAPI) => { 
-		const res =  await Post(`posts/${postId}/comments`, {comment: comment})	
+	async ({postId, content, authUser}, thunkAPI) => { 
+		const res =  await Post(`posts/${postId}/comments`, {content: content})	
 		res.comment.user = authUser
 		thunkAPI.dispatch(increasePostCount(postId))
 		return {...res, postId: postId}
@@ -44,9 +44,12 @@ export const commentsSlice = createSlice({
 	},
 
 	reducers: {
-		setPostId: (state, {payload}) => { state.postId = payload },
-
-		setShow: (state, {payload}) => { state.show = payload },
+		setPostId: (state, {payload}) => { 
+			state.postId = payload 
+		},
+		setShow: (state, {payload}) => { 
+			state.show = payload 
+		},
 
 
 

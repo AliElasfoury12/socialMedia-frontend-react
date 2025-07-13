@@ -6,7 +6,7 @@ export default function useInfinteScroll(infinteScrollFun, firstMount, elementId
         const element = document.getElementById(elementId)
 
         const handelScroll = () => {         
-            if(Number(element.clientHeight) + Number(element.scrollTop.toFixed()) + 1 >= Number(element.scrollHeight) ) 
+            if(Number(element.clientHeight) + Number(element.scrollTop.toFixed()) >= Number(element.scrollHeight) ) 
                 infinteScrollFun()            
         }
     

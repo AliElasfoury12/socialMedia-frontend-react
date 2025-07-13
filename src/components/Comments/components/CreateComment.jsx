@@ -8,13 +8,13 @@ import PropTypes from 'prop-types'
 export default function CreateComment({post}) {
 	const dispatch = useDispatch()
 	const { authUser }  = useSelector(state => state.auth)
-	const [comment, setComment] = useState('')
+	const [content, setContent] = useState('')
  
     function submitComment (e) {
 		e.preventDefault()
-		dispatch(createComment({postId: post.id, comment, authUser}))
+		dispatch(createComment({postId: post.id, content, authUser}))
 		.then(() => {
-			setComment('')
+			setContent('')
 			document.getElementById('comments').scrollTop = 0
 		})
    }
@@ -32,11 +32,11 @@ export default function CreateComment({post}) {
 				id='commentInput'
 				className='rounded-md mt-2 px-2 min-h-20  resize-none h-fit w-full' 
 				placeholder={'Comment as ' + authUser.name}
-				value={comment}
-				onChange={(e) => {setComment(e.target.value)}} />
+				value={content}
+				onChange={(e) => {setContent(e.target.value)}} />
 	
 			<button type='submit'>
-				{comment.trim() != '' &&       
+				{content.trim() != '' &&       
 					<img className='w-4 h-5 absolute bottom-1 right-2' src={arrow} />
 				}
 			</button> 
