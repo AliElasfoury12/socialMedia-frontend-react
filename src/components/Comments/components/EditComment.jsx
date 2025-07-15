@@ -15,12 +15,13 @@ export default  function EditComment({ comment }) {
     
     return (
         <form 
+            onClick={(e) => e.stopPropagation()}
             className='relative w-full'
             onSubmit={handleSubmit} >
             <textarea 
                 value={content}
                 onChange={(e) => {setContent(e.target.value)}} 
-                className='rounded-md my-2 w-[26rem] px-2 resize-none'>
+                className='rounded-md my-2 w-[26rem] px-2 resize-none h-20'>
             </textarea>
 
             <button type='submit'>

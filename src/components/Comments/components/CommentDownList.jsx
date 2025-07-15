@@ -28,10 +28,13 @@ export default function CommentDownList({ comment }) {
             
             {showList && !editing && comment.id == editId && 
                 <div 
-                    className="absolute bg-blue-500 rounded-md h-fit p-2 -right-8 top-6 flex flex-col z-10 down">
+                    className="absolute bg-blue-500 rounded-md h-fit p-2 right-0 top-6 flex flex-col z-10 down">
                     <button 
                         className="hover:bg-blue-400 rounded-full px-5" 
-                        onClick={() => dispatch(setEditing(true))}>
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            dispatch(setEditing(true))
+                        }}>
                             Edit
                     </button>
                     <DeleteComment id={comment.id}/>

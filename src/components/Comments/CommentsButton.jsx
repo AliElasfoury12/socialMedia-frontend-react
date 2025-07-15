@@ -1,6 +1,6 @@
 import { MessageCircle } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPostId, setShow, setShowList } from '../../stores/commentStore'
+import { setPostId, setShow, setShowList, setEditing } from '../../stores/commentStore'
 import PropTypes from 'prop-types'
 import countRound from '../../utils/CountRound'
 import CommentsShow from './components/CommentsShow'
@@ -17,6 +17,16 @@ export default function CommentsButton({post}) {
         dispatch(setShow(!show))
     }
 
+    function onClickModalBody () {
+        dispatch(setShowList(false))
+        dispatch(setEditing(false))
+    }
+
+    function setModalShow (s) {
+        dispatch(setShow(s))
+        onClickModalBody()
+    }
+
     return (
         <div>
             <button
@@ -26,8 +36,8 @@ export default function CommentsButton({post}) {
                 <p >{countRound(post.comments_count)}</p>
             </button>
 
-            <Modal show={show && postId == post.id } setShow={(s) => dispatch(setShow(s))}>
-                <div onClick={() => dispatch(setShowList(false))}>
+            <Modal show={show && postId == post.id } setShow={setModalShow}>
+                <div onClick={onClickModalBody}>
                     <CommentsShow post={post}/>
                     <CreateComment post={post}/>
                 </div>
