@@ -17,13 +17,12 @@ export default function CreateComment({post}) {
 			setContent('')
 			document.getElementById('comments-show-div').scrollTop = 0
 		})
-   }
+	}
 
 	useEffect(() => {
 		document.getElementById('commentInput').focus()
 	}, [])
 
-    
 	return (
 		<form 
 			onSubmit={submitComment} 

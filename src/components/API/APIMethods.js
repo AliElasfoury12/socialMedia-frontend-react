@@ -4,13 +4,13 @@ class API {
     token
     
    async request (URL, method, body = '', headers = {}) {
-
+        
         if (this.token) headers = {'Authorization':`Bearer ${this.token}`, ...headers}
         
         if(method != 'GET') {
-            if(body instanceof FormData ){
+            if(body instanceof FormData )
                 headers = {...headers}
-            }else{
+            else{
                 headers = {'Content-Type': 'application/json', ...headers}
                 if(body) body = JSON.stringify(body)
             }

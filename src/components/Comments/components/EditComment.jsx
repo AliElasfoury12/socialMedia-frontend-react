@@ -1,52 +1,43 @@
 import arrow from '../../../assets/right-arrow.png'
 import {  useState } from 'react'
 import PropTypes from 'prop-types'
-import Put from '../../API/Put'
-import { useDispatch, useSelector } from 'react-redux'
-import { setShowList, setEditing } from '../../../stores/commentStore'
+import { useDispatch } from 'react-redux'
+import { updateComment } from '../../../stores/commentStore'
 
 export default  function EditComment({ comment }) {
    const dispatch = useDispatch()
-   const { authUser }  = useSelector(state => state.auth)
-   const { editId, editing } = useSelector(state => state.comments)
-   const [commentVale, setCommentValue] = useState(comment.content)
+   const [content, setContent] = useState(comment.content)
+
+    function createFormData () {
+        // const formdata = new FormData
+        // formdata.append('_method','PUT');
+        // formdata.append('content', content)
+        // return formdata
+        return {_method: "PUT", content:content}
+    }
 
     function edit (e) {
         e.preventDefault()
-
-        Put('comments/' + comment.id,{comment: commentVale})
-        .then(() => {
-                dispatch(setEditing(false))
-                dispatch(setShowList(false))
-        }) 
+        dispatch(updateComment({commentId: comment.id, formData: createFormData()}))
     }
     
-  return (
-    <div>
-         {editing && comment.user.id == authUser.id && comment.id == editId ?
-            <form 
-                className='relative'
-                onSubmit={edit} >
-                <input type='text' 
-                    value={commentVale}
-                    onChange={(e) => {setCommentValue(e.target.value)}} 
-                    className='rounded-md my-2 outline outline-2 outline-blue-500 px-2 ml-2'
-                    style={{width: '21rem'}} />
+    return (
+        <form 
+            className='relative w-full'
+            onSubmit={edit} >
+            <textarea 
+                value={content}
+                onChange={(e) => {setContent(e.target.value)}} 
+                className='rounded-md my-2 w-[26rem] px-2 resize-none'>
+            </textarea>
 
-                <button type='submit'>
-                    {commentVale.trim() != '' &&       
-                        <img className='w-4 h-4 absolute top-3 right-2' src={arrow} />
-                    }
-                </button>
-            </form> 
-
-            :   <p
-                 className="my-1 ml-12 break-words">
-                    {commentVale}
-                </p>  
-         }
-    </div>
-  )
+            <button type='submit'>
+                {content.trim() != '' &&       
+                    <img className='w-4 h-4 absolute bottom-3 -right-3' src={arrow} />
+                }
+            </button>
+        </form> 
+    )
 }
 
 EditComment.propTypes = {

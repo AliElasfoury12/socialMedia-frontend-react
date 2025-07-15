@@ -4,26 +4,24 @@ import DeleteComment from './DeleteComment'
 import { useDispatch, useSelector } from 'react-redux'
 import { setShowList, setEditing, setEditId } from '../../../stores/commentStore'
 
-export default function CommentDownList(props) {
-    let dispatch = useDispatch()
+export default function CommentDownList({ comment }) {
+    const dispatch = useDispatch()
+    const { authUser }  = useSelector(state => state.auth)
+    const { editing, editId, showList } = useSelector(state => state.comments)
 
-    let { authUser }  = useSelector(state => state.auth)
-    let { editing, editId, showList } = useSelector(state => state.comments)
 
-    let { comment } = props
-
-    let showListFun = () => {
+    function showListFun  () {
         dispatch(setEditId(comment.id))
         dispatch(setShowList(!showList) )
     }
 
     window.addEventListener('click',  (e) => {
         let commentList = document.getElementById("comment-list")
-        e.target != commentList &&  dispatch(setShowList(!showList) )         
+        e.target != commentList &&  dispatch(setShowList(!showList))         
     })
    
    return (
-      <div className='mt-3 relative'>
+      <div className='mt-2 ml-1 relative'>
             {authUser.id == comment.user.id && !editing &&
                 <img 
                     id='comment-list'
@@ -31,11 +29,10 @@ export default function CommentDownList(props) {
                     onClick={()=>(showListFun())}
                     src={more} />
             } 
+            
             {showList && !editing && comment.id == editId && 
                 <div 
-                    className="absolute bg-blue-500 rounded-md h-fit p-2 
-                    -right-8 top-6 flex flex-col z-10 down">
-                           
+                    className="absolute bg-blue-500 rounded-md h-fit p-2 -right-8 top-6 flex flex-col z-10 down">
                     <button 
                         className="hover:bg-blue-400 rounded-full px-5" 
                         onClick={() => {dispatch(setEditing(true))}}>
