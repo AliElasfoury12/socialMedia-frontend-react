@@ -1,7 +1,7 @@
 import cover from '../../assets/cover.jpeg'
 import ProfilePicture from "./ProfilePicture"
 import { useSelector } from "react-redux"
-import Follow from "../postCard/components/postCardHeader/Follow"
+import Follow from "../Posts/postCard/components/postCardHeader/Follow"
 import { Link, useParams } from "react-router-dom"
 
 export default function ProfileHeader() {
@@ -19,8 +19,7 @@ export default function ProfileHeader() {
         <img  src={cover} style={{width:'50rem', height: '20rem'}} />
 
         <div 
-            className="flex items-center absolute -bottom-20 justify-between"
-            style={{width:'47rem'}}>
+            className="flex items-center absolute -bottom-20 justify-between w-[47rem]">
             <div 
                 className="flex flex-col" >
                 

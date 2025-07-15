@@ -4,7 +4,7 @@ import { createPost } from "../../../stores/postsStore"
 import propTypes from "prop-types"
 import SmallLoadingSpinner from "../../LoadingSpinner/SmallLoadingSpinner"
 import ImagesPreview from "./ImagesPreview"
-import Modal from "../../Modal"
+import Modal from "../../Modals/Modal"
 
 export default function CreatePostModal({show, setShow}) {
     const dispatch = useDispatch()

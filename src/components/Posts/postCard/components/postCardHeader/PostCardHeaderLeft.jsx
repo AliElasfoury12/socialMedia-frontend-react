@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import { profileStorage } from '../../../../stores/statices'
+import { profileStorage } from '../../../../../stores/statices'
 import { Link } from 'react-router-dom'
-import userLogo from '../../../../assets/user.png'
-import { timeAgo } from '../../../../utils/Moments'
+import userLogo from '../../../../../assets/user.png'
+import { timeAgo } from '../../../../../utils/Moments'
 import Follow from './Follow'
 
 export default function PostCardHeaderLeft({post}) {

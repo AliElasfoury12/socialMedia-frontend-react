@@ -1,4 +1,4 @@
-import PostCard from "../postCard/PostCard"
+import PostCard from "../Posts/postCard/PostCard"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setLoading, handelPostsSearch, setPostsPage } from "../../stores/searchStore"

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {useSelector } from 'react-redux'
 import { profileStorage } from '../../stores/statices'
-import Modal from '../Modal'
+import Modal from '../Modals/Modal'
 import EditProfilePicture from './EditProfilePicture'
 
 export default function ProfilePicture() {

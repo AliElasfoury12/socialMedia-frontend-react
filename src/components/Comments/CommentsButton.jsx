@@ -4,9 +4,8 @@ import { setPostId, setShow, setShowList, setEditing } from '../../stores/commen
 import PropTypes from 'prop-types'
 import countRound from '../../utils/CountRound'
 import CommentsShow from './components/CommentsShow'
-import Modal from '../Modal'
+import Modal from '../Modals/Modal'
 import CreateComment from './components/CreateComment'
-
 
 export default function CommentsButton({post}) {
     const dispatch = useDispatch()

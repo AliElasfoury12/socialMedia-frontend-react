@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import PostCard from '../postCard/PostCard'
+import PostCard from '../Posts/postCard/PostCard'
 import { useEffect, useState } from 'react'
 import Get from '../API/Get'
 import BigLoadingSpinner from '../LoadingSpinner/LoadingSpinner'

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import PostCardFooter from './components/postCardFooter/PostCardFooter'
 import PostCardHeader from './components/postCardHeader/PostCardHeader'
 import PostCardBody from './components/Body/PostCardBody'
-import { emptyObject } from '../../utils/objects'
+import { emptyObject } from '../../../utils/objects'
 
 export default function PostCard({element: post}) {
     

@@ -1,4 +1,4 @@
-import PostCard from "../postCard/PostCard"
+import PostCard from "./postCard/PostCard"
 import { useDispatch, useSelector } from "react-redux"
 import { getPosts } from '../../stores/postsStore' 
 import useInfinteScroll from "../../useInfinteScroll"

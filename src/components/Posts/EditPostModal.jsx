@@ -1,4 +1,4 @@
-import Modal from "../Modal";
+import Modal from "../Modals/Modal";
 import propTypes from "prop-types"
 import ImagesPreview from "./createPost/ImagesPreview";
 import { useEffect, useState } from "react";

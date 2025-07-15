@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createComment } from '../../../stores/commentStore'
 import PropTypes from 'prop-types'
 
-
 export default function CreateComment({post}) {
 	const dispatch = useDispatch()
 	const { authUser }  = useSelector(state => state.auth)

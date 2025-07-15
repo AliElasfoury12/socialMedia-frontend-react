@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types'
-import likeIcon from '../../../../assets/like.png'
-import blueLike from '../../../../assets/bluelike.png'
+import likeIcon from '../../../../../assets/like.png'
+import blueLike from '../../../../../assets/bluelike.png'
 import { useState } from 'react'
-import countRound from '../../../../utils/CountRound'
-import { Get } from '../../../API/APIMethods'
+import countRound from '../../../../../utils/CountRound'
+import { Get } from '../../../../API/APIMethods'
 
 export default function Likes({ post }) {
     const [liked, setLiked] = useState(post.isLikedByAuthUser)
     const [likesCount, setLikesCount] = useState(post.likes_count)
     const [isLikeButtonDisabled, setIsLikeButtonDisabled] = useState(false)
 
-  
     function like () {
         setIsLikeButtonDisabled(true)
         setLiked(!liked)

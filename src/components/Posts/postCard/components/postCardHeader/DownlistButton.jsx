@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import more from '../../../../assets/more.png'
+import more from '../../../../../assets/more.png'
 import { useState } from 'react'
-import EditPostModal from '../../../Posts/EditPostModal'
+import EditPostModal from '../../../EditPostModal'
 import DownList from './DownList'
-import DeleteConfirmModal from '../../../Posts/DeleteConfirmModal'
+import DeleteConfirmModal from '../../../../Modals/DeleteConfirmModal'
 import { useDispatch } from 'react-redux'
-import { deletePost } from '../../../../stores/postsStore'
+import { deletePost } from '../../../../../stores/postsStore'
 
 export default function DownlistButton ({post}) {
     const [showDownList, setShowDownList] = useState(false)

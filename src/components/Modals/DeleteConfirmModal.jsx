@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import Modal from '../Modal'
+import Modal from './Modal'
 
 export default function DeleteConfirmModal({ showConfirmDelete, setShowConfirmDelete, confirmDeleteFunction }) {
 

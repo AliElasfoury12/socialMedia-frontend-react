@@ -1,8 +1,8 @@
-import CommentsButton from '../../../Comments/CommentsButton'
+import CommentsButton from '../../../../Comments/CommentsButton'
 import Likes from './Likes'
 import PropTypes from 'prop-types'
 import SharePost from './sharePost/SharePost'
-import { emptyObject } from '../../../../utils/objects'
+import { emptyObject } from '../../../../../utils/objects'
 
 export default function PostCardFooter({ post }) {
 
