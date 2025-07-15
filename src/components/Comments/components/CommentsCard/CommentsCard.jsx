@@ -16,7 +16,7 @@ export default function CommentsCard({ element: comment }) {
                     
                     {editing && comment.user.id == authUser.id && comment.id == editId ?
                         <EditComment comment = {comment}/>
-                        : <p className="my-1 ml-12 break-words"> {comment.content} </p>
+                        : <p className="my-1 ml-12 break-words max-w-[21rem]"> {comment.content} </p>
                     }
             </div>
             <CommentDownList  comment={comment} />

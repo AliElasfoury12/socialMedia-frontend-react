@@ -8,23 +8,15 @@ export default  function EditComment({ comment }) {
    const dispatch = useDispatch()
    const [content, setContent] = useState(comment.content)
 
-    function createFormData () {
-        // const formdata = new FormData
-        // formdata.append('_method','PUT');
-        // formdata.append('content', content)
-        // return formdata
-        return {_method: "PUT", content:content}
-    }
-
-    function edit (e) {
+    function handleSubmit (e) {
         e.preventDefault()
-        dispatch(updateComment({commentId: comment.id, formData: createFormData()}))
+        dispatch(updateComment({commentId: comment.id, formData: {_method: "PUT", content: content}}))
     }
     
     return (
         <form 
             className='relative w-full'
-            onSubmit={edit} >
+            onSubmit={handleSubmit} >
             <textarea 
                 value={content}
                 onChange={(e) => {setContent(e.target.value)}} 

@@ -10,23 +10,19 @@ export default function CommentDownList({ comment }) {
     const { editing, editId, showList } = useSelector(state => state.comments)
 
 
-    function showListFun  () {
+    function showListFun  (e) {
+        e.stopPropagation()
         dispatch(setEditId(comment.id))
         dispatch(setShowList(!showList) )
     }
 
-    window.addEventListener('click',  (e) => {
-        let commentList = document.getElementById("comment-list")
-        e.target != commentList &&  dispatch(setShowList(!showList))         
-    })
-   
    return (
-      <div className='mt-2 ml-1 relative'>
+        <div className='mt-2 ml-1 relative'>
+
             {authUser.id == comment.user.id && !editing &&
                 <img 
-                    id='comment-list'
                     className="hover:bg-slate-400 rounded-full p-1 h-6 w-6" 
-                    onClick={()=>(showListFun())}
+                    onClick={(e)=> showListFun(e)}
                     src={more} />
             } 
             
@@ -35,7 +31,7 @@ export default function CommentDownList({ comment }) {
                     className="absolute bg-blue-500 rounded-md h-fit p-2 -right-8 top-6 flex flex-col z-10 down">
                     <button 
                         className="hover:bg-blue-400 rounded-full px-5" 
-                        onClick={() => {dispatch(setEditing(true))}}>
+                        onClick={() => dispatch(setEditing(true))}>
                             Edit
                     </button>
                     <DeleteComment id={comment.id}/>

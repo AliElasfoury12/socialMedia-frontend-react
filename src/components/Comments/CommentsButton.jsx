@@ -1,6 +1,6 @@
 import { MessageCircle } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPostId, setShow } from '../../stores/commentStore'
+import { setPostId, setShow, setShowList } from '../../stores/commentStore'
 import PropTypes from 'prop-types'
 import countRound from '../../utils/CountRound'
 import CommentsShow from './components/CommentsShow'
@@ -27,8 +27,10 @@ export default function CommentsButton({post}) {
             </button>
 
             <Modal show={show && postId == post.id } setShow={(s) => dispatch(setShow(s))}>
-                <CommentsShow post={post}/>
-                <CreateComment post={post}/>
+                <div onClick={() => dispatch(setShowList(false))}>
+                    <CommentsShow post={post}/>
+                    <CreateComment post={post}/>
+                </div>
             </Modal>
         </div>
     )
