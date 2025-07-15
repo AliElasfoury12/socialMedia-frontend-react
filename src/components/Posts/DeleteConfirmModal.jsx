@@ -1,19 +1,16 @@
 import PropTypes from 'prop-types'
-import { deletePost } from '../../stores/postsStore' 
-import { useDispatch } from 'react-redux';
 import Modal from '../Modal'
 
-export default function DeletePostConfirmModal({ postId, showConfirmDelte, setShowConfirmDelete }) {
-   const dispatch = useDispatch()
+export default function DeleteConfirmModal({ showConfirmDelete, setShowConfirmDelete, confirmDeleteFunction }) {
 
  return(
-    <Modal show={showConfirmDelte} setShow={setShowConfirmDelete}>
+    <Modal show={showConfirmDelete} setShow={setShowConfirmDelete}>
         <div className='w-96 h-40 flex flex-col items-center justify-center gap-4'>
             <h1>Are You Sure?</h1>
             <div className='flex gap-4'>
                 <button 
                     className="bg-red-500 text-white rounded-full py-1 w-32"
-                    onClick={() =>  dispatch(deletePost(postId))} >
+                    onClick={confirmDeleteFunction} >
                     Confirm
                 </button>
                 <button 
@@ -27,8 +24,8 @@ export default function DeletePostConfirmModal({ postId, showConfirmDelte, setSh
  )
 }
 
-DeletePostConfirmModal.propTypes = {
-   postId: PropTypes.number,
-   showConfirmDelte: PropTypes.bool,
+DeleteConfirmModal.propTypes = {
+   showConfirmDelete: PropTypes.bool,
    setShowConfirmDelete: PropTypes.func,
+   confirmDeleteFunction: PropTypes.func,
 }

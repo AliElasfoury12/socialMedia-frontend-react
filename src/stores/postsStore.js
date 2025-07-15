@@ -17,9 +17,9 @@ export const postsSlice = createSlice({
 			let post = state.posts.find((post) => post.id == payload.id)
 			post.post_imgs = payload.images
 		},
-		increasePostCount: (state, {payload}) => {
-			const post = state.posts.find((post) => post.id == payload)
-			post.comments_count++
+		changePostCount: (state, {payload}) => {
+			const post = state.posts.find((post) => post.id == payload.postId)
+			post.comments_count += payload.amount
 		}
 	},
 
@@ -66,7 +66,7 @@ export const postsSlice = createSlice({
 	}
 })
 
-export const {setPostImages, removePost, followPostUser, increasePostCount} = postsSlice.actions
+export const {setPostImages, removePost, followPostUser, changePostCount} = postsSlice.actions
 
 export default postsSlice.reducer
 
@@ -95,7 +95,7 @@ export const updatePost = createAsyncThunk(
 )
 
 export const deletePost = createAsyncThunk(
-	'posts/deletePost', async (postId) =>
+	'posts/deletePost', async ({postId}) =>
 	{
 		await Delete(`posts/${postId}`)
 		return postId;

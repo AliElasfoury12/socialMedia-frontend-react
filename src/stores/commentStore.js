@@ -1,6 +1,6 @@
 import {  createAsyncThunk, createSlice, isPending } from '@reduxjs/toolkit'
-import { Get, Post} from '../components/API/APIMethods'
-import { increasePostCount } from './postsStore'
+import { Delete, Get, Post} from '../components/API/APIMethods'
+import { changePostCount } from './postsStore'
 
 export const getComments = createAsyncThunk(
 	'comments/getComments',
@@ -22,7 +22,7 @@ export const createComment = createAsyncThunk(
 	async ({postId, content, authUser}, thunkAPI) => { 
 		const res =  await Post(`posts/${postId}/comments`, {content: content})	
 		res.comment.user = authUser
-		thunkAPI.dispatch(increasePostCount(postId))
+		thunkAPI.dispatch(changePostCount({postId: postId, amount: 1}))
 		return {...res, postId: postId}
 	}
 )
@@ -32,7 +32,19 @@ export const updateComment = createAsyncThunk(
 	async ({commentId, formData}, thunkAPI) => { 
 		const postId = thunkAPI.getState().comments.postId
 		
-		const res =  await Post(`comments/${commentId}/update`, formData)	
+		const res =  await Post(`comments/${commentId}`, formData)	
+		return {...res, postId: postId, commentId:commentId}
+	}
+)
+
+export const deleteComment = createAsyncThunk(
+	'comments/deleteComments',
+	async (commentId, thunkAPI) => { 
+		const postId = thunkAPI.getState().comments.postId
+		const res =  await Delete(`comments/${commentId}`)
+
+		thunkAPI.dispatch(changePostCount({postId: postId, amount: -1}))
+		
 		return {...res, postId: postId, commentId:commentId}
 	}
 )
@@ -65,11 +77,7 @@ export const commentsSlice = createSlice({
 		},
 		setEditId:  (state, {payload}) => {
 			state.editId = payload
-		},
-
-		deleteComment: (state, action) => {
-			state.comments = state.comments.filter((comment) => comment.id != action.payload)
-		},
+		}
 	},
 
 	extraReducers: (builder) => {
@@ -112,14 +120,22 @@ export const commentsSlice = createSlice({
 			state.editing = false
 			state.showList = false
 		})
+		.addCase(deleteComment.fulfilled, (state, {payload}) => {	
+			state.loading = false;	
+			
+			const postComments = state.comments[payload.postId]
+			state.comments[payload.postId].data = postComments.data.filter((comment) => comment.id != payload.commentId)
+			
+			state.showList = false
+		})
 		.addMatcher(
-			isPending(getComments, createComment, updateComment),(state) => {state.loading = true}
+			isPending(getComments, createComment, updateComment, deleteComment),(state) => {state.loading = true}
 		)
 	}
 
 })
 
-export const {deleteComment,setShow, setShowList, setEditing, setEditId, setPostId} = commentsSlice.actions
+export const {setShow, setShowList, setEditing, setEditId, setPostId} = commentsSlice.actions
 
 
 export default commentsSlice.reducer

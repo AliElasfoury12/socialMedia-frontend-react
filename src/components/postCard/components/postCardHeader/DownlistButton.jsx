@@ -2,13 +2,16 @@ import PropTypes from 'prop-types'
 import more from '../../../../assets/more.png'
 import { useState } from 'react'
 import EditPostModal from '../../../Posts/EditPostModal'
-import DeletePostConfirmModal from '../../../Posts/DeletePostConfirmModal'
 import DownList from './DownList'
+import DeleteConfirmModal from '../../../Posts/DeleteConfirmModal'
+import { useDispatch } from 'react-redux'
+import { deletePost } from '../../../../stores/postsStore'
 
 export default function DownlistButton ({post}) {
     const [showDownList, setShowDownList] = useState(false)
     const [showEditPost ,setShowEditPostModal] = useState(false)
     const [showConfirmDelte, setShowConfirmDelete] = useState(false)
+    const dispatch = useDispatch()
 
     return (
         <section>
@@ -31,10 +34,10 @@ export default function DownlistButton ({post}) {
                 show={showEditPost} 
                 setShow={setShowEditPostModal}/>
                 
-            <DeletePostConfirmModal
-                postId={post.id}
-                showConfirmDelte={showConfirmDelte}
-                setShowConfirmDelete={setShowConfirmDelete}/>
+            <DeleteConfirmModal
+                showConfirmDelete={showConfirmDelte}
+                setShowConfirmDelete={(s) => setShowConfirmDelete(s)}
+                confirmDeleteFunction={() => dispatch(deletePost({postId: post.id}))}/>
         </section>  
     )
 }
