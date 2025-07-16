@@ -48,10 +48,12 @@ export default function CreatePostModal({show, setShow}) {
             <form 
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-3 w-96 py-2">
+                    
                 <button 
                     className="bg-blue-800 text-white w-20 p-1 rounded-md self-end mr-2">
                         Post
                 </button>
+
                 <textarea 
                     id="create-post"
                     name="postContent"
@@ -59,14 +61,17 @@ export default function CreatePostModal({show, setShow}) {
                     className="resize-none h-40 focus:outline-none border-none p-2" 
                     placeholder='Share Your Thoughts...'>
                 </textarea>
+
                 {loading && <SmallLoadingSpinner/>}
                 {error && <p className="text-red-700 m-auto">{error}</p> }
+               
                 <label
                     htmlFor="images" 
                     className="bg-blue-800 text-white rounded-md w-28 py-1 hover:cursor-pointer text-center m-2">
                         Add Images +
                 </label>
                 <input name="images" onChange={handleChange} type="file" id="images" className="hidden" multiple/>
+
                 {form.images.length > 0 && <ImagesPreview images={form.images} setForm={setForm} /> }
             </form>
         </Modal>

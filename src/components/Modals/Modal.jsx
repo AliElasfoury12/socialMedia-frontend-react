@@ -20,7 +20,7 @@ export default function Modal({show, setShow, children}) {
 
     useEffect(() => {
         if(show) disableScrolling()
-        else enableScrolling
+        else enableScrolling()
     },[show])
   
     return (
