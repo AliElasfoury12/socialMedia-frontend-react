@@ -12,7 +12,7 @@ export default function ShowPosts () {
     
     return (
        <div className="m-auto">
-            <ShowLoop loading={loading} array={posts} LoopComponent={PostCard} exClass={'m-auto'}/>
+            <ShowLoop loading={loading} array={posts} LoopComponent={PostCard}/>
        </div>
     )
 }
