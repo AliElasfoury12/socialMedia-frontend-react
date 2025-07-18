@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types'
 
 export default function ShowIf ({children, show}) {
-    return (
-       <>
-        {show && children}
-       </>
-    )
+    return show && children
 }
 
 ShowIf.propTypes = {

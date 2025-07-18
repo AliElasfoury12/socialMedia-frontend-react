@@ -13,7 +13,6 @@ export default function Gallery ({images, showImagesGallery, setShowImagesGaller
                 src={postsStorage + image.img} />
         )
     })
-
     
     return (
         <Modal show={showImagesGallery} setShow={setShowImagesGallery}>

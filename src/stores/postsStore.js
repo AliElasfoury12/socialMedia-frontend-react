@@ -14,7 +14,7 @@ export const postsSlice = createSlice({
   
 	reducers: {
 		setPostImages: (state, {payload}) => {
-			let post = state.posts.find((post) => post.id == payload.id)
+			const post = state.posts.find((post) => post.id == payload.id)
 			post.post_imgs = payload.images
 		},
 		changePostCount: (state, {payload}) => {
@@ -55,6 +55,10 @@ export const postsSlice = createSlice({
 				return post
 			})			
         })
+		.addCase(deletePostImages.fulfilled, (state, {payload}) => {			
+			const post = state.posts.find((post) => post.id == payload.postId)	
+			post.post_imgs = post.post_imgs.filter(image => {! payload.images.includes(image)})
+        })
 		.addMatcher(
 			isFulfilled(createPost, SharePost),(state, {payload}) => {
 				state.posts.unshift(payload.post)
@@ -88,9 +92,8 @@ export const createPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
 	'posts/updatePost', async ({postId, formdata}) =>{
-		let payload = await Post(`posts/${postId}`, formdata) 
-		payload = {id : postId, ...payload};
-		return payload;
+		const payload = await Post(`posts/${postId}`, formdata) 
+		return {id : postId, ...payload}
 	}
 )
 
@@ -109,5 +112,12 @@ export const SharePost = createAsyncThunk(
 		res.post.shared_post = post
 		res.post.post_imgs = []
 		return res
+	}
+)
+
+export const deletePostImages = createAsyncThunk(
+	'posts/deletePostImages', async ({postId, toDeleteImages}) => {
+		await Delete(`delete-images/${postId}`, {images: toDeleteImages})
+		return {postId: postId, images: toDeleteImages}
 	}
 )

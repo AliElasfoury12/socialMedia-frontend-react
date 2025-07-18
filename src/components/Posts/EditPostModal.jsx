@@ -4,7 +4,7 @@ import ImagesPreview from "./createPost/ImagesPreview";
 import { useEffect, useState } from "react";
 import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { setPostImages, updatePost } from "../../stores/postsStore";
+import { deletePostImages, setPostImages, updatePost } from "../../stores/postsStore";
 import { Delete } from "../API/APIMethods";
 import { emptyObject } from '../../utils/objects'
 
@@ -36,7 +36,8 @@ export default function EditPostModal({ post, show, setShow }) {
     function deleteImages () {
         Delete(`delete-images/${post.id}`, {images: toDeleteImages})
         .then(() => {
-            dispatch(setPostImages({id: post.id, images: form.images}))
+            const images = post.post_imgs.filter(image => ! toDeleteImages.includes(image))
+            dispatch(setPostImages({id: post.id, images: images}))
         })
     }
 
@@ -47,7 +48,7 @@ export default function EditPostModal({ post, show, setShow }) {
             dispatch(updatePost({postId: post.id, formdata}))
             .then(() => {
                 setShow(false)
-                if(toDeleteImages.length) deleteImages()
+                if(toDeleteImages.length) dispatch(deletePostImages({postId: post.id, toDeleteImages}))
             })  
         }else{
             setError("Post Can't be Empty")
@@ -57,7 +58,13 @@ export default function EditPostModal({ post, show, setShow }) {
 
     useEffect(() => {
         document.getElementById('edit-post')?.focus()
-    }, [])
+    }, [show])
+
+    useEffect(() => {
+        console.log(post.post_imgs);
+        
+        setForm(f => ({...f, images: post.post_imgs}))
+    },[post])
 
     return (
         <Modal show={show} setShow={setShow} >

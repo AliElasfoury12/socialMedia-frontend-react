@@ -4,14 +4,13 @@ import { postsStorage } from '../../../stores/statices';
 
 export default function ImagesPreview({images, setForm, setToDeletedImages}) 
 {
-    function deleteImg (index) 
-    {        
+    function deleteImg (index) {        
         let image = images[index]
         if(image.img) setToDeletedImages(I => [...I, image])
         const newImages = images.filter((_, i) => i != index)        
         setForm(prev => ({...prev, images: newImages}))
     }
-    
+   
     const imagesPreview = images.map((image, index) => {        
         return ( 
             <div 
