@@ -57,7 +57,7 @@ export const postsSlice = createSlice({
         })
 		.addCase(deletePostImages.fulfilled, (state, {payload}) => {			
 			const post = state.posts.find((post) => post.id == payload.postId)	
-			post.post_imgs = post.post_imgs.filter(image => {! payload.images.includes(image)})
+			post.post_imgs = post.post_imgs.filter(image => !payload.images.some(deletedImage => deletedImage.id == image.id))
         })
 		.addMatcher(
 			isFulfilled(createPost, SharePost),(state, {payload}) => {

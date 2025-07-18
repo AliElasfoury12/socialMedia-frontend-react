@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import Gallery from './Gallery'
 import ImagesPreview from './ImagesPreview'
 import Content from './Content'
 
 export default function PostCardBody({ post }) {
-    const [images, setImages] = useState(post.post_imgs ?? [])
     const [showImagesGallery, setShowImagesGallery] = useState(false)
-
-    useEffect(() =>{        
-        setImages(post.post_imgs)
-    },[post])
-
+    const images = post.post_imgs
+  
     return (
         <div>
            <Content post={post}/>

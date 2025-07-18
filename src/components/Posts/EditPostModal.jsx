@@ -4,8 +4,7 @@ import ImagesPreview from "./createPost/ImagesPreview";
 import { useEffect, useState } from "react";
 import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePostImages, setPostImages, updatePost } from "../../stores/postsStore";
-import { Delete } from "../API/APIMethods";
+import { deletePostImages, updatePost } from "../../stores/postsStore";
 import { emptyObject } from '../../utils/objects'
 
 export default function EditPostModal({ post, show, setShow }) {
@@ -31,14 +30,6 @@ export default function EditPostModal({ post, show, setShow }) {
             formdata.append('image'+i, form.images[i])
         }
         return formdata
-    }
-
-    function deleteImages () {
-        Delete(`delete-images/${post.id}`, {images: toDeleteImages})
-        .then(() => {
-            const images = post.post_imgs.filter(image => ! toDeleteImages.includes(image))
-            dispatch(setPostImages({id: post.id, images: images}))
-        })
     }
 
     function handleSubmit(e) {
