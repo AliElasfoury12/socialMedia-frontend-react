@@ -14,7 +14,7 @@ export default function CommentsShow({post}) {
     return (
         <div 
             id='comments-show-div'
-            className='max-h-60 overflow-auto min-h-3 px-2 w-[27rem] '> 
+            className='max-h-60 overflow-auto min-h-3 px-2 w-[27rem]'> 
             <ShowLoop loading={loading} array={comments[post.id]?.data ?? [] } LoopComponent={CommentsCard} message={'No Comments Yet.'}/>
         </div>
     )

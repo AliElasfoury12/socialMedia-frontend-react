@@ -38,8 +38,8 @@ export default function EditPostModal({ post, show, setShow }) {
             const formdata = createFormData()
             dispatch(updatePost({postId: post.id, formdata}))
             .then(() => {
-                setShow(false)
                 if(toDeleteImages.length) dispatch(deletePostImages({postId: post.id, toDeleteImages}))
+                setShow(false)
             })  
         }else{
             setError("Post Can't be Empty")
@@ -51,11 +51,9 @@ export default function EditPostModal({ post, show, setShow }) {
         document.getElementById('edit-post')?.focus()
     }, [show])
 
-    useEffect(() => {
-        console.log(post.post_imgs);
-        
-        setForm(f => ({...f, images: post.post_imgs}))
-    },[post])
+    useEffect(() => {        
+        setForm(f => ({...f, postContent: post.content, images: post.post_imgs}))
+    },[show])
 
     return (
         <Modal show={show} setShow={setShow} >

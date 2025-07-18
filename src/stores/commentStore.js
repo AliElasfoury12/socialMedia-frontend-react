@@ -105,7 +105,7 @@ export const commentsSlice = createSlice({
 			const postComments = state.comments[payload.postId]
 							
 			if(postComments == undefined)
-				state.comments[payload.postId].data.push(payload.comment) 
+				state.comments[payload.postId] = {data: [payload.comment], cursor: '', end: false}
 			else
 				postComments.data.unshift(payload.comment)
 				

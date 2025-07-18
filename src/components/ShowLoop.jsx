@@ -9,7 +9,7 @@ export default function ShowLoop(props) {
     )
     
     return (
-       <div className={`mb-2 w-fit m-auto ${exClass}`}>
+       <div className={`mb-2 w-full ${exClass}`}>
             <div>
                 {showArray != '' ?
                     showArray :
@@ -20,7 +20,7 @@ export default function ShowLoop(props) {
             </div>
 
             <div 
-                className="h-14">
+                className="h-14 m-auto w-fit">
                 {loading &&  <BigLoadingSpinner/>} 
             </div> 
        </div>
