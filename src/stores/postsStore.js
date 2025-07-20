@@ -13,10 +13,6 @@ export const postsSlice = createSlice({
 	},
   
 	reducers: {
-		setPostImages: (state, {payload}) => {
-			const post = state.posts.find((post) => post.id == payload.id)
-			post.post_imgs = payload.images
-		},
 		changePostCount: (state, {payload}) => {
 			const post = state.posts.find((post) => post.id == payload.postId)
 			post.comments_count += payload.amount
@@ -65,7 +61,7 @@ export const postsSlice = createSlice({
 				state.loading = false
 		})
 		.addMatcher(
-			isPending(getPosts, createPost, updatePost, SharePost),(state) => {state.loading = true}
+			isPending(getPosts, createPost, updatePost),(state) => {state.loading = true}
 		)
 	}
 })
@@ -107,10 +103,12 @@ export const deletePost = createAsyncThunk(
 
 export const SharePost = createAsyncThunk(
 	'posts/SharePost', async ({postContent, post}, thunkAPI) => {
-		let res = await Post('share-post', {content: postContent, shared_post_id: post.id})
+		const res = await Post('share-post', {content: postContent, shared_post_id: post.id})
 		res.post.user = thunkAPI.getState().auth.authUser
 		res.post.shared_post = post
 		res.post.post_imgs = []
+		res.post.likes_count = 0
+		res.post.comments_count = 0
 		return res
 	}
 )

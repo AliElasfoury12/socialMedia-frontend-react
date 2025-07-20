@@ -6,7 +6,7 @@ import countRound from '../../../../../utils/CountRound'
 import { Get } from '../../../../API/APIMethods'
 
 export default function Likes({ post }) {
-    const [liked, setLiked] = useState(post.isLikedByAuthUser)
+    const [liked, setLiked] = useState(post.is_liked_by_auth_user)
     const [likesCount, setLikesCount] = useState(post.likes_count)
     const [isLikeButtonDisabled, setIsLikeButtonDisabled] = useState(false)
 
