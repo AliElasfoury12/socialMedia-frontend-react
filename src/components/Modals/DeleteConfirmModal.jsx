@@ -3,6 +3,11 @@ import Modal from './Modal'
 
 export default function DeleteConfirmModal({ showConfirmDelete, setShowConfirmDelete, confirmDeleteFunction }) {
 
+    function onConfirmButtonClick () {
+        confirmDeleteFunction()
+        setShowConfirmDelete(false)
+    }
+
  return(
     <Modal show={showConfirmDelete} setShow={setShowConfirmDelete}>
         <div className='w-96 h-40 flex flex-col items-center justify-center gap-4'>
@@ -10,7 +15,7 @@ export default function DeleteConfirmModal({ showConfirmDelete, setShowConfirmDe
             <div className='flex gap-4'>
                 <button 
                     className="bg-red-500 text-white rounded-full py-1 w-32"
-                    onClick={confirmDeleteFunction} >
+                    onClick={onConfirmButtonClick} >
                     Confirm
                 </button>
                 <button 
