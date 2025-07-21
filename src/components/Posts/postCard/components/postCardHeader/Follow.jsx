@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { follow } from '../../../../../stores/profileStore'
-import ShowIf from '../../../../ShowIf'
+import ShowIf from '../../../../Common/ShowIf'
 
 export default function Follow({id, follows, ClassName}) {
     const dispatch = useDispatch()

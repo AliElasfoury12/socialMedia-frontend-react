@@ -1,7 +1,7 @@
 import { X } from "lucide-react"
 import { useEffect } from "react"
 import PropTypes from 'prop-types'
-import ShowIf from '../ShowIf'
+import ShowIf from '../Common/ShowIf'
 
 export default function Modal({show, setShow, children}) {
 

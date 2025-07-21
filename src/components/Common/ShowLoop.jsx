@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import BigLoadingSpinner from './LoadingSpinner/LoadingSpinner'
+import BigLoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 export default function ShowLoop(props) {
     const { loading, LoopComponent, array, message, exClass = '' } = props

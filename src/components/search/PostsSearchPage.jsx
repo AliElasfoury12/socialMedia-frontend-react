@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setLoading, handelPostsSearch, setPostsPage } from "../../stores/searchStore"
 import useInfinteScroll from "../../useInfinteScroll"
-import ShowLoop from "../../components/ShowLoop"
+import ShowLoop from "../../components/Common/ShowLoop"
 
 export default function PostsSearchPage() {
     let dispatch = useDispatch()

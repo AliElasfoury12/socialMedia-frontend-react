@@ -5,7 +5,7 @@ import { setShowList, setEditing, setEditId } from '../../../stores/commentStore
 import DeleteConfirmModal from '../../Modals/DeleteConfirmModal'
 import { useState } from 'react'
 import { deleteComment} from '../../../stores/commentStore'
-import ShowIf from '../../ShowIf'
+import DownList from '../../Common/DownList'
 
 export default function CommentDownList({ comment }) {
     const dispatch = useDispatch()
@@ -13,7 +13,7 @@ export default function CommentDownList({ comment }) {
     const { editing, editId, showList } = useSelector(state => state.comments)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     
-    function showListFun  (e) {
+    function showListFun (e) {
         e.stopPropagation()
         dispatch(setEditId(comment.id))
         dispatch(setShowList(!showList) )
@@ -34,21 +34,12 @@ export default function CommentDownList({ comment }) {
                     src={more} />
             } 
             
-            <ShowIf show={showList && !editing && comment.id == editId}>
-                <div 
-                    onClick={(e) => e.stopPropagation()}
-                    className="absolute bg-blue-500 rounded-md h-fit p-2 right-0 top-6 flex flex-col z-10 down">
-                    <button 
-                        className="hover:bg-blue-400 rounded-full px-5" 
-                        onClick={() => dispatch(setEditing(true))}>
-                            Edit
-                    </button>
-                    <button onClick={onDeleteButtonClick} 
-                        className="hover:bg-blue-400 rounded-full px-2">
-                        Delete
-                    </button>
-                </div>
-            </ShowIf>
+            <DownList
+                postion={'right-0 top-6'}
+                showList={showList && !editing && comment.id == editId}
+                onEdit={() => dispatch(setEditing(true))}
+                onDelete={onDeleteButtonClick}
+            />
             
             <DeleteConfirmModal 
 				showConfirmDelete={showConfirmDelete} 

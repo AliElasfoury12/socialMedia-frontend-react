@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { handelSearch, setLoading, setPage } from "../../stores/searchStore"
 import UserCard from "./UserCard"
 import useInfinteScroll from "../../useInfinteScroll"
-import ShowLoop from "../../components/ShowLoop"
+import ShowLoop from "../../components/Common/ShowLoop"
 
 export default function UsersSearchPage() {
     let dispatch = useDispatch()

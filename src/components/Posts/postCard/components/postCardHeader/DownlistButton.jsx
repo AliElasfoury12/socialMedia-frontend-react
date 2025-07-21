@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import more from '../../../../../assets/more.png'
 import { useState } from 'react'
 import EditPostModal from '../../../EditPostModal'
-import DownList from './DownList'
+import DownList from '../../../../Common/DownList'
 import DeleteConfirmModal from '../../../../Modals/DeleteConfirmModal'
 import { useDispatch } from 'react-redux'
 import { deletePost } from '../../../../../stores/postsStore'
@@ -13,6 +13,16 @@ export default function DownlistButton ({post}) {
     const [showConfirmDelte, setShowConfirmDelete] = useState(false)
     const dispatch = useDispatch()
 
+    function onEditDownlistButtonFun () {
+        setShowDownList(false)
+        setShowEditPostModal(true)
+    }
+    
+    function onDeleteDownlistButtonFun  () {
+        setShowConfirmDelete(true)
+        setShowDownList(false)
+    }
+
     return (
         <section>
             <img 
@@ -20,15 +30,12 @@ export default function DownlistButton ({post}) {
                 onClick={()=>(setShowDownList(!showDownList))}
                 src={more}/> 
             
-
-            {showDownList &&
-                <DownList 
-                    post={post} 
-                    setShowDownList={setShowDownList} 
-                    setShowEditPostModal={setShowEditPostModal}
-                    setShowConfirmDelete={setShowConfirmDelete}/>
-            }
-
+            <DownList 
+                postion={'-right-4 top-8'}
+                showList={showDownList}
+                onEdit={onEditDownlistButtonFun}
+                onDelete={onDeleteDownlistButtonFun}/>
+            
             <EditPostModal 
                 post={post} 
                 show={showEditPost} 

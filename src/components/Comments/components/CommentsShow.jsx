@@ -1,6 +1,6 @@
 import CommentsCard from './CommentsCard/CommentsCard'
 import useInfinteScroll from '../../../useInfinteScroll'
-import ShowLoop from '../../../components/ShowLoop'
+import ShowLoop from '../../../components/Common/ShowLoop'
 import { useDispatch, useSelector } from 'react-redux'
 import { getComments } from '../../../stores/commentStore'
 import PropTypes from 'prop-types'

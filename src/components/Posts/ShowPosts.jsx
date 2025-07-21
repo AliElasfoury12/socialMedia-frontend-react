@@ -2,7 +2,7 @@ import PostCard from "./postCard/PostCard"
 import { useDispatch, useSelector } from "react-redux"
 import { getPosts } from '../../stores/postsStore' 
 import useInfinteScroll from "../../useInfinteScroll"
-import ShowLoop from "../../components/ShowLoop"
+import ShowLoop from "../../components/Common/ShowLoop"
 
 export default function ShowPosts () {
     const dispatch = useDispatch()
