@@ -1,16 +1,10 @@
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import ShowIf from '../../../../Common/ShowIf'
-import { useEffect } from 'react'
 
 export default function Follow({userId, follows, ClassName, followFunction}) {
     const { authUser } = useSelector(state => state.auth)
-
-    useEffect(() => {
-        console.log(follows);
-        
-    },[follows])
-   
+ 
     return (
         <ShowIf show={authUser.id != userId}>
             <button 
