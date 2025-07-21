@@ -43,7 +43,7 @@ export default function ProfileHeader() {
                 </Link> :
                     
                 <Follow 
-                id={user.id} 
+                userId={user.id} 
                 follows={following} 
                 ClassName={'bg-blue-600 rounded-md w-24 py-1 mt-7 text-white'}/>
             }

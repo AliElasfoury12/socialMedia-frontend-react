@@ -1,16 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
-import { follow } from '../../../../../stores/profileStore'
 import ShowIf from '../../../../Common/ShowIf'
+import { useEffect } from 'react'
 
-export default function Follow({id, follows, ClassName}) {
-    const dispatch = useDispatch()
+export default function Follow({userId, follows, ClassName, followFunction}) {
     const { authUser } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        console.log(follows);
+        
+    },[follows])
    
     return (
-        <ShowIf show={authUser.id != id}>
+        <ShowIf show={authUser.id != userId}>
             <button 
-                onClick={() => dispatch(follow(id))}
+                onClick={followFunction}
                 className={ClassName}>
                 {follows ? 'Following' : ' Follow'}
             </button> 
@@ -19,7 +23,8 @@ export default function Follow({id, follows, ClassName}) {
 }
 
 Follow.propTypes = {
-    id: PropTypes.number,
+    followFunction: PropTypes.func,
+    userId: PropTypes.number,
     follows: PropTypes.bool,
     ClassName:  PropTypes.string
 }

@@ -4,16 +4,18 @@ import { Link } from 'react-router-dom'
 import userLogo from '../../../../../assets/user.png'
 import { timeAgo } from '../../../../../utils/Moments'
 import Follow from './Follow'
+import { useDispatch } from 'react-redux'
+import { followPostUser } from '../../../../../stores/postsStore'
 
 export default function PostCardHeaderLeft({post}) {
-    const storage = profileStorage
     const user = post.user
+    const dispatch = useDispatch()
 
     return (
         <section className="flex ">
             <img 
                 className="w-12 h-12 border-blue-950  border-2 p-px rounded-full" 
-                src={user.img ? storage + user.img : userLogo} /> 
+                src={user.img ? profileStorage + user.img : userLogo} /> 
         
                 <div 
                     className='flex flex-col ml-2'>
@@ -33,8 +35,9 @@ export default function PostCardHeaderLeft({post}) {
                 </div>
 
                 <Follow 
-                    id={user.id} 
-                    follows={user.follows} 
+                    userId={user.id} 
+                    follows={user.isAuthFollows} 
+                    followFunction={() => dispatch(followPostUser(user.id))}
                     ClassName={'self-start ml-3 mt-px text-blue-950'}/>                
         </section> 
     )

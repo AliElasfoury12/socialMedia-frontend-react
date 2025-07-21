@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
 import { Delete, Get, Post } from '../components/API/APIMethods'
-import { follow } from './profileStore'
 import { emptyObject } from '../utils/objects'
+import { followUser } from './profileStore'
 
 export const postsSlice = createSlice({
 	name: 'posts',
@@ -29,7 +29,7 @@ export const postsSlice = createSlice({
 			state.loading = false
 		})
 		.addCase(updatePost.fulfilled, (state, {payload}) => {			
-			let post = state.posts.find((post) => post.id == payload.id)			
+			const post = state.posts.find((post) => post.id == payload.id)			
 			payload = payload.post
 			post.content = payload.content
 			post.post_imgs.push(...payload.post_imgs)
@@ -38,16 +38,14 @@ export const postsSlice = createSlice({
 		.addCase(deletePost.fulfilled, (state, {payload}) => {			
 			state.posts = state.posts.filter((post) => post.id !== payload)
 		})
-		.addCase(follow.fulfilled, (state, {payload}) => {			
+		.addCase(followPostUser.fulfilled, (state, {payload}) => {						
 			state.posts = state.posts.map((post) => {
-				if(post.user.id == payload.id) {
-					post.user.follows = payload.follows
-				}
+				if(post.user.id == payload.userId) 
+					post.user.isAuthFollows = payload.follows
 				
-				if( ( post.shared_post != undefined && !emptyObject(post.shared_post) ) && post.shared_post.user.id == payload.id) {
-					post.shared_post.user.follows = payload.follows
-				}
-
+				if( ( post.shared_post != undefined && !emptyObject(post.shared_post) ) && post.shared_post.user.id == payload.userId) 
+					post.shared_post.user.isAuthFollows = payload.follows
+				
 				return post
 			})			
         })
@@ -66,7 +64,7 @@ export const postsSlice = createSlice({
 	}
 })
 
-export const {setPostImages, removePost, followPostUser, changePostCount} = postsSlice.actions
+export const {setPostImages, removePost, changePostCount} = postsSlice.actions
 
 export default postsSlice.reducer
 
@@ -103,7 +101,7 @@ export const deletePost = createAsyncThunk(
 
 export const SharePost = createAsyncThunk(
 	'posts/SharePost', async ({postContent, post}, thunkAPI) => {
-		const res = await Post('share-post', {content: postContent, shared_post_id: post.id})
+		const res = await Post(`posts/${post.id}/share`, {content: postContent})
 		res.post.user = thunkAPI.getState().auth.authUser
 		res.post.shared_post = post
 		res.post.post_imgs = []
@@ -117,5 +115,12 @@ export const deletePostImages = createAsyncThunk(
 	'posts/deletePostImages', async ({postId, toDeleteImages}) => {
 		await Delete(`delete-images/${postId}`, {images: toDeleteImages})
 		return {postId: postId, images: toDeleteImages}
+	}
+)
+
+export const followPostUser = createAsyncThunk(
+	'posts/follow-post-user', async (userId, thunkAPI) => {
+		const res = await thunkAPI.dispatch(followUser(userId))
+		return {...res.payload, userId: userId}
 	}
 )

@@ -8,11 +8,11 @@ export const profileUser = createAsyncThunk(
     }
 )
 
-export const follow = createAsyncThunk(
-    'profile/follow',
-    async (id) => {
-        const res = await Get(`follow/${id}`)
-        return {...res, id: id}
+export const followUser = createAsyncThunk(
+    'profile/follow-user',
+    async (userId) => {
+        const res = await Get(`follow/${userId}`)
+        return {...res, userId: userId}
     }
 )
 
