@@ -5,7 +5,7 @@ import NavLeft from "./NavLeft"
 import { useSelector } from "react-redux"
 
 export default function Header() {
-    let { authUser } = useSelector(state => state.auth)
+    const { authUser } = useSelector(state => state.auth)
     
     return (
         <header 
@@ -23,7 +23,7 @@ export default function Header() {
                    {authUser?  <SearchBar/> : ''}               
                 </div>
                     
-                {authUser? 
+                {authUser ? 
                 <>
                     <Notification/>
                     <NavLeft/>

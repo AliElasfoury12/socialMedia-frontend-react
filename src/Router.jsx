@@ -18,21 +18,38 @@ import Test from "./components/Test";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 
-let router = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: '/login',
         element: <LoginPage />
-    }, {
+    },{
         path: '/register',
         element: <RegisterPage />
-    }, {
+    },{
         path: '/',
         element: <HomePage />
     },{
+        path: '/user/profile/:userId/',
+        element: <ProfilePage />,
+        children: [
+            {
+                path: 'posts',
+                element: <UserPosts/>,
+            },
+            {
+                path: 'profile-pictures',
+                element: <ShowProfilePictures/>,
+            }
+        ]
+    },{
         path: '/test',
         element: <Test /> 
-    }/*{
+    }
+    
+    
+    /*{
         path: '/home',
         element: <DefaultLayout/>,
         children: [

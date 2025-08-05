@@ -28,5 +28,5 @@ export default function PostCard({element: post}) {
 }
 
 PostCard.propTypes = {
-   element: PropTypes.object
+    element: PropTypes.object,
 }

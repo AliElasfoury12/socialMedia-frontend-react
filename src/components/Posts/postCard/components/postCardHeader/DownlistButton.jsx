@@ -26,12 +26,12 @@ export default function DownlistButton ({post}) {
     return (
         <section>
             <img 
-                className="hover:bg-slate-400 rounded-full p-1 h-6 w-6" 
+                className="hover:bg-slate-400 rounded-full p-1 h-6 w-6 " 
                 onClick={()=>(setShowDownList(!showDownList))}
                 src={more}/> 
             
             <DownList 
-                postion={'-right-4 top-8'}
+                postion={'-right-4 top-6'}
                 showList={showDownList}
                 onEdit={onEditDownlistButtonFun}
                 onDelete={onDeleteDownlistButtonFun}/>

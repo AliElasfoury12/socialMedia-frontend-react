@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 import user from '../../assets/user.png'
 
 export default function NavLeft() {
-    let { authUser } = useSelector(state => state.auth)
-    let [showList, setShowList] = useState(false)
-    let storage = profileStorage
+    const { authUser } = useSelector(state => state.auth)
+    const [showList, setShowList] = useState(false)
 
     window.addEventListener('click',  (e) => {
         let profileImg = document.getElementById("profile-img")
@@ -23,7 +22,7 @@ export default function NavLeft() {
                     id="profile-img"
                     onClick={() => setShowList(!showList)}
                     className="w-8 h-8 border-black border-2 rounded-full mx-5"
-                    src={authUser.img ? storage + authUser.img : user }
+                    src={authUser.img ?  profileStorage + authUser.img : user }
                 />
 
                 <Link 

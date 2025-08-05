@@ -15,7 +15,6 @@ export default  function EditComment({ comment }) {
     
     return (
         <form 
-            onClick={(e) => e.stopPropagation()}
             className='relative w-full'
             onSubmit={handleSubmit} >
             <textarea 

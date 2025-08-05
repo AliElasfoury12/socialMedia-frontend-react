@@ -30,7 +30,7 @@ export default function CommentsButton({post}) {
         <div>
             <button
                 onClick={onCommentButtonClick}
-                className='flex bg-blue-500 w-28 justify-center items-center h-7 rounded-full py-4'>
+                className='flex bg-blue-500 w-28 justify-center items-center h-7 rounded-full py-4 z-20'>
                 <MessageCircle className='w-7 mr-1'/>
                 <p >{countRound(post.comments_count)}</p>
             </button>

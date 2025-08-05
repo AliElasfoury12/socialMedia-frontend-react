@@ -23,7 +23,7 @@ export default function CreateComment({post}) {
 	}, [])
 
 	return (
-		<form 
+		<form
 			onSubmit={submitComment} 
 			className='relative w-full px-1'>
 			<textarea 

@@ -1,10 +1,14 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isPending } from '@reduxjs/toolkit'
 import { Get } from '../components/API/APIMethods'
 
-export const profileUser = createAsyncThunk(
-    'profile/profileuser',
-    async (id) => {
-        return await Get(`users/${id}`)
+export const getProfileUser = createAsyncThunk(
+    'profile/getProfileUser',
+    async (userId, thunkAPI) => {
+        const profileStore = thunkAPI.getState().profile
+        const user = profileStore.usersData[userId]
+        
+        if(user) return {user: user} 
+        return await Get(`users/${userId}`) 
     }
 )
 
@@ -16,11 +20,22 @@ export const followUser = createAsyncThunk(
     }
 )
 
-export let userPosts = createAsyncThunk(
+export const getUserPosts = createAsyncThunk(
     'profile/userPosts',
-    async ({id, page}) => {
-        let res = await Get(`user-posts/${id}?page=${page}`)
-        return {posts: res.posts, page: res.page, lastPage: res.lastPage, id}
+    async (userId, thunkAPI) => {                
+        const profileStore = thunkAPI.getState().profile
+        const userData = profileStore.usersPosts[userId]
+
+        if (profileStore.loading) return
+        thunkAPI.dispatch(setLoading(true))
+
+        if(userData?.end) return {userId: userId}
+
+        let page = 1
+        if(userData) page = userData.page
+        
+        const res = await Get(`user-posts/${userId}?page=${page}`)
+        return {...res, userId: userId}
     }
 )
 
@@ -28,89 +43,53 @@ export const profileSlice = createSlice({
     name: 'profile',
 
     initialState: {
-      user: [],
-      usersData: [],
-      userData:[],
-      posts: [],
-      loading: false,
-      page: 1,
-      users: []
+        usersData: [],
+        user: {},
+        usersPosts: {},
+        loading: false,
     },
 
-    reducers: {
-        setUserData: (state, {payload}) => {
-            if(payload){
-                state.page = payload.page
-                state.userData = payload
-            }else{
-                state.page = 1
-            }  
-        },
-
-        setLoading: (state, {payload}) => {
-            state.loading = payload
-        },
-
-        setEnd: (state, {payload}) => {
-            state.end = payload
-        },
-
-        resetPage: state => {
-            state.page = 1
-        },
-
-        setPage: state => {
-            state.page += 1
-        },
-
+    reducers : {
+		setLoading: (state, {payload}) => {
+			state.loading = payload
+		}
     },
 
     extraReducers: (builder) => {
-        builder.addCase(profileUser.fulfilled, (state, {payload})  => {
-            state.user = payload
-            /*
-            let exists = state.users.find((user) => user.id == payload.id) 
-
-            if(exists) {
-                state.user = exists
-            }else{
-                state.user = payload
-                state.users.push(payload)   
-            }  
-                */      
+        builder.addCase(getProfileUser.fulfilled, (state, {payload})  => { 
+            const user = state.usersData[payload.user.id]
+            if(user == undefined) state.usersData[payload.user.id] = payload.user  
+            state.user = payload.user
         })
-        .addCase(userPosts.fulfilled, (state, {payload})=> {
-            let exists = state.usersData?.find((userData) => userData?.user.id == payload.id ) 
-            
-            if(payload.posts == '' && exists){
-                exists.end = true
-            }
-            else{
+        .addCase(getUserPosts.fulfilled, (state, {payload})=> {
+            if (payload == undefined) {
+                state.loading = false 
+                return 
+            } 
+            let userPosts = state.usersPosts[payload.userId]
 
-                if(!exists && payload.posts != '') {
-                    state.userData = {   
-                        user: state.user, 
-                        posts: [...payload.posts],
-                        page: payload.page, 
-                        lastPage: payload.lastPage, 
-                        end: false
-                    }
-
-                    state.page = payload.page
-                    state.usersData.push(state.userData)
-
-                }else if(exists) {
-                    exists.page = payload.page
-                    exists.posts.push(...payload.posts)
+            if(userPosts == undefined){
+                userPosts = {posts: payload.posts, page: 1, lastPage: payload.lastPage, end: false}
+                state.usersPosts[payload.userId] = userPosts
+            }else {
+                if(userPosts.end) {
+                    state.loading = false
+                    return
                 }
+                userPosts.posts.push(...payload.posts)
             }
+            
+            userPosts.page++
 
+            if(userPosts.page >= userPosts.lastPage) userPosts.end = true
             state.loading = false
-
         })
+        .addMatcher(
+			isPending(getProfileUser),(state) => {state.loading = true}
+		)
     }
 })
 
-export const { setUserData, setLoading, setEnd, resetPage, setPage, lastPage } = profileSlice.actions
+export const {setLoading} = profileSlice.actions
 
 export default profileSlice.reducer

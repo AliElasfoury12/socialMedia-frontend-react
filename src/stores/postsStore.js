@@ -9,23 +9,27 @@ export const postsSlice = createSlice({
 	initialState: {
 		posts: [],
 		loading: false,
-		cursor: '' ,
+		cursor: '',
 	},
   
 	reducers: {
 		changePostCount: (state, {payload}) => {
 			const post = state.posts.find((post) => post.id == payload.postId)
 			post.comments_count += payload.amount
+		},
+		setLoading: (state, {payload}) => {
+			state.loading = payload
 		}
 	},
 
 	extraReducers: (builder) => {
-		builder.addCase(getPosts.fulfilled, (state, {payload}) => {			
-			if(payload == undefined) state.cursor = null
-			else {		
-				state.cursor = payload.nextCursor		
-				state.posts.push(...payload.posts)
+		builder.addCase(getPosts.fulfilled, (state, {payload}) => {	
+			if(!payload) {
+				state.loading = false
+				return
 			}
+			state.cursor = payload.nextCursor		
+			state.posts.push(...payload.posts)
 			state.loading = false
 		})
 		.addCase(updatePost.fulfilled, (state, {payload}) => {			
@@ -59,20 +63,22 @@ export const postsSlice = createSlice({
 				state.loading = false
 		})
 		.addMatcher(
-			isPending(getPosts, createPost, updatePost),(state) => {state.loading = true}
+			isPending(createPost, updatePost),(state) => {state.loading = true}
 		)
 	}
 })
 
-export const {changePostCount} = postsSlice.actions
+export const {changePostCount, setLoading} = postsSlice.actions
 
 export default postsSlice.reducer
 
 export const getPosts = createAsyncThunk(
-	'posts/getPosts', async (_,thunkAPI) =>  {
-		const state = thunkAPI.getState().posts		
-		if(state.cursor == null) return
-		return await Get('posts?cursor=' + state.cursor)
+	'posts/getPosts', async (_,thunkAPI) =>  {		
+		const postsStore = thunkAPI.getState().posts
+		if(postsStore.loading) return
+		thunkAPI.dispatch(setLoading(true))
+		if(postsStore.cursor == null) return
+		return await Get('posts?cursor=' + postsStore.cursor)
 	}
 )
 

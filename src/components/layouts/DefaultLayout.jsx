@@ -17,5 +17,5 @@ export default function DefaultLayout ({children}) {
 }
 
 DefaultLayout.propTypes = {
-    children: PropTypes.array,
+    children: PropTypes.any,
 }

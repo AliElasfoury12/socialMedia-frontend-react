@@ -13,8 +13,7 @@ export default function CommentDownList({ comment }) {
     const { editing, editId, showList } = useSelector(state => state.comments)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     
-    function showListFun (e) {
-        e.stopPropagation()
+    function showListFun () {
         dispatch(setEditId(comment.id))
         dispatch(setShowList(!showList) )
     }
@@ -25,7 +24,9 @@ export default function CommentDownList({ comment }) {
     }
 
    return (
-        <div className='mt-2 ml-1 relative'>
+        <div 
+            onClick={(e) => e.stopPropagation()}
+            className='mt-2 ml-1 relative'>
 
             {authUser.id == comment.user.id && !editing &&
                 <img 
