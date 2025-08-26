@@ -1,65 +1,49 @@
 import PropTypes from 'prop-types'
-import { Fragment, useEffect} from 'react'
+import { Fragment, useEffect, useRef} from 'react'
 import {Valdatior } from './FormValdation'
 import { useState } from 'react'
 import { emptyObject} from '../../utils/objects'
+import { firstToUpper } from '../../utils/strings'
 
 export default function Form(props) {
-    let {fields, submit , styles ={}, validation = {}, reset = true, errors = {}, children} = props
-    let id = 'FORM-' + Math.floor(Math.random() * 100) 
-    let [Errors, setErrors] = useState(errors)
+    const {fields, submit , styles ={}, validation = {}, reset = false, errors = {}, children} = props
+    const [Errors, setErrors] = useState(errors)
+    const formId = 'FORM-' + Math.floor(Math.random() * 100) 
+    const form = useRef({})
+    const valdatior = new Valdatior
+    
+    function handleFormInput (e, form, valdatior) {
+        const input = e.target
 
-    useEffect(() => {
-        let form = document.getElementById(id)
-        let inputs = form.querySelectorAll('input, textarea')
-        let result = {}
-        let valdatior = new Valdatior
+        if(input.type == 'file'){ 
+            for (let i = 0; i < input.files.length; i++) {
+                form[input.name+i] = input.files[i]   
+            } 
+        }else
+            form[input.name] = input.value  
+                
+        checkErrors(form, valdatior)
+    }
 
-        inputs.forEach((input) => {
-            result[input.name] = input.value
+    function handleFormSubmit(e, form, valdatior) {
+        e.preventDefault()
+        checkErrors(form, valdatior)
 
-            input.addEventListener("change", () => {
-                if(input.type == 'file'){ 
-                    for (let i = 0; i <input.files.length; i++) {
-                        result[input.name+i] = input.files[i]   
-                    } 
-                }else{
-                    result[input.name] = input.value  
-                }
-                checkErrors(result, valdatior)
-            })
-        })
-        
-        
-        form.addEventListener("submit", (e) => {
-            e.preventDefault()
-            checkErrors(result, valdatior)
-
-            if(emptyObject(Errors)) { 
-                submit.fun(result)                
-                if(reset) form.reset()
-            }
-        })
-
-    },[])
-
-    function checkErrors(result, valdatior) {
-        if(!emptyObject(validation)){
-            let errors = valdatior.formValdaite(result, validation)  
-            setErrors(errors) 
+        if(emptyObject(Errors)) { 
+            submit.fun(form) 
+            const formElement = document.getElementById(formId)              
+            if(reset && formElement) formElement.reset()
         }
     }
 
-    useEffect (() => {
-        setErrors(errors) 
-    }, [errors])
-
- 
-    function firstToUpper (string) {
-        return string[0].toUpperCase() + string.slice(1)
+    function checkErrors(form, valdatior) {
+        if(!emptyObject(validation)){
+            const _errors = valdatior.formValdaite(form, validation)  
+            setErrors(_errors) 
+        }
     }
 
-    let inputs = fields.map((f, index) => {        
+    const inputs = fields.map((f, index) => {        
         return (
            <Fragment key={index}>
                 {f.label != 'no' ?
@@ -92,10 +76,17 @@ export default function Form(props) {
            </Fragment>
         )
     })
-
+    
+    useEffect(() => {
+        setErrors(errors)
+    },[errors])
 
     return (
-        <form className={`flex flex-col ${styles.form ?? 'w-96'}`} id={id}>
+        <form 
+            onSubmit={(e) => handleFormSubmit(e, form.current, valdatior)}
+            onChange={(e) => handleFormInput (e, form.current, valdatior)}
+            className={`flex flex-col ${styles.form ?? 'w-96'}`} 
+            id={formId}>
             {submit.position == 'top' ?  '' : inputs}
             {submit.position == 'top' ?  '' : children}
             <button type='submit' className={`mt-2 ${styles.submit ?? ''}`}>

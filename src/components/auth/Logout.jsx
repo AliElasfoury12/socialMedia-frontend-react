@@ -9,7 +9,7 @@ export default function Logout() {
   let navigate = useNavigate()
 
   let logout = () => {
-    Get('logout')
+    Get('auth/logout')
     .then(() => {
         dispatch(setAuthUser(''))
         dispatch(setToken(''))

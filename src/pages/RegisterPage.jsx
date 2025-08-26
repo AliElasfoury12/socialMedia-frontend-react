@@ -1,29 +1,18 @@
-import { useState} from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Form from "../components/Form/Form"
-import { Post } from "../components/API/APIMethods"
 import GuestLayout from "../components/layouts/GuestLayout"
+import { useDispatch, useSelector } from "react-redux"
+import { register } from "../stores/authStore"
 
 export default function RegisterPage () {
-    const navigate = useNavigate()
-    const [errors, setErrors] = useState({})
+    const dispatch = useDispatch()
+    const { errors } = useSelector(state => state.auth)
 
     const validation = {
         name: 'required|min:4',
         email: 'required|min:4|email',
         password: 'required|min:4',
         password_confirmation: 'required|min:4'
-    }
-
-    function register (form)
-    {
-        Post('register', form)
-        .then(() => {
-            navigate('/login')
-        })
-        .catch(({errors}) => {
-            errors.email && setErrors({email: errors.email})   
-        })
     }
 
     return (
@@ -37,10 +26,10 @@ export default function RegisterPage () {
                         {name: 'password_confirmation', type: 'password', placeholder: 'Confirm Password', label: 'Password Confirmation'}
                     ]} 
                     styles={{submit: 'bg-blue-600 text-white rounded-lg py-1'}}
-                    submit={{value :'Register', fun: register}}
+                    submit={{value :'Register', fun: (form) => dispatch(register(form))}}
                     validation={validation}
                     errors={errors}
-                    reset={false}/>
+                />
                 
                 <p className="flex gap-4 self-start mt-4 ml-2">
                     <span>Have Acount already!</span>
