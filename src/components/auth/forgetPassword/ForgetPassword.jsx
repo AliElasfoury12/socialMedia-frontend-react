@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom"
 import BigLoadingSpinner from "../../LoadingSpinner/LoadingSpinner"
 
 export default function ForgetPassword() {
-    let[email,setEmail] = useState('')
-    let [error, setError] = useState('')
-    let navigate = useNavigate()
-    let [loading, setLoading] = useState(false)
+    const [email,setEmail] = useState('')
+    const [error, setError] = useState('')
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     let sendRequset = () => {
         Post('forgetPassword',{email: email})
@@ -42,10 +42,11 @@ export default function ForgetPassword() {
                 className="text-blue-700 text-2xl">
                 Find Your Account
             </h1>
-            <p 
+
+            <label
                 className="my-5">
                 Please Enter Your Email to Find Your Account 
-            </p>
+            </label>
             <input 
                 onChange={(e) => {setEmail(e.target.value)}}
                 className="w-96 h-12 px-2 border border-1 border-blue-600 rounded-md"
@@ -55,11 +56,13 @@ export default function ForgetPassword() {
             <p className="text-red-800 mt-2">
                 {error}
             </p>
-            <button 
+            <button
+                type="submit" 
                 onClick={searchEmail}   
                 className="bg-blue-600 rounded-md mt-4 w-24 py-1 self-end text-white">
                 Search
             </button>
+            
             <div
                 className="mt-5">
                 {loading && <BigLoadingSpinner/>}

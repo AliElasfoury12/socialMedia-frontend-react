@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, isPending, isRejected } from "@reduxjs/toolkit"
 import { storage } from "../utils/storage"
 import { api, Post } from "../components/API/APIMethods"
 import router from "../Router"
@@ -30,7 +30,8 @@ export const authSlice = createSlice({
 	initialState: {
 		authUser: storage.get('user'),
 		token: storage.get('token'),
-		errors: {}
+		errors: {}, 
+		loading: false
 	},
 
 	reducers: {
@@ -44,16 +45,20 @@ export const authSlice = createSlice({
 
 	extraReducers: (builder) => {
 		builder.addCase(login.fulfilled, (state, {payload}) => {
+			state.loading = false
 			state.authUser = payload.user
 			state.token = payload.token
 			storage.save('user', payload.user)
             storage.save('token', payload.token)
 			api.setToken(payload.token)
             router.navigate('/')
-		}).addCase(register.fulfilled, () => {
+		}).addCase(register.fulfilled, (state) => {
+			state.loading = false
             router.navigate('/login')
-		})
-		.addMatcher(isRejected(login, register) ,(state, {payload}) => {
+		}).addMatcher(isPending(login, register) ,(state) => {
+			state.loading = true
+		}).addMatcher(isRejected(login, register) ,(state, {payload}) => {
+			state.loading = false
 			state.errors = payload.errors
 		})
 	}
