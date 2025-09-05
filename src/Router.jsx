@@ -1,4 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
+import UserPosts from "./components/user/UserPosts";
+import ShowProfilePictures from "./components/user/ٍShowProfilePictures";
+import Test from "./components/Test";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/auth/LoginPage.jsx";
+import RegisterPage from "./pages/auth/RegisterPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import FindUser from "./pages/auth/FindUser.jsx";
+import ForgetPasswordEnterOTP from "./pages/auth/ForgetPasswordEnterOTP.jsx";
+
 import EditUser from "./components/user/EditUser";
 import Profile from "./components/user/Profile";
 import Settings from "./components/settings/Settings";
@@ -7,18 +17,10 @@ import ChangePassword from "./components/settings/ChangePassword";
 import UsersSearchPage from "./components/search/UsersSearchPage";
 import SearchPage from "./components/search/SearchPage";
 import PostsSearchPage from "./components/search/PostsSearchPage";
-import ForgetPassword from "./components/auth/forgetPassword/ForgetPassword";
-import ForgetPasswordOTP from "./components/auth/forgetPassword/ForgetPasswordOTP";
 import SetNewPassword from "./components/auth/forgetPassword/SetNewPassword";
 import DeleteUser from "./components/settings/DeleteUser";
 import ShowPost from "./components/Notifications/ShowPost";
-import UserPosts from "./components/user/UserPosts";
-import ShowProfilePictures from "./components/user/ٍShowProfilePictures";
-import Test from "./components/Test";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import ProfilePage from "./pages/ProfilePage.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +29,15 @@ const router = createBrowserRouter([
     },{
         path: '/register',
         element: <RegisterPage />
+    },{
+        path: 'find_user',
+        element: <FindUser/>
+    },{
+        path: 'forgetPasswordOTP/:email',
+        element: <ForgetPasswordEnterOTP/>
+    },{
+        path: 'setNewPassword/:email',
+        element: <SetNewPassword/>
     },{
         path: '/',
         element: <HomePage />
@@ -44,11 +55,11 @@ const router = createBrowserRouter([
             }
         ]
     },{
-        path: 'forgetpassword',
-        element: <ForgetPassword/>
-    },{
         path: '/test',
         element: <Test /> 
+    },{
+        path: '*',
+        element: <NotFound/> 
     }
     
     
@@ -121,14 +132,8 @@ const router = createBrowserRouter([
         path: '/',
         element: <GuestLayout/>,
         children: [
-            {
-                path: 'forgetpassword',
-                element: <ForgetPassword/>
-            },
-            {
-                path: 'forgetPasswordOTP/:email',
-                element: <ForgetPasswordOTP/>
-            },
+           
+            
             {
                 path: 'setNewPassword/:id',
                 element: <SetNewPassword/>

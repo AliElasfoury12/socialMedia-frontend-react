@@ -1,3 +1,12 @@
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\d)(?=.*[^\w\s])\S{8,64}$/
-console.log(passwordRegex.test("Aa1afjdy."));
+const input = '12f'
+
+
+function isNumber (value) {
+    const num = Number(value.trim())
+    if(value !== '' && !isNaN(num)) return true
+    return false
+}
+
+console.log(isNumber(input));
+
 

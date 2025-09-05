@@ -15,9 +15,7 @@ export class Valdatior {
         return this.errors
     }
 
-    checkRules (rules, form, field) {
-        console.log(rules);
-        
+    checkRules (rules, form, field) {        
         rules.forEach((rule) => {
             if(rule === 'required')  this.required(form, field)
             if(rule.includes('min')) this.min(form, field, rule)
@@ -25,6 +23,7 @@ export class Valdatior {
             if(rule === 'email') this.email (form, field)
             if(rule.includes('match:')) this.match (form, field, rule)
             if(rule === 'password') this.password (form, field)
+            if(rule === 'number') this.number (form, field)
         })
     }
 
@@ -38,7 +37,6 @@ export class Valdatior {
     match (form, field, rule) {
         const matchTo = rule.replace('match:', '')
         const message = `${field} and ${matchTo} dosn't match`
-        
         if(form[field] != form[matchTo]) this.addError (field, message)
         else if(form[field] == form[matchTo])this.removeError (field, message)
     }
@@ -47,7 +45,6 @@ export class Valdatior {
         const maxRegex = /\d+/
         const max = maxRegex.exec(rule)[0]
         const message = `${field} max characters is ${max} chars`
-        
         if(form[field]?.length > max) this.addError (field, message)
         if(form[field]?.length <= max) this.removeError (field, message)
     }
@@ -56,9 +53,16 @@ export class Valdatior {
         const minregex = /\d+/
         const min = minregex.exec(rule)[0]
         const message = `${field} must be ${min} chars at least`
-        
         if(form[field]?.length < min) this.addError (field, message)
         if(form[field]?.length >= min) this.removeError (field, message)
+    }
+
+    number (form, field) {
+        const value = form[field]                
+        const num = Number(value.trim())
+        const message = `${field} is not a number`
+        if(value === '' && isNaN(num))  this.addError (field, message)
+        else this.removeError (field, message)
     }
 
     password (form, field) {
@@ -70,7 +74,6 @@ export class Valdatior {
 
     required (form, field) {
         const message = `${field} is required`
-        
         if(form[field] === '') this.addError (field, message)
         else this.removeError (field, message)
     }
@@ -78,12 +81,12 @@ export class Valdatior {
     addError (field, message) {
         if(this.errors[field] && !this.errors[field].includes(message))
             this.errors[field] = [...this.errors[field],message]
-        else this.errors[field] = [message]        
+        else this.errors = {...this.errors, [field]:[message]}        
     }
 
-    removeError (field, message) {        
+    removeError (field, message) { 
         if(!this.errors[field]) return
-        const filteredErrors  = this.errors[field].filter((msg) => message != msg )
+        const filteredErrors  = this.errors[field].filter((msg) => message != msg )        
         this.errors = {...this.errors, [field]:[...filteredErrors]}
         if(!this.errors[field].length) delete this.errors[field]
     }
