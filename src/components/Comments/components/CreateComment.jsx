@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import arrow from '../../../assets/right-arrow.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { createComment } from '../../../stores/commentStore'
@@ -18,16 +18,14 @@ export default function CreateComment({post}) {
 		})
 	}
 
-	useEffect(() => {
-		document.getElementById('commentInput').focus()
-	}, [])
+	
 
 	return (
 		<form
 			onSubmit={submitComment} 
 			className='relative w-full px-1'>
 			<textarea 
-				id='commentInput'
+				autoFocus
 				className='rounded-md mt-2 px-2 min-h-20  resize-none h-fit w-full' 
 				placeholder={'Comment as ' + authUser.name}
 				value={content}

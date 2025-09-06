@@ -10,7 +10,7 @@ export default function DeleteConfirmModal({ showConfirmDelete, setShowConfirmDe
 
  return(
     <Modal show={showConfirmDelete} setShow={setShowConfirmDelete}>
-        <div className='w-96 h-40 flex flex-col items-center justify-center gap-4'>
+        <div className='w-96 h-32 flex flex-col items-center justify-center gap-4'>
             <h1>Are You Sure?</h1>
             <div className='flex gap-4'>
                 <button 

@@ -17,28 +17,28 @@ export default function PostCardHeaderLeft({post}) {
                 className="w-12 h-12 border-blue-950  border-2 p-px rounded-full" 
                 src={user.img ? profileStorage + user.img : userLogo} /> 
         
-                <div 
-                    className='flex flex-col ml-2'>
-                    <Link
-                        to={`/user/profile/${user.id}/posts`} 
-                        className="flex text-lg">
-                        {user.name.length > 23 ? 
-                            user.name.subString(0,20) + '...':
-                            user.name 
-                        }
-                    </Link>
+            <div 
+                className='flex flex-col ml-2'>
+                <Link
+                    to={`/user/profile/${user.id}/posts`} 
+                    className="flex text-lg">
+                    {user.name.length > 23 ? 
+                        user.name.subString(0,20) + '...':
+                        user.name 
+                    }
+                </Link>
 
-                    <p
-                        className='text-xs text-gray-800'>
-                        {timeAgo(post.created_at)}
-                    </p>
-                </div>
+                <p
+                    className='text-xs text-gray-800'>
+                    {timeAgo(post.created_at)}
+                </p>
+            </div>
 
-                <Follow 
-                    userId={user.id} 
-                    follows={user.isAuthFollows} 
-                    followFunction={() => dispatch(followPostUser(user.id))}
-                    ClassName={'self-start ml-3 mt-px text-blue-950'}/>                
+            <Follow 
+                userId={user.id} 
+                follows={user.isAuthFollows} 
+                followFunction={() => dispatch(followPostUser(user.id))}
+                ClassName={'self-start ml-3 mt-px text-blue-950'}/>                
         </section> 
     )
 }
