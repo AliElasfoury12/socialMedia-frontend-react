@@ -11,7 +11,7 @@ export default function HomePage() {
             <button 
                 className='bg-blue-600 h-12 mt-7 mb-3 text-white rounded-lg w-[30rem]'
                 onClick={() => {setShowCreatePostModal(true)}}>
-                What is in your mind?
+                What is in your mind ?
             </button>
             <CreatePostModal show={showCreatePostModal} setShow={setShowCreatePostModal}/>
             <ShowPosts/>

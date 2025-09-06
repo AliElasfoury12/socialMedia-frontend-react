@@ -28,7 +28,7 @@ export default function Modal({show, setShow, children}) {
             <div
                 onClick={close}
                 className="fixed w-full h-full z-10 top-0 left-0 
-                grid place-content-center bg-black bg-opacity-20 mt-6 ">
+                grid place-content-center bg-black bg-opacity-60 mt-6 ">
                     
                 <div 
                     onClick={(e) => e.stopPropagation()}
@@ -40,7 +40,7 @@ export default function Modal({show, setShow, children}) {
                     </button>
         
                     <div
-                        className=" flex flex-col w-fit border-black  border-2 rounded-xl my-3 py-1 m-auto max-w-[45rem] max-h-[30rem]">
+                        className=" flex flex-col w-fit bg-gray-200 rounded-xl my-3 py-1 m-auto max-w-[45rem] max-h-[30rem]">
                         {children}
                     </div>
         

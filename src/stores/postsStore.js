@@ -86,6 +86,8 @@ export const createPost = createAsyncThunk(
 	'posts/createPost', async (form, thunkAPI) => {
 		let res = await Post('posts',form)
 		res.post.user = thunkAPI.getState().auth.authUser
+		res.post.likes_count = 0
+		res.post.comments_count = 0
 		return res
 	}
 )

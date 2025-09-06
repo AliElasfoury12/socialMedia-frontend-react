@@ -7,7 +7,6 @@ export default function Content ({post}) {
     const [showMore, setShowMore] = useState(false)
     const [fullPost, setFullPost] = useState('')
 
-
     useEffect(() =>{        
         setPost(post.content)
     },[post])

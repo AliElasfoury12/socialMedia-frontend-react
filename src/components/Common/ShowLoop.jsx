@@ -10,7 +10,7 @@ export default function ShowLoop(props) {
     
     return (
        <div className={`mb-2 w-full ${exClass}`}>
-            <div>
+            <div className=' flex flex-col gap-1'>
                 {showArray != '' ?
                     showArray :
                     <h1 className=" mt-5 text-center text-2xl text-blue-600">

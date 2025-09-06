@@ -15,7 +15,7 @@ export default function SharedPostPreivew ({post}) {
             className='flex gap-2 self-start items-center'>
             <img 
                 src={imagePreview()}
-                className='w-14 h-12' />
+                className='w-12 h-12' />
             <p>{post.content}</p>
         </div>
     )

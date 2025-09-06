@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { SharePost } from '../../../../../../stores/postsStore'
 
-export default function SharePostForm ({post, show, setShow}) {
+export default function SharePostForm ({post, setShow}) {
     const [postContent, setPostContent] = useState('')
     const dispatch = useDispatch()
     
@@ -15,10 +15,6 @@ export default function SharePostForm ({post, show, setShow}) {
         })
     }
 
-    useEffect(() => {
-        document.getElementById('share-post-modal')?.focus()
-    }, [show])
-    
     return (
         <form>
             <button 
@@ -28,9 +24,9 @@ export default function SharePostForm ({post, show, setShow}) {
                 Share
             </button>
             <textarea
-                id='share-post-modal' 
+                autoFocus
                 onChange={(e) => {setPostContent(e.target.value)}}
-                className='resize-none p-2 my-2 focus:outline-none border-black border border-x-0 h-40 w-[28rem]' 
+                className='resize-none p-2 my-2 focus:outline-none h-40 w-[28rem]' 
                 placeholder='Writte Somthing'>
             </textarea>
         </form>
@@ -39,6 +35,5 @@ export default function SharePostForm ({post, show, setShow}) {
 
 SharePostForm.propTypes = {
     post: PropTypes.object,
-    show: PropTypes.bool,
     setShow: PropTypes.func
 }

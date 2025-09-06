@@ -9,7 +9,7 @@ export default function SharePostModal ({post, show, setShow}) {
             <div 
                 className='flex flex-col p-2 items-center w-[28rem]'>
 
-                <SharePostForm {...{post, show, setShow}}/>
+                <SharePostForm {...{post, setShow}}/>
                 <SharedPostPreivew {...{post}}/>
             </div>
         </Modal>

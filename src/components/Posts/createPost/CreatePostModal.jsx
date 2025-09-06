@@ -72,7 +72,7 @@ export default function CreatePostModal({show, setShow}) {
             <form 
                 onChange={handleChange}
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-3 w-96 py-2">
+                className="flex flex-col gap-3 w-[28rem] py-2">
                     
                 <button
                     type="submit" 

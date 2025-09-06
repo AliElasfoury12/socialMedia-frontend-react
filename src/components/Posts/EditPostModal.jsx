@@ -1,7 +1,7 @@
 import Modal from "../Modals/Modal";
 import propTypes from "prop-types"
 import ImagesPreview from "./createPost/ImagesPreview";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePostImages, updatePost } from "../../stores/postsStore";
@@ -48,10 +48,6 @@ export default function EditPostModal({ post, show, setShow }) {
         }
     }
 
-    useEffect(() => {        
-        setForm(f => ({...f, postContent: post.content, images: post.post_imgs}))
-    },[show])
-
    function PostInput () {
         const input_data = {
             name: 'postContent',
@@ -84,7 +80,7 @@ export default function EditPostModal({ post, show, setShow }) {
             <form 
                 onChange={handleChange}
                 onSubmit={handleSubmit}
-                className="form w-96 py-2">
+                className="form w-[28rem] py-2">
                 <button 
                     type="submit"
                     className="bg-blue-800 text-white w-20 p-1 rounded-md self-end mr-2">
