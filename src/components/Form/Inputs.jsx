@@ -46,6 +46,22 @@ export function PasswordConfirmInput(Errors, showPassword) {
     return CustomInput(input_data)
 }
 
+export function TextArea (input_data) {
+    const error = input_data.error
+    return (
+        <>
+            <textarea 
+                name={input_data.name}
+                autoFocus
+                defaultValue={input_data.defaultValue}
+                className="resize-none h-40 focus:outline-none border-none p-2" 
+                placeholder={input_data.placeholder}>
+            </textarea>
+            {error && <p className="text-red-700 m-auto">{error}</p> }
+        </>
+    )
+}
+
 export function CustomInput (input_data) {
     const name = input_data.name
     return (

@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom"
 import { useRef, useState } from "react"
-import { CustomePasswordInput, CustomInput } from "../../Form/Inputs"
+import { CustomePasswordInput, CustomInput } from "../../../components/Form/Inputs"
 import { useDispatch, useSelector } from "react-redux"
-import { formValdaitor } from "../../Form/FormValdation"
+import { formValdaitor } from "../../../components/Form/FormValdation"
 import { emptyObject } from "../../../utils/objects"
 import { setNewPassword, setErrors } from "../../../stores/authStore"
-import BigLoadingSpinner from "../../LoadingSpinner/LoadingSpinner"
+import BigLoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner"
 
 export default function SetNewPassword() {
     const dispatch = useDispatch()
     const { email } = useParams()
     const { errors, loading } = useSelector(state => state.auth)
-    const form = useRef({new_password: '', new_password_confirmation: '', email: email })
+    const form = useRef({new_password: '', new_password_confirmation: '', email: email})
     const [showNewPassword, setShowNewPassword] = useState(false)
     
     const rules = {

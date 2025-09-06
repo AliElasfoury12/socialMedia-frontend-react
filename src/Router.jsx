@@ -6,8 +6,11 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import FindUser from "./pages/auth/FindUser.jsx";
-import ForgetPasswordEnterOTP from "./pages/auth/ForgetPasswordEnterOTP.jsx";
+import FindUser from "./pages/auth/forgetPassword/FindUser.jsx";
+import ForgetPasswordEnterOTP from "./pages/auth/forgetPassword/ForgetPasswordEnterOTP.jsx";
+import SetNewPassword from "./pages/auth/forgetPassword/SetNewPassword";
+import NotFound from "./pages/NotFound.jsx";
+
 
 import EditUser from "./components/user/EditUser";
 import Profile from "./components/user/Profile";
@@ -17,10 +20,8 @@ import ChangePassword from "./components/settings/ChangePassword";
 import UsersSearchPage from "./components/search/UsersSearchPage";
 import SearchPage from "./components/search/SearchPage";
 import PostsSearchPage from "./components/search/PostsSearchPage";
-import SetNewPassword from "./components/auth/forgetPassword/SetNewPassword";
 import DeleteUser from "./components/settings/DeleteUser";
 import ShowPost from "./components/Notifications/ShowPost";
-import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter([
     {

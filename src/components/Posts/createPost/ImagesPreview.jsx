@@ -4,6 +4,7 @@ import { postsStorage } from '../../../stores/statices';
 
 export default function ImagesPreview({images, setForm, setToDeletedImages}) 
 {
+
     function deleteImg (index) {        
         let image = images[index]
         if(image.img) setToDeletedImages(I => [...I, image])

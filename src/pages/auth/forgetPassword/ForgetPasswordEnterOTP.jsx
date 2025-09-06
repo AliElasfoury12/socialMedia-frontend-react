@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
-import { formValdaitor } from "../../components/Form/FormValdation"
+import { formValdaitor } from "../../../components/Form/FormValdation"
 import { useDispatch, useSelector } from "react-redux"
-import { checkOTP, resendOTP, setErrors } from "../../stores/authStore"
-import { emptyObject } from "../../utils/objects"
-import BigLoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
+import { checkOTP, resendOTP, setErrors } from "../../../stores/authStore"
+import { emptyObject } from "../../../utils/objects"
+import BigLoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner"
 
 export default function ForgetPasswordEnterOTP () {
     const dispatch = useDispatch()

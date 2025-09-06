@@ -1,9 +1,9 @@
 import { useRef } from "react"
-import BigLoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
-import { formValdaitor } from "../../components/Form/FormValdation"
-import { emptyObject } from "../../utils/objects"
+import BigLoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner"
+import { formValdaitor } from "../../../components/Form/FormValdation"
+import { emptyObject } from "../../../utils/objects"
 import { useDispatch, useSelector } from "react-redux"
-import { findUserAndSendOTP, setErrors } from "../../stores/authStore"
+import { findUserAndSendOTP, setErrors } from "../../../stores/authStore"
 
 export default function FindUser() {
     const dispatch = useDispatch()
