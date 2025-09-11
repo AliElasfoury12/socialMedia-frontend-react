@@ -5,22 +5,21 @@ import Test from "./components/Test";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
-import ProfilePage from "./pages/ProfilePage.jsx";
 import FindUser from "./pages/auth/forgetPassword/FindUser.jsx";
 import ForgetPasswordEnterOTP from "./pages/auth/forgetPassword/ForgetPasswordEnterOTP.jsx";
 import SetNewPassword from "./pages/auth/forgetPassword/SetNewPassword";
 import NotFound from "./pages/NotFound.jsx";
-
-
-import EditUser from "./components/user/EditUser";
-import Profile from "./components/user/Profile";
+import ProfilePage from "./pages/ProfilePage.jsx";
 import Settings from "./components/settings/Settings";
 import ChangeUserNameAndEmail from "./components/settings/ChangeUserNameAndEmail";
 import ChangePassword from "./components/settings/ChangePassword";
+import DeleteUser from "./components/settings/DeleteUser";
+
+
+import EditUser from "./components/user/EditUser";
 import UsersSearchPage from "./components/search/UsersSearchPage";
 import SearchPage from "./components/search/SearchPage";
 import PostsSearchPage from "./components/search/PostsSearchPage";
-import DeleteUser from "./components/settings/DeleteUser";
 import ShowPost from "./components/Notifications/ShowPost";
 
 const router = createBrowserRouter([
@@ -55,6 +54,18 @@ const router = createBrowserRouter([
                 element: <ShowProfilePictures/>,
             }
         ]
+    }, {
+        path: 'settings',
+        element:<Settings/>,
+    },{
+        path: 'settings/change user name & email',
+        element:<ChangeUserNameAndEmail/>
+    },{
+        path: 'settings/change password',
+        element:<ChangePassword/>
+    },{
+        path: 'settings/delete user',
+        element:<DeleteUser/>
     },{
         path: '/test',
         element: <Test /> 

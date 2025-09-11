@@ -77,7 +77,8 @@ export const authSlice = createSlice({
 
 	reducers: {
 		setAuthUser: (state, {payload}) => {
-			state.authUser = payload
+			state.authUser = {...state.authUser, ...payload}
+			storage.save('user', state.authUser)
 		},
 		setToken: (state, {payload}) => {
 			state.token = payload

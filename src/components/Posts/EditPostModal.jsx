@@ -8,7 +8,7 @@ import { deletePostImages, updatePost } from "../../stores/postsStore";
 import { emptyObject } from '../../utils/objects'
 import { TextArea } from "../Form/Inputs";
 
-export default function EditPostModal({ post, show, setShow }) {
+export default function EditPostModal({ post, show, setShow }) {    
     const dispatch = useDispatch()
     const {loading} = useSelector(state => state.posts)
     const [form , setForm] = useState({postContent: post.content, images: [...post.post_imgs]})

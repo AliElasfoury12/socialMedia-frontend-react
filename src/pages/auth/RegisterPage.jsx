@@ -48,7 +48,7 @@ export default function RegisterPage () {
                 className="form">
                 {NameInput(Errors)}
                 {EmailInput(Errors)}
-                {PasswordInput(Errors, showPassword, () => dispatch(setShowPassword(!showPassword)))}
+                {PasswordInput(Errors, showPassword, () => setShowPassword(!showPassword))}
                 {PasswordConfirmInput(Errors, showPassword)}
                 <button 
                     className="bg-blue-500 text-white w-96 py-1 rounded-lg" 

@@ -7,7 +7,16 @@ import profileStore from './profileStore'
 import NotificationsStore from './NotificationsStore'
 import searchStore from './searchStore'
 
-export let store = configureStore({
+const errorMiddleware = () => next => action => {
+    try {
+        return next(action);
+    } catch (err) {
+        console.error("Redux error:", err);
+        throw err
+    }
+}
+
+export const store = configureStore({
     reducer: {
         common: commentStore,
         posts: postsStore,
@@ -17,5 +26,6 @@ export let store = configureStore({
         profile: profileStore,
         notifications: NotificationsStore,
         search: searchStore
-    }
+    },
+    middleware: (getDefaultMiddleWare) => getDefaultMiddleWare().concat(errorMiddleware)
 })

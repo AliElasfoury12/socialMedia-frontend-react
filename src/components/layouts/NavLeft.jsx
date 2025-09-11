@@ -22,7 +22,7 @@ export default function NavLeft() {
                     id="profile-img"
                     onClick={() => setShowList(!showList)}
                     className="w-8 h-8 border-black border-2 rounded-full mx-5"
-                    src={authUser.img ?  profileStorage + authUser.img : user }
+                    src={authUser.profile_pic?.url ?  profileStorage + authUser.profile_pic.url : user }
                 />
 
                 <Link 

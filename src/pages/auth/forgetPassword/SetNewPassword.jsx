@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useRef, useState } from "react"
-import { CustomePasswordInput, CustomInput } from "../../../components/Form/Inputs"
+import { NewPasswordConfirmInput, NewPasswordInput } from "../../../components/Form/Inputs"
 import { useDispatch, useSelector } from "react-redux"
 import { formValdaitor } from "../../../components/Form/FormValdation"
 import { emptyObject } from "../../../utils/objects"
@@ -33,30 +33,6 @@ export default function SetNewPassword() {
         if(emptyObject(errors)) dispatch(setNewPassword({ ...form.current, _method: 'PATCH', email: email }))
     }
 
-    function NewPasswordInput () {
-        const input_data = {
-            label: 'New Password',
-            name: 'new_password',
-            showPassword: showNewPassword,
-            setShowPassword: () =>setShowNewPassword(!showNewPassword),
-            placeholder: "Enter New Password",
-            Errors: errors
-        }
-       return CustomePasswordInput(input_data)
-    }
-
-    function NewPasswordConfirmInput() {
-        const input_data = {
-            label: 'New Password Confirmation',
-            name: 'new_password_confirmation',
-            type: showNewPassword ? "text":"password",
-            placeholder: "Confirm Your New Password",
-            Errors: errors
-        }
-    
-        return CustomInput(input_data)
-    }
-
     return (
         <div className="m-auto w-fit rounded-md mt-20 flex flex-col items-center gap-5">
             <h1 className="text-blue-700 text-2xl"> Set New Password </h1>
@@ -64,8 +40,8 @@ export default function SetNewPassword() {
                 onChange={handleChange}
                 onSubmit={handleSubmit}  
                 className="form ">
-                {NewPasswordInput()}
-                {NewPasswordConfirmInput()}
+                {NewPasswordInput(errors, showNewPassword, () => setShowNewPassword(!showNewPassword))}
+                {NewPasswordConfirmInput(errors, showNewPassword)}
                 <div>{loading && <BigLoadingSpinner/>}</div>
                 <button 
                     type="submit"

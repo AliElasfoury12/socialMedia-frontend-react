@@ -15,7 +15,7 @@ export default function ProfilePicture() {
         <div className='relative'>
             <img 
                 className="w-24 h-24 border-gray-500  border-4 rounded-full bg-slate-500" 
-                src={ user.img ? profileStorage + user.img : userPhoto} /> 
+                src={ user.profile_pic?.url ? profileStorage + user.profile_pic.url : userPhoto} /> 
 
             {user.id == authUser.id && 
                 <button 

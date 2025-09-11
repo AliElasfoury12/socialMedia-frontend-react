@@ -1,6 +1,7 @@
-import {  createAsyncThunk, createSlice, isPending } from '@reduxjs/toolkit'
+import {  createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
 import { Delete, Get, Post} from '../components/API/APIMethods'
 import { changePostCount } from './postsStore'
+import { changeUserPostCount } from './profileStore'
 
 export const getComments = createAsyncThunk(
 	'comments/getComments',
@@ -22,7 +23,12 @@ export const createComment = createAsyncThunk(
 	async ({postId, content, authUser}, thunkAPI) => { 
 		const res =  await Post(`posts/${postId}/comments`, {content: content})	
 		res.comment.user = authUser
-		thunkAPI.dispatch(changePostCount({postId: postId, amount: 1}))
+
+		if(window.location.href.includes('user/profile/'))
+			thunkAPI.dispatch(changeUserPostCount({postId: postId, amount: 1}))
+		else 
+			thunkAPI.dispatch(changePostCount({postId: postId, amount: 1}))
+
 		return {...res, postId: postId}
 	}
 )
@@ -31,7 +37,6 @@ export const updateComment = createAsyncThunk(
 	'comments/updateComments',
 	async ({commentId, formData}, thunkAPI) => { 
 		const postId = thunkAPI.getState().comments.postId
-		
 		const res =  await Post(`comments/${commentId}`, formData)	
 		return {...res, postId: postId, commentId:commentId}
 	}
@@ -43,7 +48,10 @@ export const deleteComment = createAsyncThunk(
 		const postId = thunkAPI.getState().comments.postId
 		const res =  await Delete(`comments/${commentId}`)
 
-		thunkAPI.dispatch(changePostCount({postId: postId, amount: -1}))
+		if(window.location.href.includes('user/profile/'))
+			thunkAPI.dispatch(changeUserPostCount({postId: postId, amount: -1}))
+		else 
+			thunkAPI.dispatch(changePostCount({postId: postId, amount: -1}))
 		
 		return {...res, postId: postId, commentId:commentId}
 	}
@@ -82,8 +90,7 @@ export const commentsSlice = createSlice({
 
 	extraReducers: (builder) => {
 		builder.addCase(getComments.fulfilled, (state, {payload}) => {	
-			state.loading = false;	
-					
+
 			if(!payload || payload.comments.length == 0) return
 
 			let postComments = state.comments[payload.postId]
@@ -96,11 +103,9 @@ export const commentsSlice = createSlice({
 
 			postComments.cursor = payload.nextCursor
 
-			if(postComments.data.length == payload.comments_count)
-				postComments.end = true
+			if(postComments.data.length == payload.comments_count) postComments.end = true
 		})
 		.addCase(createComment.fulfilled, (state, {payload}) => {	
-			state.loading = false;	
 			
 			const postComments = state.comments[payload.postId]
 							
@@ -111,7 +116,6 @@ export const commentsSlice = createSlice({
 				
 		})
 		.addCase(updateComment.fulfilled, (state, {payload}) => {	
-			state.loading = false;	
 			
 			const postComments = state.comments[payload.postId]
 			const updatedComment = postComments.data.find((comment) => comment.id == payload.commentId)
@@ -121,7 +125,6 @@ export const commentsSlice = createSlice({
 			state.showList = false
 		})
 		.addCase(deleteComment.fulfilled, (state, {payload}) => {	
-			state.loading = false;	
 			
 			const postComments = state.comments[payload.postId]
 			state.comments[payload.postId].data = postComments.data.filter((comment) => comment.id != payload.commentId)
@@ -129,7 +132,10 @@ export const commentsSlice = createSlice({
 			state.showList = false
 		})
 		.addMatcher(
-			isPending(getComments, createComment, updateComment, deleteComment),(state) => {state.loading = true}
+			isPending(getComments, createComment, updateComment ),(state) => {state.loading = true}
+		)
+		.addMatcher(
+			isFulfilled(getComments, createComment, updateComment ),(state) => {state.loading = false}
 		)
 	}
 

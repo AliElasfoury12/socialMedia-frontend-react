@@ -15,7 +15,7 @@ export default function PostCardHeaderLeft({post}) {
         <section className="flex ">
             <img 
                 className="w-12 h-12 border-blue-950  border-2 p-px rounded-full" 
-                src={user.img ? profileStorage + user.img : userLogo} /> 
+                src={user.profile_pic?.url ? profileStorage + user.profile_pic.url : userLogo} /> 
         
             <div 
                 className='flex flex-col ml-2'>

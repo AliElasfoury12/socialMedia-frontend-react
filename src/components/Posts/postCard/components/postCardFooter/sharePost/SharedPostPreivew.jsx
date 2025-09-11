@@ -6,8 +6,8 @@ export default function SharedPostPreivew ({post}) {
     
     function imagePreview () {
         if(post.post_imgs != '') return  postsStorage + post.post_imgs[0].img
-        if(post.user.img == null) return userImage
-        return profileStorage + post.user.img
+        if(post.user.profile_pic.url == null) return userImage
+        return profileStorage + post.user.profile_pic.url
     }
 
     return (

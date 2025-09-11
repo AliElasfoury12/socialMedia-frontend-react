@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 export default function ProfileHeader() {
     const {user} = useSelector(state => state.profile)
     const {authUser} = useSelector(state => state.auth)
-    
+ 
     return (
         <div className="w-fit flex flex-col items-center relative mb-28">
 
@@ -30,7 +30,7 @@ export default function ProfileHeader() {
                     <p> followings {user.followings_count}</p>
                 </div>
 
-                { user.id == authUser.id ? 
+                {user.id == authUser.id ? 
                     <Link 
                         to={'/settings'}
                         className='bg-blue-600 rounded-md w-24 py-1 mt-7 text-white text-center'>

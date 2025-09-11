@@ -15,7 +15,7 @@ export default function UserCard(props) {
 
             <img 
                 className="w-20 h-20 border-black  border-2 rounded-full" 
-                src={user.img ? storage + user.img : User}
+                src={user.profile_pic.url ? storage + user.profile_pic.url : User}
             /> 
             <p   
                 className="text-xl">

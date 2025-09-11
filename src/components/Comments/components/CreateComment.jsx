@@ -18,8 +18,6 @@ export default function CreateComment({post}) {
 		})
 	}
 
-	
-
 	return (
 		<form
 			onSubmit={submitComment} 
@@ -31,7 +29,8 @@ export default function CreateComment({post}) {
 				value={content}
 				onChange={(e) => {setContent(e.target.value)}} />
 	
-			<button type='submit'>
+			<button 
+				type='submit'>
 				{content.trim() != '' &&       
 					<img className='w-4 h-5 absolute bottom-1 right-2' src={arrow} />
 				}

@@ -3,15 +3,14 @@ import Post from "../API/Post"
 import { useSelector } from "react-redux"
 
 function EditUser () {
-  let authUser = useSelector(state => state.auth.authUser)
-
+  const { authUser } = useSelector(state => state.auth.authUser)
   const[name, setName] = useState(authUser.name)
   const[email, setEmail] = useState(authUser.email)
   const[img, setImg] = useState(null)
   const[nameError, setNameErorr] = useState('')
   const[emailError, setEmailErorr] = useState('')
 
-  let formdata = new FormData
+  const formdata = new FormData
   formdata.append('_method', 'PUT')
   formdata.append('name', name)
   formdata.append('email', email)

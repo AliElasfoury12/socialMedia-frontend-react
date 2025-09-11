@@ -35,7 +35,7 @@ export default function CommentsButton({post}) {
                 <p >{countRound(post.comments_count)}</p>
             </button>
 
-            <Modal show={show && postId == post.id } setShow={setModalShow}>
+            <Modal show={postId == post.id && show} setShow={setModalShow}>
                 <div onClick={onClickModalBody}>
                     <CommentsShow post={post}/>
                     <CreateComment post={post}/>
