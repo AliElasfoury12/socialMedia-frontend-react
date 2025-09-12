@@ -94,7 +94,7 @@ export function CustomePasswordInput (input_data) {
                     autoComplete="new-password"
                     type={showPassword ? "text":"password"} 
                     name={name} 
-                    placeholder="Enter Your Password" 
+                    placeholder={input_data.placeholder}
                     className='input' />
                 <button 
                     type="button"

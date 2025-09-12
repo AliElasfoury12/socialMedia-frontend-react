@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import DefaultLayout from "../layouts/DefaultLayout"
+import DefaultLayout from "../../components/layouts/DefaultLayout"
 
 export default function Settings() {
     const LinkClassName = 'bg-blue-500 py-4 w-96 flex justify-center rounded-lg mb-1'

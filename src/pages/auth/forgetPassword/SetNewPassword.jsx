@@ -30,7 +30,7 @@ export default function SetNewPassword() {
         e.preventDefault()
         const _errors = formValdaitor.formValdaite(rules, form.current)        
         dispatch(setErrors(_errors)) 
-        if(emptyObject(errors)) dispatch(setNewPassword({ ...form.current, _method: 'PATCH', email: email }))
+        if(emptyObject(errors)) dispatch(setNewPassword(form.current))
     }
 
     return (

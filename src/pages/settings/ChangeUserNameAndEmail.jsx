@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useRef, useState } from "react"
 import { setAuthUser } from "../../stores/authStore"
-import { EmailInput, NameInput, PasswordInput } from "../Form/Inputs"
-import { formValdaitor } from "../Form/FormValdation"
+import { EmailInput, NameInput, PasswordInput } from "../../components/Form/Inputs"
+import { formValdaitor } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"
-import DefaultLayout from "../layouts/DefaultLayout"
-import { Put } from "../API/APIMethods"
+import DefaultLayout from "../../components/layouts/DefaultLayout"
+import { Put } from "../../components/API/APIMethods"
 
 export default function ChangeUserNameAndEmail() {
     const dispatch = useDispatch()

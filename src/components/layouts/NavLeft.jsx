@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import SettingsDownList from "../settings/SettingsDownList";
+import SettingsDownList from "./SettingsDownList";
 import { useState } from "react";
 import { profileStorage } from "../../stores/statices";
 import { Link } from "react-router-dom";

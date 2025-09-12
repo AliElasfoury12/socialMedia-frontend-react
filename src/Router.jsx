@@ -10,10 +10,10 @@ import ForgetPasswordEnterOTP from "./pages/auth/forgetPassword/ForgetPasswordEn
 import SetNewPassword from "./pages/auth/forgetPassword/SetNewPassword";
 import NotFound from "./pages/NotFound.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import Settings from "./components/settings/Settings";
-import ChangeUserNameAndEmail from "./components/settings/ChangeUserNameAndEmail";
-import ChangePassword from "./components/settings/ChangePassword";
-import DeleteUser from "./components/settings/DeleteUser";
+import Settings from "./pages/settings/Settings.jsx"
+import ChangeUserNameAndEmail from "./pages/settings/ChangeUserNameAndEmail.jsx"
+import ChangePassword from "./pages/settings/ChangePassword.jsx"
+import DeleteUser from "./pages/settings/DeleteUser.jsx"
 
 
 import EditUser from "./components/user/EditUser";

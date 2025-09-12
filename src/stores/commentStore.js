@@ -1,5 +1,5 @@
 import {  createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
-import { Delete, Get, Post} from '../components/API/APIMethods'
+import { Delete, Get, Post, Put} from '../components/API/APIMethods'
 import { changePostCount } from './postsStore'
 import { changeUserPostCount } from './profileStore'
 
@@ -37,7 +37,7 @@ export const updateComment = createAsyncThunk(
 	'comments/updateComments',
 	async ({commentId, formData}, thunkAPI) => { 
 		const postId = thunkAPI.getState().comments.postId
-		const res =  await Post(`comments/${commentId}`, formData)	
+		const res =  await Put(`comments/${commentId}`, formData)	
 		return {...res, postId: postId, commentId:commentId}
 	}
 )

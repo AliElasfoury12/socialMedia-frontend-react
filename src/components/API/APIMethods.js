@@ -16,7 +16,7 @@ class API {
             }
         }
     
-        let options = {
+        const options = {
             method: method,
             headers: headers
         }
@@ -24,9 +24,9 @@ class API {
        if(body) options.body = body
 
         let res = await fetch(this.baseURL+URL, options)
-        let status = res.status
+        const status = res.status
         res = await res.json()
-        if( status !== 200){
+        if(status !== 200){
             console.log(URL, res);
             throw res
         }else {
@@ -45,6 +45,10 @@ class API {
     
     PUT(URL, body,  headers = {}) {
         return this.request(URL, 'PUT', body, headers)
+    }
+
+    PATCH(URL, body,  headers = {}) {
+        return this.request(URL, 'PATCH', body, headers)
     }
     
     DELETE(URL, body, headers = {}) {
@@ -66,4 +70,5 @@ export const api = new API;
 export const Get    = (...params) => api.GET(...params)
 export const Post   = (...params) => api.POST(...params)
 export const Put    = (...params) => api.PUT(...params)
+export const Patch  = (...params) => api.PATCH(...params)
 export const Delete = (...params) => api.DELETE(...params)

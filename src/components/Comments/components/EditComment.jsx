@@ -10,7 +10,7 @@ export default  function EditComment({ comment }) {
 
     function handleSubmit (e) {
         e.preventDefault()
-        dispatch(updateComment({commentId: comment.id, formData: {_method: "PUT", content: content}}))
+        dispatch(updateComment({commentId: comment.id, formData: {content: content}}))
     }
     
     return (
