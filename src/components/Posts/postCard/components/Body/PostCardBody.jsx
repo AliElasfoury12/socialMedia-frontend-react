@@ -6,7 +6,7 @@ import Content from './Content'
 
 export default function PostCardBody({ post }) {
     const [showImagesGallery, setShowImagesGallery] = useState(false)
-    const images = post.post_imgs
+    const images = post.post_imgs    
   
     return (
         <div>

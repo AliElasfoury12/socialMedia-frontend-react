@@ -2,47 +2,43 @@ import { Bell } from "lucide-react"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import ShowNotifications from "./ShowNotifications"
-import { seen, setNotifications, setNotificationsCount, setShow, getNotifications } from "../../stores/NotificationsStore"
-
+import { seen, setNotifications, setNotificationsCount, setShow, getNotificationscount } from "../../stores/NotificationsStore"
+import ShowIf from '../Common/ShowIf'
 export default function Notification() {
-    let dispatch = useDispatch()
-    let { authUser }  = useSelector(state => state.auth)
-    let { show, notificationsCount}  = useSelector(state => state.notifications)
+    const dispatch = useDispatch()
+    const { authUser }  = useSelector(state => state.auth)
+    const { show, notificationsCount}  = useSelector(state => state.notifications)
     
     useEffect(() => {
-        dispatch(getNotifications(1))
-
+        if (notificationsCount === null) dispatch(getNotificationscount()) 
+            
         window.Echo.private(`notifications.${authUser.id}`)
         .notification((data) => {
             console.log(data);
+            
             dispatch(setNotifications(data))
             dispatch(setNotificationsCount())
         })
     },[])
   
     return (
-        <div 
-            className="relative mt-1">
-            {notificationsCount && !show ?
+        <div className="relative mt-1">
+            <ShowIf show={notificationsCount > 0 && !show}>
                 <p 
-                    className="absolute -top-2 left-4 bg-red-600 rounded-full text-xs "
-                    style={{padding: '2px 6px'}}>
+                    className="absolute -top-2 left-4 bg-red-600 rounded-full text-xs px-[6px] py-[2px]">
                     {notificationsCount}
                 </p>
-            : ''}
+            </ShowIf>
 
             <Bell 
-                  onClick={() => {
+                onClick={() => {
                    dispatch(setShow(!show))
-                    if(notificationsCount){
-                        dispatch(seen())
-                    }
+                    if(notificationsCount) dispatch(seen())
                 }}
-                className="h-7 w-7"/>
+                className="h-7 w-7"
+            />
 
-                { show && 
-                    <ShowNotifications />
-                }
+            { show && <ShowNotifications />}
         </div>
     )
 }

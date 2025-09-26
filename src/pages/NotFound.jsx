@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { AlertCircle } from "lucide-react"
 
 export default function NotFound () { 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     return (
         <div className="min-h-screen flex items-center justify-center px-6 py-16 bg-gray-200"> 

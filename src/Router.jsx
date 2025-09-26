@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import UserPosts from "./components/user/UserPosts";
 import ShowProfilePictures from "./components/user/ٍShowProfilePictures";
-import Test from "./components/Test";
+import Test from "./components/test/Test.jsx";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
@@ -14,13 +14,10 @@ import Settings from "./pages/settings/Settings.jsx"
 import ChangeUserNameAndEmail from "./pages/settings/ChangeUserNameAndEmail.jsx"
 import ChangePassword from "./pages/settings/ChangePassword.jsx"
 import DeleteUser from "./pages/settings/DeleteUser.jsx"
-
-
-import EditUser from "./components/user/EditUser";
+import ShowNotificationsPost from "./components/Notifications/ShowNotificationsPost.jsx";
 import UsersSearchPage from "./components/search/UsersSearchPage";
-import SearchPage from "./components/search/SearchPage";
+import SearchPage from "./pages/SearchPage.jsx";
 import PostsSearchPage from "./components/search/PostsSearchPage";
-import ShowPost from "./components/Notifications/ShowPost";
 
 const router = createBrowserRouter([
     {
@@ -67,92 +64,28 @@ const router = createBrowserRouter([
         path: 'settings/delete user',
         element:<DeleteUser/>
     },{
+        path: 'post/:post_id/comment/:comment_id',
+        element:<ShowNotificationsPost/>
+    }, {
+        path: 'search/',
+        element:<SearchPage/>,
+        children: [
+            {
+                path: 'users/:search',
+                element:<UsersSearchPage/>
+            }, 
+            {
+                path: 'posts/:search',
+                element:<PostsSearchPage/>
+            }
+        ]
+    },{
         path: '/test',
         element: <Test /> 
     },{
         path: '*',
         element: <NotFound/> 
     }
-    
-    
-    /*{
-        path: '/home',
-        element: <DefaultLayout/>,
-        children: [
-            {
-                path: '/user/edit/:id',
-                element: <EditUser/>
-            },{
-                path: '/user/profile/:id/',
-                element: <Profile/>,
-                children: [
-                    {
-                        path: '/posts',
-                        element: <UserPosts/>,
-                    },
-                    {
-                        path: '/profile-pictures',
-                        element: <ShowProfilePictures/>,
-                    }
-                ]
-            },
-            {
-                path: '',
-                element:<Posts/>
-            }, 
-            {
-                path: 'post/:post_id/comment/:comment_id',
-                element:<ShowPost/>
-            }, 
-            {
-                path: 'settings',
-                element:<Settings/>,
-            },
-            {
-                path: 'settings/change user name & email',
-                element:<ChangeUserNameAndEmail/>
-            },
-            {
-                path: 'settings/change password',
-                element:<ChangePassword/>
-            },
-            {
-                path: 'settings/delete user',
-                element:<DeleteUser/>
-            },
-            {
-                path: 'search/',
-                 element:<SearchPage/>,
-                 children: [
-                    {
-                        path: 'users/:search',
-                        element:<UsersSearchPage/>
-                    }, 
-                    {
-                        path: 'posts/:search',
-                        element:<PostsSearchPage/>
-                    },
-                 ]
-            },
-            {
-                path: 'counter',
-                 element:<Test/>
-            },
-        ]
-    },
-    {
-        path: '/',
-        element: <GuestLayout/>,
-        children: [
-           
-            
-            {
-                path: 'setNewPassword/:id',
-                element: <SetNewPassword/>
-            },
-        ]
-    },*/
-
 ])
 
 export default router

@@ -1,23 +1,21 @@
 import PostCard from "../Posts/postCard/PostCard"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { setLoading, handelPostsSearch, setPostsPage } from "../../stores/searchStore"
+import { postsSearch, setSearch } from "../../stores/searchStore"
 import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
+import { useEffect } from "react"
 
 export default function PostsSearchPage() {
-    let dispatch = useDispatch()
-    let {posts, loading, postsPage, postsEnd} = useSelector(state => state.search)
-    let {search} = useParams()
+    const dispatch = useDispatch()
+    const {posts, loading, search} = useSelector(state => state.search)
+    const {search: searchKey} = useParams()
 
-    let searchPosts =  () => {
-        if((!postsEnd && postsPage > 1) || (postsPage == 1 && posts == '')) {
-            dispatch(setLoading(true))
-            dispatch(handelPostsSearch ({search, postsPage}))
-        } 
-    }
-         
-    useInfinteScroll(postsPage, setPostsPage, searchPosts)
+    useEffect(() => {
+        if (!search) dispatch(setSearch(searchKey))
+    },[])
+
+    useInfinteScroll(() => dispatch(postsSearch ()), posts.length == 0)
 
     return (
         <div className="m-auto w-fit">

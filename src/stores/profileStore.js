@@ -93,7 +93,6 @@ export const profileSlice = createSlice({
             
             userPosts.page++
             if(userPosts.page >= userPosts.lastPage) userPosts.end = true
-
         })
         .addCase(changeProfileImage.fulfilled, (state, {payload})  => { 
             state.usersData[state.user.id].profile_pic.url = payload.profile_image_url
@@ -111,7 +110,7 @@ export const profileSlice = createSlice({
         .addMatcher(
 			isPending(getProfileUser, changeProfileImage),(state) => {state.loading = true}
 		).addMatcher(
-			isFulfilled(changeProfileImage, getUserPosts),(state) => {state.loading = false}
+			isFulfilled(changeProfileImage, getUserPosts, getProfileUser),(state) => {state.loading = false}
 		)
     }
 })

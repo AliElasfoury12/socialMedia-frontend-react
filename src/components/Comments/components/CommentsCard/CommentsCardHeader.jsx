@@ -9,7 +9,7 @@ export default function CommentsCardHeader ({comment}) {
         <div className="flex">
             <img 
                 className="w-10 h-10 border-black  border-2 rounded-full p-px" 
-                src={comment.user.profile_pic.url ?  profileStorage + comment.user.profile_pic.url : user} /> 
+                src={comment.user.profile_pic?.url ?  profileStorage + comment.user.profile_pic.url : user} /> 
             <div 
                 className='text-left ml-2'>
                 <Link

@@ -13,7 +13,6 @@ export default function CreateComment({post}) {
 		e.preventDefault()
 		dispatch(createComment({postId: post.id, content, authUser}))
 		.then(() => {
-			setContent('')
 			document.getElementById('comments-show-div').scrollTop = 0
 		})
 	}

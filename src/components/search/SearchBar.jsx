@@ -1,41 +1,44 @@
 import { Search  as SearchIcon} from "lucide-react"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { handelSearch, resetPage, setEnd, setSearch } from "../../stores/searchStore"
-import { useEffect, useState } from "react"
+import { usersSearch, setSearch, setShow } from "../../stores/searchStore"
+import { useEffect, useRef } from "react"
 import UsersSearchPage from "./UsersSearchPage"
 
 export default function SearchBar() {
-    let dispatch = useDispatch()
-    let {search} = useSelector(state => state.search)
-    let [on, setOn] = useState(false)
+    const dispatch = useDispatch()
+    const {search, show} = useSelector(state => state.search)
+    const firstRender = useRef(true)
 
     window.onclick = (e) => {        
-        let searchElement = document.getElementById('searchVal')
-        e.target != searchElement && setOn(false)
+        const searchElement = document.getElementById('searchVal')
+        e.target != searchElement && dispatch(setShow(false))
     }
 
-    let Search = () => {
-        if(search ){
-            dispatch(handelSearch({search: search, page: 1}))
-            dispatch(setEnd(false))
-            dispatch(resetPage())
-            setOn(true)
+    function handleSearch () {
+        dispatch(usersSearch())
+        if(!show) dispatch(setShow(true))
+    }
+    
+    useEffect (() => { 
+        if(firstRender.current){
+            firstRender.current = false
+            if(show) dispatch(setShow(false))
+            return
         }
-    }
-
-    useEffect (() => {      
-        let typing = setTimeout(() => Search(), 1700)
+             
+        const typing = setTimeout(() => handleSearch() , 500)
         return () => clearTimeout(typing)
     },[search])
-  
+
+    
     return (
         <div 
             className="w-fit m-auto relative ">
            <div
                 className="w-fit m-auto">
                 <input
-                    onChange={(e)=> {dispatch(setSearch(e.target.value))}}
+                    onChange={(e) => {dispatch(setSearch(e.target.value))}}
                     id="searchVal"
                     className="w-80 rounded-lg resize-none px-3 py-1  placeholder:text-lg text-black"
                     placeholder="...search"/>
@@ -43,17 +46,15 @@ export default function SearchBar() {
                 {search &&
                     <Link 
                         to={'/search/users/' + search} 
-                        className="absolute right-1 z-20"
-                        style={{top: '2px'}}>
+                        className="absolute right-1 z-20 top-[2px]">
                         <SearchIcon className="text-blue-950 h-7 w-7"/>
                     </Link>
                 }
            </div>
 
-           {on && 
+           {show && 
                 <div    
-                    className='p-2 bg-blue-600 rounded-xl absolute flex justify-center -left-24 -top-10 scale-75'
-                    style={{height: '41rem', width: '32rem'}}>
+                    className='p-2 bg-white rounded-xl absolute flex justify-center -left-24 -top-7 scale-75 h-[40rem] w-[32rem] overflow-scroll'>
                     <UsersSearchPage/>
                 </div>
            }

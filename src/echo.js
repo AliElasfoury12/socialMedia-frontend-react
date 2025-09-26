@@ -1,6 +1,7 @@
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { base_url } from './stores/statices';
+import { storage } from './utils/storage'
 
 window.Pusher = Pusher;
 
@@ -15,7 +16,7 @@ window.Echo = new Echo({
     authEndpoint: base_url + 'api/broadcasting/auth',
     auth: {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${storage.get('token')}`
         },
     },
 });

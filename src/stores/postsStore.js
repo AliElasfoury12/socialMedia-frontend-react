@@ -4,10 +4,9 @@ import { deleteUserPost, followUser, updateUserPost } from './profileStore'
 
 export const getPosts = createAsyncThunk(
 	'posts/getPosts', async (_,thunkAPI) =>  {		
-		const postsStore = thunkAPI.getState().posts
-		if(postsStore.loading) return
+		const postsStore = thunkAPI.getState().posts		
+		if(postsStore.loading || postsStore.cursor === null) return
 		thunkAPI.dispatch(setLoading(true))
-		if(postsStore.cursor == null) return
 		return await Get('posts?cursor=' + postsStore.cursor)
 	}
 )
@@ -95,14 +94,11 @@ export const postsSlice = createSlice({
 	},
 
 	extraReducers: (builder) => {
-		builder.addCase(getPosts.fulfilled, (state, {payload}) => {	
-			if(!payload) {
-				state.loading = false
-				return
-			}
+		builder.addCase(getPosts.fulfilled, (state, {payload}) => {				
+			if(!payload) return
+
 			state.cursor = payload.nextCursor		
 			state.posts.push(...payload.posts)
-			state.loading = false
 		})
 		.addCase(updatePost.fulfilled, (state, {payload}) => {
 			if(!payload) return
@@ -111,7 +107,6 @@ export const postsSlice = createSlice({
 			payload = payload.post
 			post.content = payload.content
 			post.post_imgs.push(...payload.post_imgs)
-			state.loading = false
 		})
 		.addCase(deletePost.fulfilled, (state, {payload}) => {
 			if(!payload) return			
@@ -134,11 +129,12 @@ export const postsSlice = createSlice({
         })
 		.addMatcher(isFulfilled(createPost, SharePost),(state, {payload}) => {
 			state.posts.unshift(payload.post)
+		})
+		.addMatcher(isPending(createPost, updatePost),(state) => {state.loading = true}
+		)
+		.addMatcher(isFulfilled(getPosts, updatePost, createPost, SharePost),(state) => {
 			state.loading = false
 		})
-		.addMatcher(
-			isPending(createPost, updatePost),(state) => {state.loading = true}
-		)
 	}
 })
 

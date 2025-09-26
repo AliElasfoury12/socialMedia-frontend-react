@@ -1,19 +1,22 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import Get from '../components/API/Get'
+import { createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
+import { Get } from '../components/API/APIMethods'
 
-export let handelSearch = createAsyncThunk(
+export const usersSearch = createAsyncThunk(
 	'search/handleSearch',
-	async ({search, page}) => { 
-        if (search !== undefined) {
-            return await Get('search-users/'+ search +'?page='+ page)
-        }
+	async (_, thunkAPI) => { 
+        const searchStore = thunkAPI.getState().search
+        const isEnd = searchStore.usersCursor == null && window.location.href.includes('/search/users/')
+        if (isEnd || searchStore.loading || !searchStore.search) return
+        thunkAPI.dispatch(setLoading(true))
+        return await Get(`search-users/${searchStore.search}?cursor=${searchStore.usersCursor}`)
 	}
 )
 
-export let handelPostsSearch = createAsyncThunk(
+export const postsSearch = createAsyncThunk(
 	'search/handlePostsSearch',
-	async ({search, postsPage}) => { 
-        return await   Get('search-posts/'+ search +'?page=' + postsPage)
+	async (_,thunkAPI) => { 
+        const searchStore = thunkAPI.getState().search
+        return await Get(`search-posts/${searchStore.search}?cursor=${searchStore.postsCursor}`)
 	}
 )
 
@@ -22,83 +25,44 @@ export const searchSlice = createSlice({
 
     initialState: {
         search: '',
-        users: [],
-        page: 1,
-        lastPage:0,
         loading: false,
-        end: false,
+        users: [],
+        usersCursor: '',
         posts: [],
-        postsEnd: false,
-        postsPage: 1,
-        lastPostPage: 0
+        postsCursor: '',
+        show: false,
     },
 
     reducers: {
         setSearch: (state, {payload}) => {
             state.search = payload
         },
-
         setLoading: (state, {payload}) => {
             state.loading = payload
         },
-
-        setPage: state => {
-            state.page += 1
-        },
-
-        resetPage: state => {
-            state.page = 1
-            state.lastPage = 0
-        },
-
-        setEnd: (state, {payload}) => {
-            state.end = payload
-        },
-
-        setPostsPage: state => {
-            state.postsPage += 1
-        },
-
-        resetPostsPage: state => {
-            state.postsPage = 1
-            state.lastPostPage = 0
-        },
-
-        setPostsEnd: (state, {payload}) => {
-            state.postsEnd = payload
+        setShow: (state, {payload}) => {
+            state.show = payload
         }
     },
 
     extraReducers: (builder) => {
-        builder.addCase(handelSearch.fulfilled, (state, {payload})  => {
-            if(payload == '' && state.page > 1) {
-                state.end = true
-                state.loading = false
-            }else if(state.page  == 1){
-                state.users = payload
-                state.loading = false
-            }else{
-                state.users = [...state.users, ...payload]
-                state.loading = false
-                state.lastPage = state.page
-            }
+        builder.addCase(usersSearch.fulfilled, (state, {payload})  => {
+            if(!payload) return
+            if(window.location.href.includes('/search/users/'))
+                state.users = [...state.users,...payload.users]
+            else  state.users = payload.users
+                state.usersCursor = payload.nextCursor
         })
-        .addCase(handelPostsSearch.fulfilled, (state, {payload})  => {
-            if(payload == '' && state.postsPage > 1) {
-                state.postsEnd = true
-                state.loading = false
-            }else if(state.postsPage  == 1){
-                state.posts = payload
-                state.loading = false
-            }else{
-                state.posts = [...state.posts, ...payload]
-                state.loading = false
-                state.lastPostPage = state.postsPage
-            }
+        .addCase(postsSearch.fulfilled, (state, {payload})  => {
+            if(!payload) return
+            state.posts = [...state.posts,...payload.posts]
+            state.postsCursor = payload.nextCursor
         })
+        .addMatcher(isPending(postsSearch),(state) => {state.loading = true})
+		.addMatcher(isFulfilled(usersSearch, postsSearch),(state) => {state.loading = false})
     }
 })
 
-export const { setSearch, setLoading, setPage, resetPage, setEnd, setPostsEnd, setPostsPage, resetPostsPage } = searchSlice.actions
+export const { setSearch, setLoading, setShow } = searchSlice.actions
 
 export default searchSlice.reducer

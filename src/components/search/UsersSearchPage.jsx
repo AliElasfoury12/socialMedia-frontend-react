@@ -1,25 +1,30 @@
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { handelSearch, setLoading, setPage } from "../../stores/searchStore"
+import { setSearch, usersSearch } from "../../stores/searchStore"
 import UserCard from "./UserCard"
 import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
+import { useEffect } from "react"
 
 export default function UsersSearchPage() {
-    let dispatch = useDispatch()
-    let {search} = useParams()
-    let {users, loading, page, end, lastPage} = useSelector(state => state.search)
+    const dispatch = useDispatch()
+    const {search: searchKey} = useParams()
+    const {users, loading, search } = useSelector(state => state.search)
 
-    let searchUsers = () => {
-        if((!end && page > lastPage)) {
-            dispatch(setLoading(true))
-            dispatch(handelSearch({search, page}))
-        } 
-    }
+    useEffect(() => {
+       if (!search) dispatch(setSearch(searchKey))
+    },[])
 
-    useInfinteScroll(page, setPage, searchUsers)
+    useInfinteScroll(() => dispatch(usersSearch()), users.length == 0 )
 
     return (
-        <ShowLoop loading={loading} array={users} LoopComponent={UserCard} message={'No Results Found'}/>
+        <div className="w-fit mx-auto">
+            <ShowLoop 
+                loading={loading} 
+                array={users} 
+                LoopComponent={UserCard} 
+                message={'No Results Found'}
+            />
+        </div>
     )
 }

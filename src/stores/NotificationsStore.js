@@ -1,28 +1,35 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
 import { Get } from '../components/API/APIMethods'
 
-export let getNotifications = createAsyncThunk(
+export const getNotifications = createAsyncThunk(
 	'Notiofications/getNotifications',
-	async (page) => { 			
-		return await Get('notifications?page=' + page)
-	}
+	async (_, thunkAPI) => {
+        const notifications_store = thunkAPI.getState().notifications
+        const cursor = notifications_store.cursor
+        if(cursor === null ) return
+       return await Get('notifications?cursor=' + cursor)
+    }
 )
 
-export let seen = createAsyncThunk(
-	'Notiofications/seen',
-	async () => { 			
-		return await Get('notifications/seen')
-	}
+export const getNotificationscount = createAsyncThunk(
+	'Notiofications/getNotificationsCount',
+	async (_, thunkAPI) => {
+        const notifications_store = thunkAPI.getState().notifications
+        const cursor = notifications_store.cursor
+        if(cursor === null ) return
+        return await Get('notifications-count')
+    }
+)
+
+export const seen = createAsyncThunk(
+	'Notiofications/seen', async () => await Get('notifications/seen')
 )
 
 export let markAllAsRead = createAsyncThunk(
-	'Notiofications/markAllAsRead',
-	async () => { 			
-		return await Get('notifications/mark-all-as-read')
-	}
+	'Notiofications/markAllAsRead', async () => await Get('notifications/mark-all-as-read')
 )
 
-export let read = createAsyncThunk(
+export const read = createAsyncThunk(
 	'Notiofications/read',
 	async (id) => { 
         await Get('notifications/mark-as-read/' + id)			
@@ -35,12 +42,10 @@ export const NotificationsSlice = createSlice({
 
     initialState: {
         notifications: [],
-        notificationsCount: 0,
+        notificationsCount: null,
         show: false,
-        end: false,
         loading: false,
-        page: 1,
-        lastPage: 0
+        cursor: '',
     },
 
     reducers: {
@@ -49,7 +54,7 @@ export const NotificationsSlice = createSlice({
         },
 
         setNotificationsCount:(state) => {
-            state.notificationsCount += 1
+            state.notificationsCount++
         },
 
         setShow:(state, {payload}) => {
@@ -72,15 +77,13 @@ export const NotificationsSlice = createSlice({
 
     extraReducers: (builder) => {
         builder.addCase(getNotifications.fulfilled,(state, {payload}) => {
-            if(payload.notifications == '') {
-                state.end = true
-                state.loading = false
-            }else{
-                state.notifications.push(...payload.notifications)
-                state.notificationsCount = payload.notifications_count
-                state.loading = false
-                state.lastPage = state.page
-            }
+            if(!payload) return
+
+            state.notifications.push(...payload.notifications)
+            state.cursor = payload.nextCursor            
+        })
+        .addCase(getNotificationscount.fulfilled, (state, {payload}) => {
+            state.notificationsCount = payload.notifications_count
         })
         .addCase(seen.fulfilled, (state) => {
             state.notificationsCount = 0
@@ -89,9 +92,15 @@ export const NotificationsSlice = createSlice({
             state.notifications.map((n)=> n.read_at == 'read')
         })
         .addCase(read.fulfilled, (state,{payload}) => {
-           let notification = state.notifications.find(n => n.id == payload)
+           const notification = state.notifications.find(n => n.id == payload)
            notification.read_at = 'read'
         })
+        .addMatcher(isPending(getNotifications),(state) => {
+			state.loading = true
+		})
+        .addMatcher(isFulfilled(getNotifications),(state) => {
+			state.loading = false
+		})
     }
 })
 
