@@ -8,7 +8,7 @@ export default function SearchPage() {
     return (
         <DefaultLayout>
             <div 
-                className="flex justify-center sticky top-0 bg-slate-400 w-screen h-fit py-4 z-10">
+                className="flex justify-center fixed top-10 left-0 bg-slate-400 w-screen h-fit py-4 z-10">
 
                 <Link 
                 className=" bg-blue-700 py-2 px-14  rounded-xl mr-5 mt"
@@ -27,7 +27,9 @@ export default function SearchPage() {
                 
             </div>
 
-            <Outlet/>
+            <div className="w-fit mx-auto mt-20">
+                <Outlet/>
+            </div>
         </DefaultLayout>
     )
 }

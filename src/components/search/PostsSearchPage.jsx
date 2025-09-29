@@ -1,25 +1,29 @@
 import PostCard from "../Posts/postCard/PostCard"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { postsSearch, setSearch } from "../../stores/searchStore"
+import { postsSearch  } from "../../stores/searchStore"
 import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 export default function PostsSearchPage() {
     const dispatch = useDispatch()
-    const {posts, loading, search} = useSelector(state => state.search)
-    const {search: searchKey} = useParams()
+    const {posts, loading } = useSelector(state => state.search)
+    const {search} = useParams()
+    const isFirstMount = useRef(true)
+
+    function handleSearch () {        
+        if(isFirstMount.current && posts.length > 0) return
+        dispatch(postsSearch (search))    
+    }
 
     useEffect(() => {
-        if (!search) dispatch(setSearch(searchKey))
+        isFirstMount.current = false
     },[])
 
-    useInfinteScroll(() => dispatch(postsSearch ()), posts.length == 0)
+    useInfinteScroll(handleSearch, posts.length == 0)
 
     return (
-        <div className="m-auto w-fit">
-            <ShowLoop loading={loading} array={posts} LoopComponent={PostCard} message={'No Results Found'}/>
-        </div>
+        <ShowLoop loading={loading} array={posts} LoopComponent={PostCard} message={'No Results Found'}/>
     )
 }

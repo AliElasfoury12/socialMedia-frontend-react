@@ -1,22 +1,33 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
 import { Get } from '../components/API/APIMethods'
 
+export const searchBar = createAsyncThunk(
+	'searchBar/handleSearch',
+	async (search, thunkAPI) => { 
+        const searchStore = thunkAPI.getState().search
+        if (searchStore.loading || !search) return
+        thunkAPI.dispatch(setLoading(true))
+        return await Get(`search-users/${search}?cursor=${searchStore.usersCursor}`)
+	}
+)
+
 export const usersSearch = createAsyncThunk(
 	'search/handleSearch',
-	async (_, thunkAPI) => { 
+	async (search, thunkAPI) => { 
         const searchStore = thunkAPI.getState().search
-        const isEnd = searchStore.usersCursor == null && window.location.href.includes('/search/users/')
-        if (isEnd || searchStore.loading || !searchStore.search) return
-        thunkAPI.dispatch(setLoading(true))
-        return await Get(`search-users/${searchStore.search}?cursor=${searchStore.usersCursor}`)
+        const isEnd = searchStore.usersCursor == null 
+        if (isEnd || !search) return
+        return await Get(`search-users/${search}?cursor=${searchStore.usersCursor}`)
 	}
 )
 
 export const postsSearch = createAsyncThunk(
 	'search/handlePostsSearch',
-	async (_,thunkAPI) => { 
+	async (search,thunkAPI) => { 
         const searchStore = thunkAPI.getState().search
-        return await Get(`search-posts/${searchStore.search}?cursor=${searchStore.postsCursor}`)
+        const isEnd = searchStore.postsCursor == null 
+        if (isEnd || !search) return
+        return await Get(`search-posts/${search}?cursor=${searchStore.postsCursor}`)
 	}
 )
 
@@ -24,7 +35,6 @@ export const searchSlice = createSlice({
     name: 'search',
 
     initialState: {
-        search: '',
         loading: false,
         users: [],
         usersCursor: '',
@@ -34,9 +44,6 @@ export const searchSlice = createSlice({
     },
 
     reducers: {
-        setSearch: (state, {payload}) => {
-            state.search = payload
-        },
         setLoading: (state, {payload}) => {
             state.loading = payload
         },
@@ -46,23 +53,27 @@ export const searchSlice = createSlice({
     },
 
     extraReducers: (builder) => {
-        builder.addCase(usersSearch.fulfilled, (state, {payload})  => {
+        builder.addCase(searchBar.fulfilled, (state, {payload})  => {
             if(!payload) return
-            if(window.location.href.includes('/search/users/'))
-                state.users = [...state.users,...payload.users]
-            else  state.users = payload.users
-                state.usersCursor = payload.nextCursor
+            state.users = payload.users
+            state.usersCursor = payload.nextCursor
+            state.show = true
+        })
+        .addCase(usersSearch.fulfilled, (state, {payload})  => {
+            if(!payload) return
+            state.users = [...state.users,...payload.users]
+            state.usersCursor = payload.nextCursor
         })
         .addCase(postsSearch.fulfilled, (state, {payload})  => {
             if(!payload) return
             state.posts = [...state.posts,...payload.posts]
             state.postsCursor = payload.nextCursor
         })
-        .addMatcher(isPending(postsSearch),(state) => {state.loading = true})
-		.addMatcher(isFulfilled(usersSearch, postsSearch),(state) => {state.loading = false})
+        .addMatcher(isPending(usersSearch, postsSearch),(state) => {state.loading = true})
+		.addMatcher(isFulfilled(searchBar,usersSearch, postsSearch),(state) => {state.loading = false})
     }
 })
 
-export const { setSearch, setLoading, setShow } = searchSlice.actions
+export const { setLoading, setShow } = searchSlice.actions
 
 export default searchSlice.reducer
