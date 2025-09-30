@@ -27,7 +27,7 @@ export const postsSearch = createAsyncThunk(
         const searchStore = thunkAPI.getState().search
         const isEnd = searchStore.postsCursor == null 
         if (isEnd || !search) return
-        return await Get(`search-posts/${search}?cursor=${searchStore.postsCursor}`)
+        return await Get(`posts/search/${search}?cursor=${searchStore.postsCursor}`)
 	}
 )
 

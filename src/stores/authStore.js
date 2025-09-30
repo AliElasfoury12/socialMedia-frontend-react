@@ -15,11 +15,11 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk(
 	'auth/logout', async (_, {rejectWithValue}) => {
-		try {
-			return await Get('auth/logout')
-		} catch (error) {
-			return rejectWithValue(error)
-		}
+		// try {
+		// 	return await Get('auth/logout')
+		// } catch (error) {
+		// 	return rejectWithValue(error)
+		// }
 	}
 )
 

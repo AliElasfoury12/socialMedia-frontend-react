@@ -15,7 +15,7 @@ export default function Likes({ post }) {
         setLiked(!liked)
         liked ? setLikesCount(l => l-1) : setLikesCount (l => l+1)
 
-        Get(`posts/${post.id}/like`)
+        Get(`posts/like/${post.id}`)
         .then((data) => {
             setIsLikeButtonDisabled(false)
             setLikesCount(data.likesCount)

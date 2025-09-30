@@ -50,7 +50,7 @@ export const deletePost = createAsyncThunk(
 
 export const SharePost = createAsyncThunk(
 	'posts/SharePost', async ({postContent, post}, thunkAPI) => {
-		const res = await Post(`posts/${post.id}/share`, {content: postContent})
+		const res = await Post(`posts/share/${post.id}`, {content: postContent})
 		res.post.user = thunkAPI.getState().auth.authUser
 		res.post.shared_post = post
 		res.post.post_imgs = []
