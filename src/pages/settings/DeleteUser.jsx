@@ -25,6 +25,8 @@ export default function DeleteUser() {
             storage.delete('user')
             storage.delete('token')
 			api.setToken(null)
+        })
+        .then(() => {
             router.navigate('/login')
         })
         .catch(({errors}) => {

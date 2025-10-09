@@ -21,7 +21,7 @@ export default function ChangeUserNameAndEmail() {
     }
 
     function edit  () {
-        Put('users/'+ authUser.id, form.current)
+        Put('users', form.current)
         .then((data) => {
             dispatch(setAuthUser(data.user))
         })

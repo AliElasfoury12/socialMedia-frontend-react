@@ -4,7 +4,7 @@ import ShowIf from '../../../../Common/ShowIf'
 
 export default function Follow({userId, follows, ClassName, followFunction}) {
     const { authUser } = useSelector(state => state.auth)
- 
+    
     return (
         <ShowIf show={authUser.id != userId}>
             <button 

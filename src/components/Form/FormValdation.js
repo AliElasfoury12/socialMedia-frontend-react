@@ -28,7 +28,7 @@ export class Valdatior {
     }
 
     email (form, field) {
-        const emailregex = /^([a-z\d-\\.]+)@([a-z\d-]+)\.([a-z]{1,8})(\.[a-z]{1,8})?$/
+        const emailregex = /^([A-Za-z\d-_.%+]+)@([A-Za-z\d.-]+)\.([A-Za-z]{1,})(\.[A-Za-z]{1,})?$/
         const message = 'not a vaild email'
         if(!emailregex.test(form[field])) this.addError (field, message)
         else this.removeError (field, message)

@@ -107,6 +107,19 @@ export const profileSlice = createSlice({
                 return post
             })
         })
+        .addCase(followUser.fulfilled,(state, {payload}) =>{
+            state.user.is_auth_user_follows = payload.follows
+            
+            if(payload.follows) state.user.followers_count++
+            else state.user.followers_count--
+            
+            const userPosts = state.usersPosts[payload.userId].posts
+            userPosts.forEach((post) => {
+                post.user.is_auth_user_follows = payload.follows
+            })
+
+            state.usersData[payload.userId] = state.user
+        })
         .addMatcher(
 			isPending(getProfileUser, changeProfileImage),(state) => {state.loading = true}
 		).addMatcher(

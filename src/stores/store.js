@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import countrStore from './countrStore'
 import postsStore from './postsStore'
 import authStore from './authStore'
 import commentStore from './commentStore'
@@ -22,7 +21,6 @@ export const store = configureStore({
         posts: postsStore,
         comments: commentStore,
         auth: authStore,
-        counter: countrStore,
         profile: profileStore,
         notifications: NotificationsStore,
         search: searchStore

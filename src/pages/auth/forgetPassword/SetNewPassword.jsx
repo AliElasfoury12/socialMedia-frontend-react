@@ -42,6 +42,7 @@ export default function SetNewPassword() {
                 className="form ">
                 {NewPasswordInput(errors, showNewPassword, () => setShowNewPassword(!showNewPassword))}
                 {NewPasswordConfirmInput(errors, showNewPassword)}
+                <p className="text-red-700">{errors.otp && errors.otp[0]}</p>
                 <div>{loading && <BigLoadingSpinner/>}</div>
                 <button 
                     type="submit"

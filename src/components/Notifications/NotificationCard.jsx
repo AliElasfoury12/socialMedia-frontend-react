@@ -8,11 +8,10 @@ import { read, setShow } from '../../stores/NotificationsStore'
 
 export default function NotificationCard({ element: notification }) {
     const dispatch = useDispatch()
-    const image = notification.user?.img
-    notification = {...notification , data: JSON.parse(notification.data)}
+    const image = notification.user?.profile_pic
     const bg_color =  notification.read_at == null ? 'bg-blue-950' : 'bg-blue-600'
-    const post = notification.data.post
-    const comment = notification.data.comment
+    const post = notification.post
+    const comment = notification.comment
     
     function handleClick () {
         if(notification.read_at == null) dispatch(read(notification.id))
@@ -28,7 +27,7 @@ export default function NotificationCard({ element: notification }) {
                 className="w-12 h-12 border-black border-2 rounded-full p-px" 
                 src={image ? profileStorage + image : User} />
             <div >
-                <p>{notification.data.title}</p>
+                <p>{notification.title}</p>
                 <p>{post.post}</p>
                 <p>{comment?.comment ?? ''}</p>
                 <p>{timeAgo(notification.created_at)}</p>

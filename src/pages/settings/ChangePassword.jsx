@@ -3,10 +3,14 @@ import { formValdaitor } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"
 import { CustomePasswordInput, NewPasswordConfirmInput, NewPasswordInput } from "../../components/Form/Inputs"
 import BigLoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
-import { Post } from "../../components/API/APIMethods"
+import { api, Post } from "../../components/API/APIMethods"
 import DefaultLayout from "../../components/layouts/DefaultLayout"
+import { useDispatch } from "react-redux"
+import { setToken } from "../../stores/authStore"
+import { storage } from "../../utils/storage"
 
 export default function ChangePassword() {
+    const dispatch = useDispatch()
     const [Errors, setErrors] = useState({})
     const form = useRef({current_password: '',new_password: '', new_password_confirmation: ''})
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
@@ -35,8 +39,13 @@ export default function ChangePassword() {
             setloading(true)
 
             Post('auth/changePassword', form.current)
-            .catch((errors) => {
-                setErrors(errors)
+            .then((res) => {
+                dispatch(setToken(res.new_jwt_token))
+                storage.save('token', res.new_jwt_token)
+                api.token = res.new_jwt_token
+            })
+            .catch((err) => {
+                setErrors(err.errors)
             })
             .finally(() => setloading(false))
         }

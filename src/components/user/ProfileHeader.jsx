@@ -1,12 +1,14 @@
 import cover from '../../assets/cover.jpeg'
 import ProfilePicture from "./ProfilePicture"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Follow from "../Posts/postCard/components/postCardHeader/Follow"
 import { Link } from "react-router-dom"
+import { followUser } from '../../stores/profileStore'
 
 export default function ProfileHeader() {
     const {user} = useSelector(state => state.profile)
     const {authUser} = useSelector(state => state.auth)
+    const dispatch = useDispatch()
  
     return (
         <div className="w-fit flex flex-col items-center relative mb-28">
@@ -39,8 +41,10 @@ export default function ProfileHeader() {
                         
                     <Follow 
                         userId={user.id} 
-                        follows={user.follows} 
-                        ClassName={'bg-blue-600 rounded-md w-24 py-1 mt-7 text-white'}/>
+                        follows={user.is_auth_user_follows} 
+                        ClassName={'bg-blue-600 rounded-md w-24 py-1 mt-7 text-white'}
+                        followFunction={() => dispatch(followUser(user.id))}
+                    />
                 }
             </div> 
         </div>

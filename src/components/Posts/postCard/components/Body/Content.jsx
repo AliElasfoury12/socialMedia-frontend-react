@@ -15,7 +15,7 @@ export default function Content ({post}) {
         if (!fullPost) {
             api.GET('posts/'+ post.id)
             .then((data)=> {
-                setFullPost(data)
+                setFullPost(data.content)
             })
         }
         setShowMore(true)

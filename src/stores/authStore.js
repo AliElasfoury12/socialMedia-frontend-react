@@ -87,7 +87,8 @@ export const authSlice = createSlice({
 
 	reducers: {
 		setAuthUser: (state, {payload}) => {
-			state.authUser = {...state.authUser, ...payload}
+			if (payload) state.authUser = {...state.authUser, ...payload}
+			else state.authUser = payload
 			storage.save('user', state.authUser)
 		},
 		setToken: (state, {payload}) => {
@@ -100,10 +101,10 @@ export const authSlice = createSlice({
 
 	extraReducers: (builder) => {
 		builder.addCase(login.fulfilled, (state, {payload}) => {
-			state.authUser = payload.user
-			state.token = payload.token
 			storage.save('user', payload.user)
             storage.save('token', payload.token)
+			state.authUser = payload.user
+			state.token = payload.token
 			api.setToken(payload.token)
             router.navigate('/')
 		})

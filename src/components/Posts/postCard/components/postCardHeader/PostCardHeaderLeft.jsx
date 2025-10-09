@@ -36,7 +36,7 @@ export default function PostCardHeaderLeft({post}) {
 
             <Follow 
                 userId={user.id} 
-                follows={user.isAuthFollows} 
+                follows={user.is_auth_user_follows} 
                 followFunction={() => dispatch(followPostUser(user.id))}
                 ClassName={'self-start ml-3 mt-px text-blue-950'}/>                
         </section> 

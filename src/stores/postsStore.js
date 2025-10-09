@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
 import { Delete, Get, Post } from '../components/API/APIMethods'
-import { deleteUserPost, followUser, updateUserPost } from './profileStore'
+import { deleteUserPost, updateUserPost } from './profileStore'
 
 export const getPosts = createAsyncThunk(
 	'posts/getPosts', async (_,thunkAPI) =>  {		
@@ -68,8 +68,8 @@ export const deletePostImages = createAsyncThunk(
 )
 
 export const followPostUser = createAsyncThunk(
-	'posts/follow-post-user', async (userId, thunkAPI) => {
-		const res = await thunkAPI.dispatch(followUser(userId))
+	'posts/follow-post-user', async (userId) => {
+		const res = await Get(`follow/${userId}`)
 		return {...res.payload, userId: userId}
 	}
 )
@@ -115,10 +115,10 @@ export const postsSlice = createSlice({
 		.addCase(followPostUser.fulfilled, (state, {payload}) => {						
 			state.posts = state.posts.map((post) => {
 				if(post.user.id == payload.userId) 
-					post.user.isAuthFollows = payload.follows
+					post.user.is_auth_user_follows = payload.follows
 				
 				if(post.shared_post?.user?.id == payload.userId) 
-					post.shared_post.user.isAuthFollows = payload.follows
+					post.shared_post.user.is_auth_user_follows = payload.follows
 				
 				return post
 			})			
