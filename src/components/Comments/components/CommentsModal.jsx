@@ -2,7 +2,7 @@ import { X } from "lucide-react"
 import CommentsShow from "./CommentsShow"
 import CreateComment from "./CreateComment"
 import { useDispatch } from "react-redux"
-import { setShow } from '../../../stores/commentStore'
+import { setShow } from '../../../stores/comments/comments_slice'
 import { useEffect } from "react"
 
 export default function CommentsModal() {

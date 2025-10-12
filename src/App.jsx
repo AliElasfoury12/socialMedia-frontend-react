@@ -2,12 +2,18 @@ import { RouterProvider } from 'react-router-dom'
 import router from './Router.jsx'
 import {api} from './components/API/APIMethods.js'
 import { base_url } from './stores/statices.js'
-import { useSelector } from 'react-redux'
+import { Provider } from 'react-redux'
+import { start_broadcasting } from './echo.js'
+import { store } from './stores/store.js'
 
 export default function App() {
-    const { token, window_echo } = useSelector(state => state.auth) 
-    window.Echo = window_echo
+    const { token } = store.getState().auth 
     api.setBaseURL(base_url + 'api/')
     api.setToken(token)
-    return (<RouterProvider router={router}/>)
+    window.Echo = start_broadcasting(token)
+    return (
+        <Provider store={store}>
+            <RouterProvider router={router}/>
+        </Provider>
+    )
 }

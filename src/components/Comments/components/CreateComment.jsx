@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import arrow from '../../../assets/right-arrow.png'
 import { useDispatch, useSelector } from 'react-redux'
-import { createComment } from '../../../stores/commentStore'
+import { createComment } from '../../../stores/comments/comments_thunks'
 import PropTypes from 'prop-types'
 
 export default function CreateComment({post}) {

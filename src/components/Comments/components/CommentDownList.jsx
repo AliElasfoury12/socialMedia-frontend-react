@@ -1,10 +1,10 @@
 import  more  from '../../../assets/more.png'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { setShowList, setEditing, setEditId } from '../../../stores/commentStore'
+import { setShowList, setEditing, setEditId } from '../../../stores/comments/comments_slice'
 import DeleteConfirmModal from '../../Modals/DeleteConfirmModal'
 import { useState } from 'react'
-import { deleteComment} from '../../../stores/commentStore'
+import { deleteComment} from '../../../stores/comments/comments_thunks'
 import DownList from '../../Common/DownList'
 
 export default function CommentDownList({ comment }) {

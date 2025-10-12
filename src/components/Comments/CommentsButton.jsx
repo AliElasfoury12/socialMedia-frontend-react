@@ -1,6 +1,6 @@
 import { MessageCircle } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPostId, setShow, setShowList, setEditing } from '../../stores/commentStore'
+import { setPostId, setShow, setShowList, setEditing } from '../../stores/comments/comments_slice'
 import PropTypes from 'prop-types'
 import countRound from '../../utils/CountRound'
 import CommentsShow from './components/CommentsShow'

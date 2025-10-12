@@ -2,7 +2,7 @@ import arrow from '../../../assets/right-arrow.png'
 import {  useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { updateComment } from '../../../stores/commentStore'
+import { updateComment } from '../../../stores/comments/comments_thunks'
 
 export default  function EditComment({ comment }) {
    const dispatch = useDispatch()
