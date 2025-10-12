@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useRef, useState } from "react"
-import { setAuthUser } from "../../stores/authStore"
+import { setAuthUser } from "../../stores/auth/auth_slice"
 import { EmailInput, NameInput, PasswordInput } from "../../components/Form/Inputs"
 import { formValdaitor } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"

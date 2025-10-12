@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import postsStore from './postsStore'
-import authStore from './authStore'
+import authStore from './auth/auth_slice'
 import commentStore from './commentStore'
 import profileStore from './profileStore'
 import NotificationsStore from './NotificationsStore'

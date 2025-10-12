@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { setAuthUser, setToken } from "../../stores/authStore"
+import { setAuthUser, setToken } from "../../stores/auth/auth_slice"
 import { api, Delete } from "../../components/API/APIMethods"
 import { formValdaitor } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"

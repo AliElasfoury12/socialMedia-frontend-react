@@ -4,7 +4,8 @@ import { NewPasswordConfirmInput, NewPasswordInput } from "../../../components/F
 import { useDispatch, useSelector } from "react-redux"
 import { formValdaitor } from "../../../components/Form/FormValdation"
 import { emptyObject } from "../../../utils/objects"
-import { setNewPassword, setErrors } from "../../../stores/authStore"
+import { setNewPassword } from "../../../stores/auth/auth_thunks"
+import { setErrors } from "../../../stores/auth/auth_slice"
 import BigLoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner"
 
 export default function SetNewPassword() {

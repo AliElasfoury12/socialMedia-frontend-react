@@ -6,7 +6,7 @@ import BigLoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
 import { api, Post } from "../../components/API/APIMethods"
 import DefaultLayout from "../../components/layouts/DefaultLayout"
 import { useDispatch } from "react-redux"
-import { setToken } from "../../stores/authStore"
+import { setToken } from "../../stores/auth/auth_slice"
 import { storage } from "../../utils/storage"
 
 export default function ChangePassword() {

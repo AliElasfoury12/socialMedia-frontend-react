@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { login } from "../../stores/authStore"
+import { login } from "../../stores/auth/auth_thunks"
 import GuestLayout from "../../components/layouts/GuestLayout"
 import { formValdaitor } from "../../components/Form/FormValdation"
 import { useEffect, useRef, useState } from "react"

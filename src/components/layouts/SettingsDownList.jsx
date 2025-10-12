@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Settings} from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { logout } from "../../stores/authStore"
+import { logout } from "../../stores/auth/auth_slice"
 import { LogOutIcon } from 'lucide-react'
 
 export default function SettingsDownList() {

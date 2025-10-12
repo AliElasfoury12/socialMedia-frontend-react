@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import GuestLayout from "../../components/layouts/GuestLayout"
 import { useDispatch, useSelector } from "react-redux"
-import { register } from "../../stores/authStore"
+import { register } from "../../stores/auth/auth_thunks"
 import { useEffect, useRef, useState } from "react"
 import { formValdaitor } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"

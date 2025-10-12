@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import userPhoto from '../../assets/user.png'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {setAuthUser} from '../../stores/authStore'
+import {setAuthUser} from '../../stores/auth/auth_slice'
 import { profileStorage } from "../../stores/statices"
 import { changeProfileImage } from '../../stores/profileStore'
 import SmallLoadingSpinner from '../LoadingSpinner/SmallLoadingSpinner'
