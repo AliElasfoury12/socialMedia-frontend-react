@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import SettingsDownList from "./SettingsDownList";
 import { useState } from "react";
-import { profileStorage } from "../../stores/statices";
+import { profileStorage } from "../../main";
 import { Link } from "react-router-dom";
 import user from '../../assets/user.png'
 

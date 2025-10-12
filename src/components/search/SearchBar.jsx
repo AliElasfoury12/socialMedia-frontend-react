@@ -1,7 +1,8 @@
 import { Search  as SearchIcon} from "lucide-react"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { setShow, searchBar } from "../../stores/searchStore"
+import { setShow } from "../../stores/search/search_slice"
+import { searchBar } from "../../stores/search/search_thunks"
 import { useEffect, useState } from "react"
 import UsersSearchPage from "./UsersSearchPage"
 

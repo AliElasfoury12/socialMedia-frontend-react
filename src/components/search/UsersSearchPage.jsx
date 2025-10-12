@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { usersSearch } from "../../stores/searchStore"
+import { usersSearch } from "../../stores/search/search_thunks"
 import UserCard from "./UserCard"
 import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"

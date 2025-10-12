@@ -4,7 +4,7 @@ import authStore from './auth/auth_slice'
 import commentStore from './comments/comments_slice'
 import profileStore from './profile/profile_slice'
 import NotificationsStore from './notifications/notifications_slice'
-import searchStore from './searchStore'
+import searchStore from './search/search_slice'
 
 const errorMiddleware = () => next => action => {
     try {

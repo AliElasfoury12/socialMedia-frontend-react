@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { postsStorage } from '../../../../../stores/statices'
+import { postsStorage } from '../../../../../main'
 
 export default function ImagesPreview ({images, setShowImagesGallery}) {
     let GridClassRepeat = 'grid-cols-2'

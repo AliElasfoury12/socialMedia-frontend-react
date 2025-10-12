@@ -3,7 +3,7 @@ import userPhoto from '../../assets/user.png'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {setAuthUser} from '../../stores/auth/auth_slice'
-import { profileStorage } from "../../stores/statices"
+import { profileStorage } from "../../main"
 import { changeProfileImage } from '../../stores/profile/profile_thunks'
 import SmallLoadingSpinner from '../LoadingSpinner/SmallLoadingSpinner'
 

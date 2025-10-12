@@ -2,7 +2,7 @@ import userPhoto from '../../assets/user.png'
 import { Camera } from "lucide-react"
 import { useState } from 'react'
 import {useSelector } from 'react-redux'
-import { profileStorage } from '../../stores/statices'
+import { profileStorage } from '../../main'
 import Modal from '../Modals/Modal'
 import EditProfilePicture from './EditProfilePicture'
 

@@ -1,6 +1,6 @@
 import { Trash } from 'lucide-react'
 import PropTypes from 'prop-types'
-import { postsStorage } from '../../../stores/statices';
+import { postsStorage } from '../../../main';
 
 export default function ImagesPreview({images, setForm, setToDeletedImages}) 
 {

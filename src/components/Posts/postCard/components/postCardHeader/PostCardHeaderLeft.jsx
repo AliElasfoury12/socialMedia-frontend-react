@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { profileStorage } from '../../../../../stores/statices'
+import { profileStorage } from '../../../../../main'
 import { Link } from 'react-router-dom'
 import userLogo from '../../../../../assets/user.png'
 import { timeAgo } from '../../../../../utils/Moments'

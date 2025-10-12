@@ -1,6 +1,6 @@
 import Modal from '../../../../Modals/Modal'
 import PropTypes from 'prop-types'
-import { postsStorage } from '../../../../../stores/statices'
+import { postsStorage } from '../../../../../main'
 
 export default function Gallery ({images, showImagesGallery, setShowImagesGallery}) {
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import  User  from '../../assets/user.png'
 import { timeAgo } from "../../utils/Moments"
-import { profileStorage } from '../../stores/statices'
+import { profileStorage } from '../../main'
 import { useDispatch } from 'react-redux'
 import { setShow } from '../../stores/notifications/notifications_slice'
 import { read } from '../../stores/notifications/notifications_thunks'

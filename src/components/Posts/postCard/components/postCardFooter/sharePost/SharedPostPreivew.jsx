@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { postsStorage, profileStorage } from '../../../../../../stores/statices'
+import { postsStorage, profileStorage } from '../../../../../../main'
 import userImage from '../../../../../../assets/user.png'
 
 export default function SharedPostPreivew ({post}) {

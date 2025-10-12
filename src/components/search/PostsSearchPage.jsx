@@ -1,7 +1,7 @@
 import PostCard from "../Posts/postCard/PostCard"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { postsSearch  } from "../../stores/searchStore"
+import { postsSearch } from "../../stores/search/search_thunks"
 import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
 import { useEffect, useRef } from "react"
