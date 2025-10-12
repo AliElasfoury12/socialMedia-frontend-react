@@ -70,7 +70,7 @@ export const deletePostImages = createAsyncThunk(
 export const followPostUser = createAsyncThunk(
 	'posts/follow-post-user', async (userId) => {
 		const res = await Get(`follow/${userId}`)
-		return {...res.payload, userId: userId}
+		return {...res, userId: userId}
 	}
 )
 
@@ -112,7 +112,9 @@ export const postsSlice = createSlice({
 			if(!payload) return			
 			state.posts = state.posts.filter((post) => post.id !== payload)
 		})
-		.addCase(followPostUser.fulfilled, (state, {payload}) => {						
+		.addCase(followPostUser.fulfilled, (state, {payload}) => {	
+			console.log(payload);
+								
 			state.posts = state.posts.map((post) => {
 				if(post.user.id == payload.userId) 
 					post.user.is_auth_user_follows = payload.follows

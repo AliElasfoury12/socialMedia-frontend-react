@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected } fro
 import { storage } from "../utils/storage"
 import { api, Patch, Post, Get } from "../components/API/APIMethods"
 import router from "../Router"
+import { start_broadcasting } from '../echo.js'
 
 export const login = createAsyncThunk(
 	'auth/login', async (form, {rejectWithValue}) => {
@@ -82,7 +83,8 @@ export const authSlice = createSlice({
 		authUser: storage.get('user'),
 		token: storage.get('token'),
 		errors: {}, 
-		loading: false
+		loading: false,
+		window_echo: null
 	},
 
 	reducers: {
@@ -106,6 +108,7 @@ export const authSlice = createSlice({
 			state.authUser = payload.user
 			state.token = payload.token
 			api.setToken(payload.token)
+			state.window_echo = start_broadcasting(payload.token)    
             router.navigate('/')
 		})
 		.addCase(logout.fulfilled, (state) => {

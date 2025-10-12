@@ -12,10 +12,8 @@ export default function Notification() {
     useEffect(() => {
         if (notificationsCount === null) dispatch(getNotificationscount()) 
             
-        window.Echo.private(`notifications.${authUser.id}`)
-        .notification((data) => {
-            console.log(data);
-            
+        window.Echo?.private(`notifications.${authUser.id}`)
+        .notification((data) => {            
             dispatch(setNotifications(data))
             dispatch(setNotificationsCount())
         })
