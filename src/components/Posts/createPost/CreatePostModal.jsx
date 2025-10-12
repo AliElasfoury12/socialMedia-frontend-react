@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector} from "react-redux"
-import { createPost } from "../../../stores/postsStore"
+import { createPost } from "../../../stores/posts/posts_thunks"
 import propTypes from "prop-types"
 import SmallLoadingSpinner from "../../LoadingSpinner/SmallLoadingSpinner"
 import ImagesPreview from "./ImagesPreview"

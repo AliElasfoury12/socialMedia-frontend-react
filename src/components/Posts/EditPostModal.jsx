@@ -4,7 +4,7 @@ import ImagesPreview from "./createPost/ImagesPreview";
 import { useState } from "react";
 import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePostImages, updatePost } from "../../stores/postsStore";
+import { deletePostImages, updatePost } from "../../stores/posts/posts_thunks";
 import { emptyObject } from '../../utils/objects'
 import { TextArea } from "../Form/Inputs";
 

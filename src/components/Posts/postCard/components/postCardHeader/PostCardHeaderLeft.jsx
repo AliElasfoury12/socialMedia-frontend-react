@@ -5,7 +5,7 @@ import userLogo from '../../../../../assets/user.png'
 import { timeAgo } from '../../../../../utils/Moments'
 import Follow from './Follow'
 import { useDispatch } from 'react-redux'
-import { followPostUser } from '../../../../../stores/postsStore'
+import { followPostUser } from '../../../../../stores/posts/posts_thunks'
 
 export default function PostCardHeaderLeft({post}) {
     const user = post.user

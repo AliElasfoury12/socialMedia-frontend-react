@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { SharePost } from '../../../../../../stores/postsStore'
+import { SharePost } from '../../../../../../stores/posts/posts_thunks'
 
 export default function SharePostForm ({post, setShow}) {
     const [postContent, setPostContent] = useState('')

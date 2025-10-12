@@ -5,7 +5,7 @@ import EditPostModal from '../../../EditPostModal'
 import DownList from '../../../../Common/DownList'
 import DeleteConfirmModal from '../../../../Modals/DeleteConfirmModal'
 import { useDispatch } from 'react-redux'
-import { deletePost } from '../../../../../stores/postsStore'
+import { deletePost } from '../../../../../stores/posts/posts_thunks'
 
 export default function DownlistButton ({post}) {
     const [showDownList, setShowDownList] = useState(false)

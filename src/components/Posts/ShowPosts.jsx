@@ -1,6 +1,6 @@
 import PostCard from "./postCard/PostCard"
 import { useDispatch, useSelector } from "react-redux"
-import { getPosts } from '../../stores/postsStore' 
+import { getPosts } from '../../stores/posts/posts_thunks' 
 import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
 

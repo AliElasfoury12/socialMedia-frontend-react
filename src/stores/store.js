@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import postsStore from './postsStore'
+import postsStore from './posts/posts_slice'
 import authStore from './auth/auth_slice'
 import commentStore from './comments/comments_slice'
 import profileStore from './profileStore'

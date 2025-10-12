@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Delete, Get, Post, Put} from '../../components/API/APIMethods'
-import { changePostCount } from './../postsStore'
+import { changePostCount } from './../posts/posts_slice'
 import { changeUserPostCount } from './../profileStore'
 
 export const getComments = createAsyncThunk(
