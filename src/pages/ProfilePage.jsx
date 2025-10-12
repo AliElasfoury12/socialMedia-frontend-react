@@ -2,7 +2,7 @@ import { Link, Outlet, useHref, useParams } from "react-router-dom"
 import {useEffect } from "react"
 import ProfileHeader from "../components/user/ProfileHeader"
 import { useDispatch, useSelector} from "react-redux"
-import { getProfileUser } from "../stores/profileStore"
+import { getProfileUser } from "../stores/profile/profile_thunks"
 import BigLoadingSpinner from "../components/LoadingSpinner/LoadingSpinner"
 import DefaultLayout from "../components/layouts/DefaultLayout"
 

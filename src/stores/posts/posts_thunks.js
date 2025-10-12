@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Delete, Get, Post } from '../../components/API/APIMethods'
-import { deleteUserPost, updateUserPost } from '../profileStore'
+import { deleteUserPost, updateUserPost } from '../profile/profile_slice'
 import { setLoading } from './posts_slice'
 
 export const getPosts = createAsyncThunk(

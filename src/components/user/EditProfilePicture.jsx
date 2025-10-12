@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {setAuthUser} from '../../stores/auth/auth_slice'
 import { profileStorage } from "../../stores/statices"
-import { changeProfileImage } from '../../stores/profileStore'
+import { changeProfileImage } from '../../stores/profile/profile_thunks'
 import SmallLoadingSpinner from '../LoadingSpinner/SmallLoadingSpinner'
 
 export default function EditProfilePicture({setShow}) {

@@ -1,7 +1,7 @@
 import  PostCard  from '../Posts/postCard/PostCard'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserPosts } from '../../stores/profileStore'
+import { getUserPosts } from '../../stores/profile/profile_thunks'
 import useInfinteScroll from '../../useInfinteScroll'
 import ShowLoop from '../../components/Common/ShowLoop'
 

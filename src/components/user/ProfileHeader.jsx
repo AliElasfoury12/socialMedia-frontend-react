@@ -3,7 +3,7 @@ import ProfilePicture from "./ProfilePicture"
 import { useDispatch, useSelector } from "react-redux"
 import Follow from "../Posts/postCard/components/postCardHeader/Follow"
 import { Link } from "react-router-dom"
-import { followUser } from '../../stores/profileStore'
+import { followUser } from '../../stores/profile/profile_thunks'
 
 export default function ProfileHeader() {
     const {user} = useSelector(state => state.profile)
