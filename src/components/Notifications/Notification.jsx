@@ -2,8 +2,10 @@ import { Bell } from "lucide-react"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import ShowNotifications from "./ShowNotifications"
-import { seen, setNotifications, setNotificationsCount, setShow, getNotificationscount } from "../../stores/NotificationsStore"
+import { setNotifications, setNotificationsCount, setShow } from "../../stores/notifications/notifications_slice"
+import { seen, getNotificationscount } from "../../stores/notifications/notifications_thunks"
 import ShowIf from '../Common/ShowIf'
+
 export default function Notification() {
     const dispatch = useDispatch()
     const { authUser }  = useSelector(state => state.auth)

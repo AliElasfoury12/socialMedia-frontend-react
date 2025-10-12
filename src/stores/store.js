@@ -3,7 +3,7 @@ import postsStore from './postsStore'
 import authStore from './auth/auth_slice'
 import commentStore from './comments/comments_slice'
 import profileStore from './profileStore'
-import NotificationsStore from './NotificationsStore'
+import NotificationsStore from './notifications/notifications_slice'
 import searchStore from './searchStore'
 
 const errorMiddleware = () => next => action => {

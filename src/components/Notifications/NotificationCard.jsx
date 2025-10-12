@@ -4,7 +4,9 @@ import  User  from '../../assets/user.png'
 import { timeAgo } from "../../utils/Moments"
 import { profileStorage } from '../../stores/statices'
 import { useDispatch } from 'react-redux'
-import { read, setShow } from '../../stores/NotificationsStore'
+import { setShow } from '../../stores/notifications/notifications_slice'
+import { read } from '../../stores/notifications/notifications_thunks'
+
 
 export default function NotificationCard({ element: notification }) {
     const dispatch = useDispatch()

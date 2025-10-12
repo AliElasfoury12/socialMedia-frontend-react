@@ -1,6 +1,6 @@
 import NotificationCard from "./NotificationCard"
 import { useDispatch, useSelector } from 'react-redux'
-import { getNotifications, markAllAsRead} from '../../stores/NotificationsStore'
+import { getNotifications, markAllAsRead} from '../../stores/notifications/notifications_thunks'
 import useInfinteScroll from "../../useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
 
