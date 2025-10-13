@@ -1,11 +1,15 @@
 import Header from "./Header"
 import PropTypes from 'prop-types'
 import router from "../../Router"
+import { useSelector } from "react-redux"
 
-export default function DefaultLayout ({children}) {
-    const token = localStorage.getItem('token')
-    if(!token) return router.navigate('/login')
-        
+export default function DefaultLayout ({children}) {    
+    const { token } = useSelector(state => state.auth)
+    if(!token) { 
+        router.navigate('/login')
+        return
+    }
+
     return (
         <>
             <Header/>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector} from "react-redux"
 import { createPost } from "../../../stores/posts/posts_thunks"
 import propTypes from "prop-types"
@@ -12,10 +12,6 @@ export default function CreatePostModal({show, setShow}) {
     const [error, setError] = useState('')
     const [form , setForm] = useState({postContent: '', images: []})
     const {loading} = useSelector(state => state.posts)
-
-    useEffect(() => {
-        
-    }, [form])
 
     function handleChange (e) {
         const {name, value, type, files} = e.target        

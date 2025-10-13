@@ -19,7 +19,7 @@ export function EmailInput(Errors, defaultValue) {
         type: 'email',
         placeholder: 'Enter Your Email',
         Errors: Errors,
-        defaultValue: defaultValue
+        defaultValue: defaultValue ?? ''
     }
     return CustomInput(input_data)
 }
@@ -128,5 +128,17 @@ export function NewPasswordConfirmInput(Errors, showNewPassword) {
         Errors: Errors
     }
 
+    return CustomInput(input_data)
+}
+
+export function CustomeEmailInput(data) {
+    const input_data = {
+        label: data.label,
+        name: 'email',
+        type: 'email',
+        placeholder: 'Enter Your Email',
+        Errors: data.Errors ?? {},
+        defaultValue: data.defaultValue ?? ''
+    }
     return CustomInput(input_data)
 }
