@@ -2,13 +2,15 @@ import { Trash } from 'lucide-react'
 import PropTypes from 'prop-types'
 import { postsStorage } from '../../../main';
 
-export default function ImagesPreview({images, setForm, setToDeletedImages}) 
+export default function ImagesPreview({images, setImages, setForm}) 
 {
+    function deleteImg (index) { 
+        const image = images[index]
+        if(image.img) setForm(prev => ({...prev, to_delete_images: [...prev.to_delete_images, image]}))
 
-    function deleteImg (index) {        
-        let image = images[index]
-        if(image.img) setToDeletedImages(I => [...I, image])
-        const newImages = images.filter((_, i) => i != index)        
+        let newImages = images.filter((_,i) => i != index)        
+        setImages(newImages)
+        newImages = newImages.filter((image) => image.img == undefined )
         setForm(prev => ({...prev, images: newImages}))
     }
    
@@ -35,6 +37,7 @@ export default function ImagesPreview({images, setForm, setToDeletedImages})
 
 ImagesPreview.propTypes = {
     images: PropTypes.array,
+    setImages: PropTypes.func,
     setForm: PropTypes.func,
     setToDeletedImages: PropTypes.func
 }

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPostId, setShow, setShowList, setEditing } from '../../stores/comments/comments_slice'
 import PropTypes from 'prop-types'
 import countRound from '../../utils/CountRound'
-import CommentsShow from './components/CommentsShow'
+import ShowComments from './components/ShowComments'
 import Modal from '../Modals/Modal'
 import CreateComment from './components/CreateComment'
 
@@ -37,7 +37,7 @@ export default function CommentsButton({post}) {
 
             <Modal show={postId == post.id && show} setShow={setModalShow}>
                 <div onClick={onClickModalBody}>
-                    <CommentsShow post={post}/>
+                    <ShowComments post={post}/>
                     <CreateComment post={post}/>
                 </div>
             </Modal>

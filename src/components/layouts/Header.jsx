@@ -3,6 +3,7 @@ import SearchBar from "../search/SearchBar"
 import Notification from "../Notifications/Notification"
 import NavLeft from "./NavLeft"
 import { useSelector } from "react-redux"
+import { Else, If, IfElse } from "../Common/IfElse"
 
 export default function Header() {
     const { authUser } = useSelector(state => state.auth)
@@ -23,17 +24,18 @@ export default function Header() {
                    {authUser?  <SearchBar/> : ''}               
                 </div>
                     
-                {authUser ? 
-                <>
-                    <Notification/>
-                    <NavLeft/>
-                </> : 
-                <div className="flex gap-4">
-                    <Link to={'/register'}>Register</Link>
-                    <Link to={'/login'}>Login</Link>
-                </div>
-                }
-
+                <IfElse condition={authUser}>
+                    <If>
+                        <Notification/>
+                        <NavLeft/>
+                    </If>
+                    <Else>
+                        <div className="flex gap-4">
+                            <Link to={'/register'}>Register</Link>
+                            <Link to={'/login'}>Login</Link>
+                        </div>
+                    </Else>
+                </IfElse>
             </div>
         </header>
     )

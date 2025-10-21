@@ -1,4 +1,4 @@
-import { createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { createComment, deleteComment, getComments, updateComment } from './comments_thunks'
 
 export const commentsSlice = createSlice({
@@ -8,7 +8,6 @@ export const commentsSlice = createSlice({
 		comments: {/*postId : {data: [], page: 1} */},
 		postId: '',
 		show: false,
-		loading:false,
 		showList: false,
 		editing: false,
 		editId: 0,		
@@ -71,12 +70,6 @@ export const commentsSlice = createSlice({
 			state.comments[payload.postId].data = postComments.data.filter((comment) => comment.id != payload.commentId)
 			state.showList = false
 		})
-		.addMatcher(
-			isPending(getComments),(state) => {state.loading = true}
-		)
-		.addMatcher(
-			isFulfilled(getComments),(state) => {state.loading = false}
-		)
 	}
 
 })

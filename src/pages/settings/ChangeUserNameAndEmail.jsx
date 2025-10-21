@@ -20,14 +20,13 @@ export default function ChangeUserNameAndEmail() {
         password: 'required|min:4|max:100',
     }
 
-    function edit  () {
-        Put('users', form.current)
-        .then((data) => {
-            dispatch(setAuthUser(data.user))
-        })
-        .catch((errors) => {
-            setErrors(errors)  
-        })
+    async function edit  () {
+        try {
+            const data = await Put('users', form.current)
+            await dispatch(setAuthUser(data.user))
+        } catch ({errors}) {
+            setErrors(errors) 
+        }
     }
 
     function handleChange(e) {

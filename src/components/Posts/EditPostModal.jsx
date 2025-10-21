@@ -1,47 +1,57 @@
 import Modal from "../Modals/Modal";
 import propTypes from "prop-types"
 import ImagesPreview from "./createPost/ImagesPreview";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SmallLoadingSpinner from "../LoadingSpinner/SmallLoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePostImages, updatePost } from "../../stores/posts/posts_thunks";
+import { updatePost } from "../../stores/posts/posts_thunks";
 import { emptyObject } from '../../utils/objects'
 import { TextArea } from "../Form/Inputs";
+import { Alert } from "../../stores/app";
 
 export default function EditPostModal({ post, show, setShow }) {    
     const dispatch = useDispatch()
     const {loading} = useSelector(state => state.posts)
-    const [form , setForm] = useState({postContent: post.content, images: [...post.post_imgs]})
+    const [form , setForm] = useState({images: [], to_delete_images: []})
     const [error, setError] = useState('')
-    const [toDeleteImages, setToDeleteImages] = useState([])
+    const [images, setImages] = useState([...post.post_imgs,...form.images])
+
+    useEffect(() => {
+        setForm({images: [], to_delete_images: []})
+        setImages([...post.post_imgs,...form.images])
+    },[show])
 
     function handleChange (e) {
         const {name, value, type, files} = e.target
         if(type == 'file') {
             setForm(prev => ({...prev, [name]: [...prev[name],...files]}))
+            setImages(prev => [...prev, ...files])
         }else setForm(prev => ({...prev, [name]: value}))
     }
 
     function createFormData () {
         let formdata = new FormData
         formdata.append('_method','PUT');
-        formdata.append('content', form.postContent)
-        for (let i = 0; i < form.images.length; i++) {
-            if(form.images[i].img) continue
-            formdata.append('image'+i, form.images[i])
+        if(form.postContent) formdata.append('content', form.postContent)
+        if(form.images){
+            for (let i = 0; i < form.images.length; i++) {            
+                formdata.append('image'+i, form.images[i])
+            }
+        }
+        if(form.to_delete_images.length > 0){
+            formdata.append('to_delete_images', JSON.stringify(form.to_delete_images))
         }
         return formdata
     }
 
-    function handleSubmit(e) {
-        e.preventDefault()        
-        if(form.postContent || form.images.length > 0){
+    async function handleSubmit(e) {
+        e.preventDefault() 
+        const is_post_not_empty = form.postContent || form.images.length > 0     
+        if(is_post_not_empty || form.to_delete_images.length > 0){
             const formdata = createFormData()
-            dispatch(updatePost({postId: post.id, formdata}))
-            .then(() => {
-                if(toDeleteImages.length) dispatch(deletePostImages({postId: post.id, toDeleteImages}))
-                setShow(false)
-            })  
+            await dispatch(updatePost({postId: post.id, formdata}))
+            setShow(false)
+            dispatch(Alert('post updated successfully'))
         }else{
             setError("Post Can't be Empty")
             setTimeout(() => setError(''), 3000)
@@ -76,29 +86,30 @@ export default function EditPostModal({ post, show, setShow }) {
     }
 
     return (
-        <Modal show={show} setShow={setShow} >
-            <form 
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-                className="form w-[28rem] py-2">
-                <button 
-                    type="submit"
-                    className="bg-blue-800 text-white w-20 p-1 rounded-md self-end mr-2">
-                    Update
-                </button>
+        <>
+            <Modal show={show} setShow={setShow} >
+                <form 
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                    className="form w-[28rem] py-2">
+                    <button 
+                        type="submit"
+                        className="bg-blue-800 text-white w-20 p-1 rounded-md self-end mr-2">
+                        Update
+                    </button>
 
-                {PostInput()}
+                    {PostInput()}
+                    {loading && <SmallLoadingSpinner/>}
+                    {ImagesInput()}
 
-                {loading && <SmallLoadingSpinner/>}
-
-                {ImagesInput()}
-
-                <ImagesPreview 
-                    images={form.images}
-                    setForm={setForm}
-                    setToDeletedImages={setToDeleteImages}/>
-            </form>
-        </Modal>
+                    <ImagesPreview 
+                        images={images}
+                        setImages={setImages}
+                        setForm={setForm}
+                    />
+                </form>
+            </Modal>
+        </>
     )
 }
 

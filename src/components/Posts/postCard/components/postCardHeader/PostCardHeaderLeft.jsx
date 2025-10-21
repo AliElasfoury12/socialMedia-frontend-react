@@ -8,8 +8,8 @@ import { useDispatch } from 'react-redux'
 import { followPostUser } from '../../../../../stores/posts/posts_thunks'
 
 export default function PostCardHeaderLeft({post}) {
-    const user = post.user
     const dispatch = useDispatch()
+    const user = post.user
 
     return (
         <section className="flex ">
@@ -23,7 +23,7 @@ export default function PostCardHeaderLeft({post}) {
                     to={`/user/profile/${user.id}/posts`} 
                     className="flex text-lg">
                     {user.name.length > 23 ? 
-                        user.name.subString(0,20) + '...':
+                        user.name.substring(0,20) + '...':
                         user.name 
                     }
                 </Link>

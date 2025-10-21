@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
-import {api} from '../../../../API/APIMethods'
+import {Get} from '../../../../API/APIMethods'
 
 export default function Content ({post}) {
     const [Post, setPost] = useState(post.content ?? '')
@@ -13,17 +13,17 @@ export default function Content ({post}) {
 
     function show_more () {
         if (!fullPost) {
-            api.GET('posts/'+ post.id)
+            Get('posts/'+ post.id)
             .then((data)=> {
                 setFullPost(data.content)
+                setShowMore(true)
             })
-        }
-        setShowMore(true)
+        }else setShowMore(true)
     }
     
     return (
         <div 
-            className="w-96 text-left text-lg m-2">
+            className="text-left text-lg m-2">
             <p onClick={() => setShowMore(false)}>
                 {showMore ? fullPost : Post}
             </p>

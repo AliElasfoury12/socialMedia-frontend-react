@@ -1,7 +1,7 @@
 import NotificationCard from "./NotificationCard"
 import { useDispatch, useSelector } from 'react-redux'
 import { getNotifications, markAllAsRead} from '../../stores/notifications/notifications_thunks'
-import useInfinteScroll from "../../useInfinteScroll"
+import useInfinteScroll from "../../hooks/useInfinteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
 
 export default function ShowNotifications() {

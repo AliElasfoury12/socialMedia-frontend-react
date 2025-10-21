@@ -6,12 +6,13 @@ import DownList from '../../../../Common/DownList'
 import DeleteConfirmModal from '../../../../Modals/DeleteConfirmModal'
 import { useDispatch } from 'react-redux'
 import { deletePost } from '../../../../../stores/posts/posts_thunks'
+import { Alert } from '../../../../../stores/app'
 
 export default function DownlistButton ({post}) {
+    const dispatch = useDispatch()
     const [showDownList, setShowDownList] = useState(false)
     const [showEditPost ,setShowEditPostModal] = useState(false)
     const [showConfirmDelte, setShowConfirmDelete] = useState(false)
-    const dispatch = useDispatch()
 
     function onEditDownlistButtonFun () {
         setShowDownList(false)
@@ -23,6 +24,11 @@ export default function DownlistButton ({post}) {
         setShowDownList(false)
     }
 
+    function confirmDeleteFunction () {
+        dispatch(deletePost({postId: post.id}))
+        dispatch(Alert('post deleted successfully'))
+    }
+    
     return (
         <section>
             <img 
@@ -44,7 +50,8 @@ export default function DownlistButton ({post}) {
             <DeleteConfirmModal
                 showConfirmDelete={showConfirmDelte}
                 setShowConfirmDelete={(s) => setShowConfirmDelete(s)}
-                confirmDeleteFunction={() => dispatch(deletePost({postId: post.id}))}/>
+                confirmDeleteFunction={confirmDeleteFunction}/>
+            
         </section>  
     )
 }

@@ -1,4 +1,4 @@
-import { createSlice, isFulfilled, isPending } from '@reduxjs/toolkit'
+import { createSlice, current, isFulfilled, isPending } from '@reduxjs/toolkit'
 import { createPost, deletePost, deletePostImages, followPostUser, getPosts, SharePost, updatePost } from './posts_thunks'
 
 export const postsSlice = createSlice({
@@ -31,10 +31,15 @@ export const postsSlice = createSlice({
 		.addCase(updatePost.fulfilled, (state, {payload}) => {
 			if(!payload) return
 
-			const post = state.posts.find((post) => post.id == payload.id)			
-			payload = payload.post
-			post.content = payload.content
-			post.post_imgs.push(...payload.post_imgs)
+			const post = state.posts.find((post) => post.id == payload.id)
+
+			if(payload.post.content) post.content = payload.post.content
+			if(payload.to_delete_images) {
+				console.log(payload.to_delete_images, current(post.post_imgs));
+				
+				post.post_imgs = post.post_imgs.filter(image => !payload.to_delete_images.some(deletedImage => deletedImage.id == image.id))
+			}
+			if(payload.post.post_imgs) post.post_imgs.push(...payload.post.post_imgs)
 		})
 		.addCase(deletePost.fulfilled, (state, {payload}) => {
 			if(!payload) return			

@@ -4,28 +4,44 @@ import PropTypes from 'prop-types'
 import ShowIf from '../Common/ShowIf'
 
 export default function Modal({show, setShow, children}) {
-
-    function enableScrolling() {
-        document.body.classList.remove('disableScrolling')
+    let id = 0
+    
+    function get_modal_id () {
+        if(show) {
+            for (let i = 1; i < 1000; i++) {
+                id = document.getElementById(`modal-${i}`)            
+                if (!id) {
+                    id = i
+                    break
+                }
+            }
+        }
     }
 
-    function disableScrolling() {
-        document.body.classList.add('disableScrolling')
+    get_modal_id()
+    
+    function enableScrolling() {
+        const is_any_model_open = document.getElementById('modal-1')
+        if(is_any_model_open == null)document.body.style.overflow = 'auto'
+    }
+
+    const disableScrolling = () => {
+       if(show) document.body.style.overflow = 'hidden'
     }
 
     function close () {
-        enableScrolling()
         setShow(false)
     }
 
     useEffect(() => {
-        if(show) disableScrolling()
-        else enableScrolling()
+        disableScrolling()
+        return () => enableScrolling()
     },[show])
-  
+
     return (
         <ShowIf show={show}>
             <div
+                id={`modal-${id}`}
                 onClick={close}
                 className="fixed w-full h-full z-10 top-0 left-0 
                 grid place-content-center bg-black bg-opacity-60 mt-6 ">
@@ -53,5 +69,5 @@ export default function Modal({show, setShow, children}) {
 Modal.propTypes = {
     show: PropTypes.bool,
     setShow: PropTypes.func,
-    children: PropTypes.any
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 }

@@ -6,6 +6,7 @@ import SmallLoadingSpinner from "../../LoadingSpinner/SmallLoadingSpinner"
 import ImagesPreview from "./ImagesPreview"
 import Modal from "../../Modals/Modal"
 import { TextArea } from "../../Form/Inputs"
+import { Alert } from "../../../stores/app"
 
 export default function CreatePostModal({show, setShow}) {
     const dispatch = useDispatch()
@@ -28,15 +29,14 @@ export default function CreatePostModal({show, setShow}) {
         return formdata
     }
     
-    function handleSubmit (e) { 
+    async function handleSubmit (e) { 
         e.preventDefault()        
         if(form.postContent || form.images.length > 0){
             const formdata = createFormData() 
-            dispatch(createPost(formdata))
-            .then(() => {
-                setShow(false)
-                setForm({postContent: '', images: []})
-            })
+            await dispatch(createPost(formdata))
+            setShow(false)
+            setForm({postContent: '', images: []})
+            dispatch(Alert('post created successfully'))
         }else{
             setError("Post Can't be Empty")
             setTimeout(() => setError(''), 3000)
@@ -68,23 +68,25 @@ export default function CreatePostModal({show, setShow}) {
     }
 
     return (
-        <Modal show={show} setShow={setShow} >
-            <form 
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-3 w-[28rem] py-2">
-                    
-                <button
-                    type="submit" 
-                    className="bg-blue-800 text-white w-20 p-1 rounded-md self-end mr-2">
-                    Post
-                </button>
+        <>
+            <Modal show={show} setShow={setShow} >
+                <form 
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-3 w-[28rem] py-2">
+                        
+                    <button
+                        type="submit" 
+                        className="bg-blue-800 text-white w-20 p-1 rounded-md self-end mr-2">
+                        Post
+                    </button>
 
-                {PostInput()}                
-                {loading && <SmallLoadingSpinner/>}
-                {ImagesInput()}
-            </form>
-        </Modal>
+                    {PostInput()}                
+                    {loading && <SmallLoadingSpinner/>}
+                    {ImagesInput()}
+                </form>
+            </Modal>
+        </>
     )
 }
 

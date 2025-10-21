@@ -10,7 +10,6 @@ export const getComments = createAsyncThunk(
 		const postComments = state.comments[post.id]
 				
 		if(post.id != state.postId || post.comments_count == 0 || postComments?.end) return 
-		
 		const cursor = (postComments?.cursor) ? postComments.cursor : ''
 
 		const res =  await Get(`posts/${post.id}/comments?cursor=${cursor}`)		
@@ -20,15 +19,10 @@ export const getComments = createAsyncThunk(
 
 export const createComment = createAsyncThunk(
 	'comments/createComments',
-	async ({postId, content, authUser}, thunkAPI) => { 
+	async ({postId, content, authUser}, thunkAPI ) => { 
 		const res =  await Post(`posts/${postId}/comments`, {content: content})	
 		res.comment.user = authUser
-
-		if(window.location.href.includes('user/profile/'))
-			thunkAPI.dispatch(changeUserPostCount({postId: postId, amount: 1}))
-		else 
-			thunkAPI.dispatch(changePostCount({postId: postId, amount: 1}))
-
+		change_post_count(thunkAPI, postId, 1)
 		return {...res, postId: postId}
 	}
 )
@@ -47,12 +41,14 @@ export const deleteComment = createAsyncThunk(
 	async (commentId, thunkAPI) => { 
 		const postId = thunkAPI.getState().comments.postId
 		const res =  await Delete(`comments/${commentId}`)
-
-		if(window.location.href.includes('user/profile/'))
-			thunkAPI.dispatch(changeUserPostCount({postId: postId, amount: -1}))
-		else 
-			thunkAPI.dispatch(changePostCount({postId: postId, amount: -1}))
-		
+		change_post_count(thunkAPI, postId, -1)
 		return {...res, postId: postId, commentId:commentId}
 	}
 )
+
+const change_post_count = (thunkAPI, post_id, amount) => {
+	if(window.location.href.includes('user/profile/'))
+		thunkAPI.dispatch(changeUserPostCount({postId: post_id, amount: amount}))
+	else 
+		thunkAPI.dispatch(changePostCount({postId: post_id, amount: amount}))
+}

@@ -6,13 +6,17 @@ import DeleteConfirmModal from '../../Modals/DeleteConfirmModal'
 import { useState } from 'react'
 import { deleteComment} from '../../../stores/comments/comments_thunks'
 import DownList from '../../Common/DownList'
+import Alert from '../../alerts/Alert'
+import BigLoadingSpinner from '../../LoadingSpinner/LoadingSpinner'
+import {Alert as _Alert} from '../../../stores/app'
 
 export default function CommentDownList({ comment }) {
     const dispatch = useDispatch()
     const { authUser }  = useSelector(state => state.auth)
     const { editing, editId, showList } = useSelector(state => state.comments)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
-    
+    const [ loading, setLoading ] = useState(false)
+
     function showListFun () {
         dispatch(setEditId(comment.id))
         dispatch(setShowList(!showList) )
@@ -21,6 +25,30 @@ export default function CommentDownList({ comment }) {
     function onDeleteButtonClick () {
         setShowConfirmDelete(true)
         dispatch(setShowList(false))
+    }
+
+    function DeleteCommentAlret() {
+		return (
+			<Alert show={loading} >
+				<div>
+					<h1 className='text-2xl mb-5'>
+						Deleting Comment 
+					</h1>
+					<BigLoadingSpinner/>
+				</div>
+			</Alert> 
+		)
+	}
+
+    async function delete_comment_func () {
+        setLoading(true)
+        try {
+            await dispatch(deleteComment(comment.id))
+            setLoading(false)
+            dispatch(_Alert('comment deleted successfully'))
+        } catch (error) {
+            setLoading(false)
+        }
     }
 
    return (
@@ -45,8 +73,10 @@ export default function CommentDownList({ comment }) {
             <DeleteConfirmModal 
 				showConfirmDelete={showConfirmDelete} 
 				setShowConfirmDelete={(s) => setShowConfirmDelete(s)} 
-				confirmDeleteFunction={() => dispatch(deleteComment(comment.id))}
+				confirmDeleteFunction={delete_comment_func}
 			/>
+
+            <DeleteCommentAlret/>
       </div>
    )
 }

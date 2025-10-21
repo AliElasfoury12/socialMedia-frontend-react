@@ -5,6 +5,8 @@ import commentStore from './comments/comments_slice'
 import profileStore from './profile/profile_slice'
 import NotificationsStore from './notifications/notifications_slice'
 import searchStore from './search/search_slice'
+import appStore from './app'
+
 
 const errorMiddleware = () => next => action => {
     try {
@@ -17,6 +19,7 @@ const errorMiddleware = () => next => action => {
 
 export const store = configureStore({
     reducer: {
+        app: appStore,
         common: commentStore,
         posts: postsStore,
         comments: commentStore,

@@ -1,15 +1,25 @@
 import CommentsCard from './CommentsCard/CommentsCard'
-import useInfinteScroll from '../../../useInfinteScroll'
-import ShowLoop from '../../../components/Common/ShowLoop'
+import useInfinteScroll from '../../../hooks/useInfinteScroll'
+import ShowLoop from '../../Common/ShowLoop'
 import { useDispatch, useSelector } from 'react-redux'
 import { getComments } from '../../../stores/comments/comments_thunks'
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 
-export default function CommentsShow({post}) {
+export default function ShowComments({post}) {
     const dispatch = useDispatch()
-	const { loading, comments } = useSelector(state => state.comments)
+	const { comments } = useSelector(state => state.comments)
+    const [ loading, setLoading ] = useState(false)
   
-    useInfinteScroll(() => dispatch(getComments(post)), comments[post.id] == undefined, 'comments-show-div')
+    function get_comments () {
+        setLoading(true)
+        dispatch(getComments(post))
+        .then(() => {
+            setLoading(false)
+        })
+    }
+
+    useInfinteScroll(get_comments , comments[post.id] == undefined, 'comments-show-div')
   
     return (
         <div 
@@ -20,6 +30,6 @@ export default function CommentsShow({post}) {
     )
 }
 
-CommentsShow.propTypes = {
+ShowComments.propTypes = {
 	post: PropTypes.object
 }

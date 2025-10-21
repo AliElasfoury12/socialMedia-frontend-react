@@ -12,15 +12,13 @@ export default function EditProfilePicture({setShow}) {
     const {user, loading} = useSelector(state => state.profile)
     const [image, setImage] = useState('')
 
-    function changePhoto (e) {
+    async function changePhoto (e) {
         e.preventDefault()
         const  formdata = new FormData
         formdata.append('image', image)
 
-        dispatch(changeProfileImage(formdata))
-        .then(() => {
-            setShow(false)
-        })
+        await dispatch(changeProfileImage(formdata))
+        setShow(false)
     }
 
     useEffect(() => {        
@@ -31,8 +29,8 @@ export default function EditProfilePicture({setShow}) {
     return (
         <form
             onSubmit={changePhoto}
-            className=" flex flex-col w-fit my-3 py-1 px-2 min-w-80 m-auto">
-            <div className="flex justify-between my-2">
+            className=" flex flex-col items-center w-fit my-3 py-1 px-2 min-w-[28rem] m-auto">
+            <div className="flex justify-between my-2 w-96">
                 
                 <label
                     htmlFor="profileImg"
@@ -53,7 +51,7 @@ export default function EditProfilePicture({setShow}) {
                 type="file" />
 
             <img 
-                src={image ? URL.createObjectURL(image) : (user.profile_pic.url ? profileStorage + user.profile_pic.url : userPhoto )}
+                src={image ? URL.createObjectURL(image) : (user.profile_pic?.url ? profileStorage + user.profile_pic.url : userPhoto )}
                 className="w-96 h-96 rounded-full my-2" />
 
             {loading && <SmallLoadingSpinner/>}

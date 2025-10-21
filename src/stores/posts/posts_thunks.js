@@ -23,15 +23,17 @@ export const createPost = createAsyncThunk(
 )
 
 export const updatePost = createAsyncThunk(
-	'posts/updatePost', async ({postId, formdata}, {dispatch}) =>{
-		const payload = await Post(`posts/${postId}`, formdata) 
+	'posts/updatePost', async ({postId, formdata}, thunkAPI) =>{
+		const response = await Post(`posts/${postId}`, formdata) 
 
 		if(window.location.href.includes('user/profile')) {
-			dispatch(updateUserPost({id : postId, ...payload.post}))
+			thunkAPI.dispatch(updateUserPost({id : postId, ...response.post}))
 			return
 		}
 
-		return {id : postId, ...payload}
+		const to_delete_images = JSON.parse(formdata.get('to_delete_images'))
+		
+		return {...response, id : postId, to_delete_images: to_delete_images}
 	}
 )
 

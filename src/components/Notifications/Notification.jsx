@@ -19,7 +19,9 @@ export default function Notification() {
             dispatch(setNotifications(data))
             dispatch(setNotificationsCount())
         })
-    },[])
+
+       return () => window.Echo.leave(`notifications.${authUser.id}`)
+    },[authUser.id])
   
     return (
         <div className="relative mt-1">

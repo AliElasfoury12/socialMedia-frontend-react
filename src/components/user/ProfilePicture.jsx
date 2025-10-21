@@ -20,7 +20,7 @@ export default function ProfilePicture() {
             {user.id == authUser.id && 
                 <button 
                     onClick={() => setShow(true)}
-                    className="absolute top-16 right-0 bg-blue-600 p-1 rounded-full">
+                    className="absolute top-16 right-7 bg-blue-600 p-1 rounded-full">
                     <Camera/>
                 </button>
             }
