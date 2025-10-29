@@ -43,7 +43,7 @@ export default function Modal({show, setShow, children}) {
             <div
                 id={`modal-${id}`}
                 onClick={close}
-                className="fixed w-full h-full z-10 top-0 left-0 
+                className="fixed w-full h-full z-30 -top-6 left-0
                 grid place-content-center bg-black bg-opacity-60 mt-6 ">
                     
                 <div 

@@ -53,13 +53,17 @@ export const profileSlice = createSlice({
             if(userPosts.page >= userPosts.lastPage) userPosts.end = true
         })
         .addCase(changeProfileImage.fulfilled, (state, {payload})  => { 
-            state.usersData[state.user.id].profile_pic.url = payload.profile_image_url
+            const user = state.usersData[state.user.id]
+
+            user.profile_pic.url = payload.profile_image_url
             state.user.profile_pic.url = payload.profile_image_url
 
-            state.usersPosts[state.user.id].posts = state.usersPosts[state.user.id].posts.map((post) => {
+            const userPosts = state.usersPosts[state.user.id];
+
+            userPosts.posts = userPosts.posts.map((post) => {
                 post.user.profile_pic.url = payload.profile_image_url
 
-                if(post.shared_post.user?.id == state.user.id)
+                if(post.shared_post && post.shared_post.user?.id == state.user.id)
                     post.shared_post.user.profile_pic.url = payload.profile_image_url
                 
                 return post

@@ -8,6 +8,7 @@ import DefaultLayout from "../../components/layouts/DefaultLayout"
 import { useDispatch } from "react-redux"
 import { setToken } from "../../stores/auth/auth_slice"
 import { storage } from "../../utils/storage"
+import { Alert } from "../../stores/app"
 
 export default function ChangePassword() {
     const dispatch = useDispatch()
@@ -43,6 +44,7 @@ export default function ChangePassword() {
                 dispatch(setToken(res.new_jwt_token))
                 storage.save('token', res.new_jwt_token)
                 api.token = res.new_jwt_token
+                dispatch(Alert('password updated successfully'))
             })
             .catch((err) => {
                 setErrors(err.errors)

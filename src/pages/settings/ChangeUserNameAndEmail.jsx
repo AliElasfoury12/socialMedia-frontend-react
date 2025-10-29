@@ -6,6 +6,7 @@ import { formValdaitor } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"
 import DefaultLayout from "../../components/layouts/DefaultLayout"
 import { Put } from "../../components/API/APIMethods"
+import { Alert } from "../../stores/app"
 
 export default function ChangeUserNameAndEmail() {
     const dispatch = useDispatch()
@@ -24,6 +25,7 @@ export default function ChangeUserNameAndEmail() {
         try {
             const data = await Put('users', form.current)
             await dispatch(setAuthUser(data.user))
+            dispatch(Alert('user updated successfully'))
         } catch ({errors}) {
             setErrors(errors) 
         }

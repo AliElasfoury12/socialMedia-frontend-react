@@ -4,11 +4,19 @@ import { useState } from "react";
 import { profileStorage } from "../../main";
 import { Link } from "react-router-dom";
 import user from '../../assets/user.png'
+import DeleteConfirmModal from '../Modals/DeleteConfirmModal'
+import { useDispatch } from 'react-redux'
+import { logout } from "../../stores/auth/auth_slice"
 
 export default function NavLeft() {
+    const dispatch = useDispatch()
     const { authUser } = useSelector(state => state.auth)
     const [showList, setShowList] = useState(false)
+    const [showConfirmDelte, setShowConfirmDelete] = useState(false)
 
+	function ConfirmDeleteFunc () {
+		dispatch(logout())
+	}
     window.addEventListener('click',  (e) => {
         let profileImg = document.getElementById("profile-img")
         e.target != profileImg && setShowList(false)         
@@ -33,7 +41,12 @@ export default function NavLeft() {
             
             </div>
 
-            {showList && <SettingsDownList/>}
+            {showList && <SettingsDownList setShowConfirmDelete={setShowConfirmDelete}/>}
+
+            <DeleteConfirmModal
+				showConfirmDelete={showConfirmDelte}
+				setShowConfirmDelete={(s) => setShowConfirmDelete(s)}
+				confirmDeleteFunction={ConfirmDeleteFunc}/>
        </>
     )
 }
