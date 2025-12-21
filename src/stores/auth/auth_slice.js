@@ -37,7 +37,7 @@ export const authSlice = createSlice({
 	},
 
 	extraReducers: (builder) => {
-		builder.addCase(login.fulfilled, (state, {payload}) => {
+		builder.addCase(login.fulfilled, (state, {payload}) => {			
 			storage.save('user', payload.user)
             storage.save('token', payload.token)
 			state.authUser = payload.user

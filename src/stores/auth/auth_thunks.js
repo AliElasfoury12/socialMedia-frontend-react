@@ -3,9 +3,9 @@ import { Patch, Post } from "../../components/API/APIMethods"
 
 export const login = createAsyncThunk(
 	'auth/login', async (form, {rejectWithValue}) => {
-		try {
+		try {			
 			return await Post('auth/login', form)
-		} catch (error) {
+		} catch (error) {			
 			return rejectWithValue(error)
 		}
 	}

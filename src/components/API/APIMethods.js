@@ -3,30 +3,33 @@ import { storage } from "../../utils/storage"
 class API {
     baseURL
     token
+    headers = {}
     
     request (URL, method, body = '', headers = {}) {
         
-        headers = {value: headers}
-
-        body = this.headers(headers, method, body)
+        body = this.handleHeaders(headers, method, body)
         
-       const options = this.options(method, headers, body)
-       
-       return this.send_request(URL, options)
+        const options = this.options(method, body)
+        
+        const response = this.send_request(URL, options)
+
+        this.headers = {}
+        
+        return response
     }
 
     async send_request (URL, options) {
         let res = await fetch(this.baseURL+URL, options)
-        const status = res.status
+        const ok = res.ok
         res = await res.json()
         if(res.new_token) this.updateToken(res.new_token)
 
-        if(status !== 200){
-            console.log(URL, res);
-            throw res
-        }else {
+        if(ok){
             console.log(URL, res);
             return res
+        }else {
+            console.log(URL, res);
+            throw res
         }
     }
 
@@ -35,22 +38,28 @@ class API {
         storage.save('token', new_token)
     }
 
-    headers (headers, method, body) {
-        if (this.token) headers.value = {'Authorization':`Bearer ${this.token}`, ...headers.value}
+    handleHeaders (headers, method, body) {
+        if (this.token) this.addHeaders({Authorization:`Bearer ${this.token}`});
         
         if(method != 'GET') {
             if(!(body instanceof FormData)){
-                headers.value = {'Content-Type': 'application/json', ...headers.value}
+                this.addHeaders({'Content-Type': 'application/json'})
                 return JSON.stringify(body)
             }
         }
+        this.addHeaders(headers)
         return body
     }
 
-    options (method, headers, body) {
+    addHeaders (header) {
+        this.headers = {...this.headers,...header}
+    }
+
+    options (method, body) {
         const options = {
             method: method,
-            headers: headers.value
+            headers: this.headers,
+            credentials: 'include'
         }
                 
        if(body) options.body = body
