@@ -27,8 +27,7 @@ export function Else ({children}) {
 }
 
 IfElse.propTypes = {
-    children: PropTypes.array,
-    condition: PropTypes.bool
+    children: PropTypes.any,
 }
 
 If.propTypes = {

@@ -17,6 +17,7 @@ export default function NavLeft() {
 	function ConfirmDeleteFunc () {
 		dispatch(logout())
 	}
+    
     window.addEventListener('click',  (e) => {
         let profileImg = document.getElementById("profile-img")
         e.target != profileImg && setShowList(false)         

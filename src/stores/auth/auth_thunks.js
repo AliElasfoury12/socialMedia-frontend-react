@@ -1,5 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { Patch, Post } from "../../components/API/APIMethods"
+import { Get, Patch, Post } from "../../components/API/APIMethods"
+
+export const register = createAsyncThunk(
+	'auth/register', async (form, {rejectWithValue}) => {
+		try {
+			return await Post('auth/register', form)
+		} catch (error) {
+			return rejectWithValue(error)
+		}
+	}
+)
 
 export const login = createAsyncThunk(
 	'auth/login', async (form, {rejectWithValue}) => {
@@ -11,11 +21,11 @@ export const login = createAsyncThunk(
 	}
 )
 
-export const register = createAsyncThunk(
-	'auth/register', async (form, {rejectWithValue}) => {
-		try {
-			return await Post('auth/register', form)
-		} catch (error) {
+export const logout = createAsyncThunk(
+	'auth/logout', async (_, {rejectWithValue}) => {
+		try {			
+			return await Get('auth/logout')
+		} catch (error) {			
 			return rejectWithValue(error)
 		}
 	}
@@ -62,3 +72,14 @@ export const setNewPassword = createAsyncThunk(
 		}
 	}
 )
+
+export const GetNewAccessToken = createAsyncThunk(
+	'auth/get_new)access_token', async (_, {rejectWithValue}) => {
+		try {
+			return await Get('auth/get_new_access_token')
+		} catch (error) {
+			return rejectWithValue(error)
+		}
+	}
+)
+

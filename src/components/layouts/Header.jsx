@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import { Else, If, IfElse } from "../Common/IfElse"
 
 export default function Header() {
-    const { authUser } = useSelector(state => state.auth)
+    const { token } = useSelector(state => state.auth)
     
     return (
         <header 
@@ -21,10 +21,10 @@ export default function Header() {
                         birdy
                     </Link>
 
-                   {authUser?  <SearchBar/> : ''}               
+                   {token?  <SearchBar/> : ''}               
                 </div>
                     
-                <IfElse condition={authUser}>
+                <IfElse condition={token}>
                     <If>
                         <Notification/>
                         <NavLeft/>
