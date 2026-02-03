@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import user from '../../assets/user.png'
 import DeleteConfirmModal from '../Modals/DeleteConfirmModal'
 import { useDispatch } from 'react-redux'
-import { logout } from "../../stores/auth/auth_slice"
+import { logout } from "../../stores/auth/auth_thunks"
 
 export default function NavLeft() {
     const dispatch = useDispatch()
