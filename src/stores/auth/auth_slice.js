@@ -57,7 +57,7 @@ export const authSlice = createSlice({
 		})
 		.addCase(GetNewAccessToken.fulfilled, (state, {payload}) => {
 			state.token = payload.token 
-			router.navigate('/')  
+			router.navigate(window.location.pathname)  
 			state.loading = false                
 		})
 		.addCase(GetNewAccessToken.rejected, (state) => {

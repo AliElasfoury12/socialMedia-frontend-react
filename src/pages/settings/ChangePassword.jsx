@@ -3,11 +3,9 @@ import { formValdaitor } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"
 import { CustomePasswordInput, NewPasswordConfirmInput, NewPasswordInput } from "../../components/Form/Inputs"
 import BigLoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
-import { api, Post } from "../../components/API/APIMethods"
+import { Post } from "../../components/API/APIMethods"
 import DefaultLayout from "../../components/layouts/DefaultLayout"
 import { useDispatch } from "react-redux"
-import { setToken } from "../../stores/auth/auth_slice"
-import { storage } from "../../utils/storage"
 import { Alert } from "../../stores/app"
 
 export default function ChangePassword() {
@@ -40,10 +38,7 @@ export default function ChangePassword() {
             setloading(true)
 
             Post('auth/changePassword', form.current)
-            .then((res) => {
-                dispatch(setToken(res.new_jwt_token))
-                storage.save('token', res.new_jwt_token)
-                api.token = res.new_jwt_token
+            .then(() => {
                 dispatch(Alert('password updated successfully'))
             })
             .catch((err) => {
