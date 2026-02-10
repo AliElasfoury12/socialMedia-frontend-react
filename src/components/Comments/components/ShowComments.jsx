@@ -1,5 +1,5 @@
 import CommentsCard from './CommentsCard/CommentsCard'
-import useInfinteScroll from '../../../hooks/useInfinteScroll'
+import useInfiniteScroll from '../../../hooks/useInfiniteScroll'
 import ShowLoop from '../../Common/ShowLoop'
 import { useDispatch, useSelector } from 'react-redux'
 import { getComments } from '../../../stores/comments/comments_thunks'
@@ -19,7 +19,7 @@ export default function ShowComments({post}) {
         })
     }
 
-    useInfinteScroll(get_comments , comments[post.id] == undefined, 'comments-show-div')
+    useInfiniteScroll(get_comments , comments[post.id] == undefined, 'comments-show-div')
   
     return (
         <div 

@@ -1,7 +1,7 @@
 import PostCard from "./postCard/PostCard"
 import { useDispatch, useSelector } from "react-redux"
 import { getPosts } from '../../stores/posts/posts_thunks' 
-import useInfinteScroll from "../../hooks/useInfinteScroll"
+import useInfiniteScroll from "../../hooks/useInfiniteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
 
 export default function ShowPosts () {
@@ -9,7 +9,7 @@ export default function ShowPosts () {
     const {posts, loading} = useSelector(state => state.posts)
         console.log('show Posts');
 
-    useInfinteScroll(() => dispatch(getPosts()), posts.length == 0)
+    useInfiniteScroll(() => dispatch(getPosts()), posts.length == 0)
     
     return (
         <div 

@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 
-export default function useInfinteScroll(infinteScrollFun, hasNoData, elementId) {
+export default function useInfiniteScroll(infiniteScrollFun, hasNoData, elementId) {
     
     function isReachToLastElementInDiv (element) {
        return Number(element.clientHeight) + Number(element.scrollTop.toFixed()) >= Number(element.scrollHeight) 
     }
    
-    function infinteScrolleInDiv () {
+    function infiniteScrollInDiv () {
         const element = document.getElementById(elementId)
-        const handelScroll = () => { if(isReachToLastElementInDiv(element) && !hasNoData) infinteScrollFun() } 
+        const handelScroll = () => { if(isReachToLastElementInDiv(element) && !hasNoData) infiniteScrollFun() } 
     
         element.addEventListener('scroll',handelScroll)
         return () => element.removeEventListener('scroll', handelScroll)
@@ -19,20 +19,20 @@ export default function useInfinteScroll(infinteScrollFun, hasNoData, elementId)
        return window.innerHeight + doc.scrollTop >= doc.scrollHeight
     }
 
-    function infinteScroll() {
-        const handelScroll = () => { if(isReachToLastElementInDocument() && !hasNoData) infinteScrollFun() } 
+    function infiniteScroll() {
+        const handelScroll = () => { if(isReachToLastElementInDocument() && !hasNoData) infiniteScrollFun() } 
 
         window.addEventListener('scroll', handelScroll)
         return () => window.removeEventListener('scroll', handelScroll)
     }
 
     useEffect(() => {  
-        if(hasNoData) infinteScrollFun()
+        if(hasNoData) infiniteScrollFun()
       
         if(elementId) 
-            return infinteScrolleInDiv()
+            return infiniteScrollInDiv()
         else
-            return infinteScroll()
+            return infiniteScroll()
 
     },[hasNoData])
 }

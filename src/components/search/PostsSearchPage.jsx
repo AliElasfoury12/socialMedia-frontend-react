@@ -2,7 +2,7 @@ import PostCard from "../Posts/postCard/PostCard"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { postsSearch } from "../../stores/search/search_thunks"
-import useInfinteScroll from "../../hooks/useInfinteScroll"
+import useInfiniteScroll from "../../hooks/useInfiniteScroll"
 import ShowLoop from "../../components/Common/ShowLoop"
 import { useEffect, useRef } from "react"
 
@@ -21,7 +21,7 @@ export default function PostsSearchPage() {
         isFirstMount.current = false
     },[])
 
-    useInfinteScroll(handleSearch, posts.length == 0)
+    useInfiniteScroll(handleSearch, posts.length == 0)
 
     return (
         <ShowLoop loading={loading} array={posts} LoopComponent={PostCard} message={'No Results Found'}/>
