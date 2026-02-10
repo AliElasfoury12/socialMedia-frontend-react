@@ -1,7 +1,7 @@
 export class Valdatior {
     errors = {}
 
-    formValdaite (form, validation) {
+    formValidate (form, validation) {
         for (let field in validation) {
             const rules = validation[field].split('|')            
             this.checkRules(rules, form, field)
@@ -9,7 +9,7 @@ export class Valdatior {
         return this.errors
     }
 
-    inputValdaite (validation, form, field) {
+    inputValidate (validation, form, field) {
         const rules = validation[field].split('|')
         this.checkRules(rules, form, field)
         return this.errors
@@ -92,4 +92,4 @@ export class Valdatior {
     }
 }
 
-export const formValdaitor = new Valdatior
+export const formValidator = new Valdatior

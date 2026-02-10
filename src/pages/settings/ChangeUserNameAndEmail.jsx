@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useRef, useState } from "react"
 import { setAuthUser } from "../../stores/auth/auth_slice"
 import { EmailInput, NameInput, PasswordInput } from "../../components/Form/Inputs"
-import { formValdaitor } from "../../components/Form/FormValdation"
+import { formValidator } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"
 import DefaultLayout from "../../components/layouts/DefaultLayout"
 import { Put } from "../../components/API/APIMethods"
@@ -34,13 +34,13 @@ export default function ChangeUserNameAndEmail() {
     function handleChange(e) {
         const {name, value} = e.target
         form.current[name] = value
-        const _errors = formValdaitor.inputValdaite(rules, form.current, name) 
+        const _errors = formValidator.inputValidate(rules, form.current, name) 
         setErrors({..._errors}) 
     }
     
     function handleSubmit(e) {
         e.preventDefault()
-        const _errors = formValdaitor.formValdaite(rules, form.current)        
+        const _errors = formValidator.formValidate(rules, form.current)        
         setErrors(_errors)  
         if(emptyObject(Errors)) edit()
     }

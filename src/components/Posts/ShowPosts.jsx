@@ -7,7 +7,8 @@ import ShowLoop from "../../components/Common/ShowLoop"
 export default function ShowPosts () {
     const dispatch = useDispatch()
     const {posts, loading} = useSelector(state => state.posts)
-    
+        console.log('show Posts');
+
     useInfinteScroll(() => dispatch(getPosts()), posts.length == 0)
     
     return (

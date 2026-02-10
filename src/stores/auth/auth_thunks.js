@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { Get, Patch, Post } from "../../components/API/APIMethods"
+import { setIsAuthChecked } from "./auth_slice"
 
 export const register = createAsyncThunk(
 	'auth/register', async (form, {rejectWithValue}) => {
@@ -74,11 +75,13 @@ export const setNewPassword = createAsyncThunk(
 )
 
 export const GetNewAccessToken = createAsyncThunk(
-	'auth/get_new)access_token', async (_, {rejectWithValue}) => {
+	'auth/get_new)access_token', async (layout = 'default', {rejectWithValue, dispatch}) => {
+		dispatch(setIsAuthChecked(true))
+		
 		try {
 			return await Get('auth/get_new_access_token')
 		} catch (error) {
-			return rejectWithValue(error)
+			return rejectWithValue({error: error, layout: layout})
 		}
 	}
 )

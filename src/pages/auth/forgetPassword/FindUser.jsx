@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import BigLoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner"
-import { formValdaitor } from "../../../components/Form/FormValdation"
+import { formValidator } from "../../../components/Form/FormValdation"
 import { emptyObject } from "../../../utils/objects"
 import { useDispatch, useSelector } from "react-redux"
 import { setErrors } from "../../../stores/auth/auth_slice"
@@ -20,7 +20,7 @@ export default function FindUser() {
     function handleChange(e) {
         const {name, value} = e.target
         form.current[name] = value
-        const _errors = formValdaitor.inputValdaite(rules, form.current, name)         
+        const _errors = formValidator.inputValidate(rules, form.current, name)         
         dispatch(setErrors(_errors))
     }
     

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { formValdaitor } from "../../components/Form/FormValdation"
+import { formValidator } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"
 import { CustomePasswordInput, NewPasswordConfirmInput, NewPasswordInput } from "../../components/Form/Inputs"
 import BigLoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
@@ -25,13 +25,13 @@ export default function ChangePassword() {
     function handleChange(e) {
         const {name, value} = e.target
         form.current[name] = value
-        const _errors = formValdaitor.inputValdaite(rules, form.current, name) 
+        const _errors = formValidator.inputValidate(rules, form.current, name) 
         setErrors(_errors)
     }
     
     function handleSubmit(e) {
         e.preventDefault()
-        const _errors = formValdaitor.formValdaite(rules, form.current)        
+        const _errors = formValidator.formValidate(rules, form.current)        
         setErrors(_errors) 
 
         if(emptyObject(Errors)) {

@@ -2,7 +2,7 @@ import { useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { setAuthUser, setToken } from "../../stores/auth/auth_slice"
 import { api, Delete } from "../../components/API/APIMethods"
-import { formValdaitor } from "../../components/Form/FormValdation"
+import { formValidator } from "../../components/Form/FormValdation"
 import { emptyObject } from "../../utils/objects"
 import { PasswordInput } from "../../components/Form/Inputs"
 import DeleteConfirmModal from "../../components/Modals/DeleteConfirmModal"
@@ -41,13 +41,13 @@ export default function DeleteUser() {
     function handleChange(e) {
         const {name, value} = e.target
         form.current[name] = value
-        const _errors = formValdaitor.inputValdaite(rules, form.current, name)        
+        const _errors = formValidator.inputValidate(rules, form.current, name)        
         setErrors(_errors)        
     }
         
     function handleSubmit(e) {
         e.preventDefault()
-        const _errors = formValdaitor.formValdaite(rules, form.current)        
+        const _errors = formValidator.formValidate(rules, form.current)        
         setErrors(_errors)  
         if(emptyObject(Errors) && form.current.password != '') setShowConfirmDeletet(true)
     }

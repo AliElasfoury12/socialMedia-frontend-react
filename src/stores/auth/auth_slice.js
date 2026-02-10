@@ -12,6 +12,8 @@ export const authSlice = createSlice({
 		token: null,
 		errors: {}, 
 		loading: false,
+		loading2: false,
+		isAuthChecked: false
 	},
 
 	reducers: {
@@ -25,6 +27,9 @@ export const authSlice = createSlice({
 		},
 		setErrors: (state, {payload}) => {
 			state.errors = payload
+		},
+		setIsAuthChecked: (state, {payload}) => {
+			state.isAuthChecked = payload
 		}
 	},
 
@@ -34,7 +39,13 @@ export const authSlice = createSlice({
 			state.authUser = payload.user
 			state.token = payload.token
 			api.setToken(payload.token)
+			state.loading2 = false
             router.navigate('/')
+		})
+		.addCase(login.pending, (state) => {state.loading2 = true})
+		.addCase(login.rejected, (state,{payload}) => {
+			state.errors = payload.errors
+			state.loading2 = false
 		})
 		.addCase(logout.fulfilled, (state) => {			
 			state.authUser = null
@@ -57,26 +68,27 @@ export const authSlice = createSlice({
 		})
 		.addCase(GetNewAccessToken.fulfilled, (state, {payload}) => {
 			state.token = payload.token 
-			router.navigate(window.location.pathname)  
+			router.navigate(window.location.pathname) 
 			state.loading = false                
 		})
-		.addCase(GetNewAccessToken.rejected, (state) => {
+		.addCase(GetNewAccessToken.rejected, (state,{payload}) => {
 			state.loading = false
-			router.navigate('/login')                               
+			if(payload.layout === 'guest') router.navigate(window.location.pathname)
+			else router.navigate('/login')                               
 		})
-		.addMatcher(isFulfilled(login, register, findUserAndSendOTP, checkOTP, setNewPassword, resendOTP) ,(state) => {
+		.addMatcher(isFulfilled(register, findUserAndSendOTP, checkOTP, setNewPassword, resendOTP) ,(state) => {
 			state.loading = false
 		})
-		.addMatcher(isPending(login, register, findUserAndSendOTP, checkOTP, setNewPassword, resendOTP, GetNewAccessToken) ,(state) => {
+		.addMatcher(isPending(register, findUserAndSendOTP, checkOTP, setNewPassword, resendOTP, GetNewAccessToken) ,(state) => {
 			state.loading = true
 		})
-		.addMatcher(isRejected(login, register,findUserAndSendOTP, checkOTP, setNewPassword, resendOTP) ,(state, {payload}) => {
+		.addMatcher(isRejected(register,findUserAndSendOTP, checkOTP, setNewPassword, resendOTP) ,(state, {payload}) => {
 			state.loading = false
 			state.errors = payload.errors
 		})
 	}
 })
 
-export const { setAuthUser, setToken, setErrors} = authSlice.actions
+export const { setAuthUser, setToken, setErrors, setIsAuthChecked} = authSlice.actions
 
 export default authSlice.reducer

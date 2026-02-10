@@ -4,19 +4,26 @@ import { useDispatch, useSelector } from "react-redux"
 import TimedAlert from "../alerts/TimedAlert"
 import { setShowAlert } from '../../stores/app'
 import { isObject } from "../../utils/objects"
-import { useEffect } from "react"
 import { GetNewAccessToken } from "../../stores/auth/auth_thunks"
+import { useEffect } from "react"
+import router from "../../Router"
 
-export default function DefaultLayout ({children}) {    
-    const { token, loading } = useSelector(state => state.auth)
+export default function DefaultLayout ({children}) {
+    const dispatch = useDispatch()    
+    const { token, loading, isAuthChecked } = useSelector(state => state.auth)
     const { showAlert, alertMessage } = useSelector(state => state.app)
-    const dispatch = useDispatch()
-
+    const isCheckingAuth = !token && !isAuthChecked
+    
     useEffect(() => {
-        if(!token) dispatch(GetNewAccessToken())  
+        if(isCheckingAuth) dispatch(GetNewAccessToken()) 
     },[])
 
-    if(loading || !token) return <h1>Loading...</h1>
+    if(loading || isCheckingAuth) return <h1>Loading...</h1>
+
+    if(!token && isAuthChecked) {
+        router.navigate('/login')
+        return ''
+    }
 
     return (
         <>

@@ -5,7 +5,7 @@ import ShowPosts from "../components/Posts/ShowPosts"
 
 export default function HomePage() {
     const [showCreatePostModal, setShowCreatePostModal] = useState(false)
-
+    
     return (
         <DefaultLayout>
             <button 

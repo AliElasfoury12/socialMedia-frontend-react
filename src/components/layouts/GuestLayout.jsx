@@ -3,21 +3,18 @@ import router from "../../Router"
 import Header from "./Header"
 import PropTypes from 'prop-types'
 import { isObject } from "../../utils/objects"
-import { useEffect } from "react"
 import { GetNewAccessToken } from "../../stores/auth/auth_thunks"
 
 export default function GuestLayout ({children}) {
-    const { token, loading } = useSelector(state => state.auth)
+    const { token, loading, isAuthChecked } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
-    useEffect(() => {        
-        if(token) {
-            router.navigate('/')
-        }else{
-            dispatch(GetNewAccessToken())
-        }
-    },[])
-
+    if(token) {
+        router.navigate('/')
+    }else if(!isAuthChecked) {
+        dispatch(GetNewAccessToken('guest'))
+    }
+    
     if(loading) return <h1>Loading...</h1>
     
     return (

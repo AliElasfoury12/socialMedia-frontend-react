@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import { useRef, useState } from "react"
 import { NewPasswordConfirmInput, NewPasswordInput } from "../../../components/Form/Inputs"
 import { useDispatch, useSelector } from "react-redux"
-import { formValdaitor } from "../../../components/Form/FormValdation"
+import { formValidator } from "../../../components/Form/FormValdation"
 import { emptyObject } from "../../../utils/objects"
 import { setNewPassword } from "../../../stores/auth/auth_thunks"
 import { setErrors } from "../../../stores/auth/auth_slice"
@@ -24,13 +24,13 @@ export default function SetNewPassword() {
     function handleChange(e) {
         const {name, value} = e.target
         form.current[name] = value
-        const _errors = formValdaitor.inputValdaite(rules, form.current, name) 
+        const _errors = formValidator.inputValidate(rules, form.current, name) 
         dispatch(setErrors(_errors))
     }
     
     function handleSubmit(e) {
         e.preventDefault()
-        const _errors = formValdaitor.formValdaite(rules, form.current)        
+        const _errors = formValidator.formValidate(rules, form.current)        
         dispatch(setErrors(_errors)) 
         if(emptyObject(errors)) dispatch(setNewPassword(form.current))
     }

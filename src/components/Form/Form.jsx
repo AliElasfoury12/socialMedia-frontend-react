@@ -38,7 +38,7 @@ export default function Form(props) {
 
     function checkErrors(form, valdatior) {
         if(!emptyObject(validation)){
-            const _errors = valdatior.formValdaite(form, validation)  
+            const _errors = valdatior.formValidate(form, validation)  
             setErrors(_errors) 
         }
     }
